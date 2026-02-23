@@ -1,0 +1,1048 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS &#8212; Artificial Intelligence</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2. Ćwiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Wykład 1: Wprowadzenie do GIS i QGIS" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artificial Intelligence</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F2. Ćwiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/2. Ćwiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje-uzywane-w-tym-notatniku">Konwencje używane w tym notatniku</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacja-qgis-do-wykonania-w-domu-na-wlasnych-komputerach">1. Instalacja QGIS (do wykonania w domu na własnych komputerach)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-pobierz-i-zainstaluj-qgis-ltr">Zadanie 1.1  — Pobierz i zainstaluj QGIS LTR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-sprawdz-wersje">Zadanie 1.2 — Sprawdź wersję</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konfiguracja-srodowiska-qgis">3. Konfiguracja środowiska QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-ustaw-jezyk-interfejsu">Zadanie 3.1 — Ustaw język interfejsu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-zainstaluj-wtyczki">Zadanie 3.2 — Zainstaluj wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-otworz-konsole-pythona-qgis">Zadanie 3.3 — Otwórz Konsolę Pythona QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksploracja-interfejsu-qgis">4. Eksploracja interfejsu QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-utworz-nowy-projekt">Zadanie 4.1 — Utwórz nowy projekt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-znajdz-i-wlacz-panele">Zadanie 4.2 — Znajdź i włącz panele</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-3-uzupelnij-wlasciwosci-projektu">Zadanie 4.3 — Uzupełnij właściwości projektu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-warstw-wektorowych-i-rastrowych">5. Wczytywanie warstw wektorowych i rastrowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-pobierz-dane-testowe">Zadanie 5.1 — Pobierz dane testowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-wczytaj-warstwe-trzema-metodami">Zadanie 5.2 — Wczytaj warstwę trzema metodami</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-3-dodaj-podklad-rastrowy">Zadanie 5.3 — Dodaj podkład rastrowy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-4-sprawdz-wlasciwosci-warstwy">Zadanie 5.4 — Sprawdź właściwości warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabela-atrybutow-i-podstawowe-zapytania">6.Tabela atrybutów i podstawowe zapytania</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-otworz-tabele-atrybutow">Zadanie 6.1 — Otwórz tabelę atrybutów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-2-selekcja-reczna">Zadanie 6.2 — Selekcja ręczna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-3-zapytanie-przez-wyrazenie">Zadanie 6.3 — Zapytanie przez wyrażenie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-4-eksport-zaznaczonych-obiektow">Zadanie 6.4 — Eksport zaznaczonych obiektów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbolizacja-i-styl-warstwy">7. Symbolizacja i styl warstwy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-pojedynczy-symbol">Zadanie 7.1 — Pojedynczy symbol</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-2-symbolizacja-kategoryzowana">Zadanie 7.2 — Symbolizacja kategoryzowana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-3-symbolizacja-stopniowana-choropleta">Zadanie 7.3 — Symbolizacja stopniowana (choropleta)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-4-etykiety">Zadanie 7.4 — Etykiety</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uklady-wspolrzednych-crs">8. Układy współrzędnych — CRS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-1-sprawdz-crs-warstw">Zadanie 8.1 — Sprawdź CRS warstw</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crs-projektu-vs-crs-warstwy">8.2 CRS projektu vs CRS warstwy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-2-zmien-crs-projektu-i-obserwuj">Zadanie 8.2 — Zmień CRS projektu i obserwuj</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-3-reprojekcja-warstwy">Zadanie 8.3 — Reprojekcja warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-podsumowujace">9. Zadanie podsumowujące</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-koncowe-mapa-tematyczna-wybranego-obszaru">Zadanie końcowe — Mapa tematyczna wybranego obszaru</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cwiczenia-1-srodowisko-pracy-i-wprowadzenie-do-qgis">
+<h1>Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS<a class="headerlink" href="#cwiczenia-1-srodowisko-pracy-i-wprowadzenie-do-qgis" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-cwiczenia">
+<h2>Programowanie w GIS — Ćwiczenia<a class="headerlink" href="#programowanie-w-gis-cwiczenia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="cele-cwiczenia">
+<h2>Cele ćwiczenia<a class="headerlink" href="#cele-cwiczenia" title="Permalink to this heading">#</a></h2>
+<p>Po ukończeniu tego ćwiczenia będziesz potrafić:</p>
+<ul class="simple">
+<li><p>zainstalować i skonfigurować QGIS oraz środowisko Python / Jupyter,</p></li>
+<li><p>swobodnie poruszać się po interfejsie QGIS,</p></li>
+<li><p>wczytywać warstwy wektorowe i rastrowe,</p></li>
+<li><p>korzystać z tabeli atrybutów i wykonywać podstawowe zapytania,</p></li>
+<li><p>zmieniać styl i symbolizację warstwy,</p></li>
+<li><p>sprawdzać i zmieniać układ współrzędnych (CRS) warstwy i projektu.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="konwencje-uzywane-w-tym-notatniku">
+<h2>Konwencje używane w tym notatniku<a class="headerlink" href="#konwencje-uzywane-w-tym-notatniku" title="Permalink to this heading">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Znaczenie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Zadanie</strong></p></td>
+<td><p>Czynność do samodzielnego wykonania w QGIS</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Wskazówka</strong></p></td>
+<td><p>Pomocna podpowiedź</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Uwaga</strong></p></td>
+<td><p>Częsty błąd lub ważna informacja</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Sprawdź</strong></p></td>
+<td><p>Pytanie kontrolne — zapisz odpowiedź w komórce poniżej</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="instalacja-qgis-do-wykonania-w-domu-na-wlasnych-komputerach">
+<h2>1. Instalacja QGIS (do wykonania w domu na własnych komputerach)<a class="headerlink" href="#instalacja-qgis-do-wykonania-w-domu-na-wlasnych-komputerach" title="Permalink to this heading">#</a></h2>
+<p>Na tym kursie używamy <strong>QGIS w wersji LTR (Long Term Release)</strong> — najbardziej stabilnej.</p>
+<section id="zadanie-1-1-pobierz-i-zainstaluj-qgis-ltr">
+<h3>Zadanie 1.1  — Pobierz i zainstaluj QGIS LTR<a class="headerlink" href="#zadanie-1-1-pobierz-i-zainstaluj-qgis-ltr" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Wejdź na stronę: <a class="reference external" href="https://qgis.org/download/">https://qgis.org/download/</a></p></li>
+<li><p>Wybierz zakładkę swojego systemu operacyjnego (Windows / macOS / Linux)</p></li>
+<li><p>Pobierz instalator oznaczony jako <strong>Long Term Release (LTR)</strong></p></li>
+<li><p>Zainstaluj z domyślnymi ustawieniami</p></li>
+</ol>
+<p><strong>Uwaga:</strong> Nie instaluj kilku wersji QGIS jednocześnie — może powodować konflikty ścieżek Pythona.</p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-1-2-sprawdz-wersje">
+<h3>Zadanie 1.2 — Sprawdź wersję<a class="headerlink" href="#zadanie-1-2-sprawdz-wersje" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Uruchom QGIS</p></li>
+<li><p>Przejdź do menu <code class="docutils literal notranslate"><span class="pre">Pomoc</span> <span class="pre">→</span> <span class="pre">O</span> <span class="pre">programie</span> <span class="pre">QGIS</span></code></p></li>
+<li><p>Zanotuj numer wersji poniżej</p></li>
+</ol>
+<p><strong>Uwaga</strong>: QGIS instaluje własną wersję Pythona. Do pracy w Jupyter potrzebujemy <strong>dodatkowej, niezależnej instalacji</strong>.</p>
+<p><strong>Sprawdź — wpisz zainstalowaną wersję QGIS:</strong></p>
+<p><strong>Wersja QGIS:</strong></p>
+<p><strong>System operacyjny:</strong></p>
+<p>Poniższy kod pozwoli Ci sprawdzić na jakim Pythonie pracujesz w tym środowisku:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Weryfikacja srodowiska Python&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Wersja Pythona  : </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  System          : </span><span class="si">{</span><span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Sciezka Python  : </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="n">biblioteki</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;geopandas&#39;</span><span class="p">,</span> <span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;shapely&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Stan bibliotek:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">biblioteki</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span>
+        <span class="n">wersja</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;__version__&#39;</span><span class="p">,</span> <span class="s1">&#39;brak info&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  OK   </span><span class="si">{</span><span class="n">lib</span><span class="si">:</span><span class="s1">&lt;15</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">wersja</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  BRAK </span><span class="si">{</span><span class="n">lib</span><span class="si">:</span><span class="s1">&lt;15</span><span class="si">}</span><span class="s1"> NIE ZAINSTALOWANA&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Jesli widzisz BRAK — zainstaluj: pip install nazwa_biblioteki&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=============================================
+  Weryfikacja srodowiska Python
+=============================================
+  Wersja Pythona  : 3.9.12
+  System          : Windows 10
+  Sciezka Python  : C:\ProgramData\Anaconda3\python.exe
+=============================================
+
+  Stan bibliotek:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  BRAK geopandas       NIE ZAINSTALOWANA
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  OK   matplotlib      3.8.2
+  OK   numpy           1.25.2
+  OK   shapely         2.0.7
+
+Jesli widzisz BRAK — zainstaluj: pip install nazwa_biblioteki
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="konfiguracja-srodowiska-qgis">
+<h2>3. Konfiguracja środowiska QGIS<a class="headerlink" href="#konfiguracja-srodowiska-qgis" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-3-1-ustaw-jezyk-interfejsu">
+<h3>Zadanie 3.1 — Ustaw język interfejsu<a class="headerlink" href="#zadanie-3-1-ustaw-jezyk-interfejsu" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Ustawienia</span> <span class="pre">→</span> <span class="pre">Opcje</span> <span class="pre">→</span> <span class="pre">Ogólne</span></code></p></li>
+<li><p>Zmień język na <strong>Polski</strong></p></li>
+<li><p>OK i <strong>zrestartuj QGIS</strong></p></li>
+</ol>
+<p>Zmiana języka wymaga restartu QGIS.</p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-3-2-zainstaluj-wtyczki">
+<h3>Zadanie 3.2 — Zainstaluj wtyczki<a class="headerlink" href="#zadanie-3-2-zainstaluj-wtyczki" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">→</span> <span class="pre">Zarządzaj</span> <span class="pre">wtyczkami</span> <span class="pre">i</span> <span class="pre">instaluj</span></code></p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Wtyczka</p></th>
+<th class="head"><p>Po co nam?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>OpenLayers</strong></p></td>
+<td><p>Szybkie dodawanie podkładów mapowych (OSM, Google)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Plugin Builder</strong></p></td>
+<td><p>Generator szkieletu wtyczki</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="zadanie-3-3-otworz-konsole-pythona-qgis">
+<h3>Zadanie 3.3 — Otwórz Konsolę Pythona QGIS<a class="headerlink" href="#zadanie-3-3-otworz-konsole-pythona-qgis" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">→</span> <span class="pre">Konsola</span> <span class="pre">Pythona</span></code> (lub <code class="docutils literal notranslate"><span class="pre">Ctrl+Alt+P</span></code>)</p></li>
+<li><p>Kliknij ikonę <strong>Pokaż edytor</strong></p></li>
+<li><p>W konsoli wpisz:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qgis</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Qgis</span><span class="o">.</span><span class="n">QGIS_VERSION</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Sprawdź:</strong></p>
+<p><strong>Jakie wtyczki udało Ci się zainstalować?</strong></p>
+<p><strong>Jaki numer wersji wyświetliła Konsola Pythona?</strong></p>
+<p><strong>Czy QuickMapServices działa? (tak/nie)</strong></p>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="eksploracja-interfejsu-qgis">
+<h2>4. Eksploracja interfejsu QGIS<a class="headerlink" href="#eksploracja-interfejsu-qgis" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-4-1-utworz-nowy-projekt">
+<h3>Zadanie 4.1 — Utwórz nowy projekt<a class="headerlink" href="#zadanie-4-1-utworz-nowy-projekt" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Projekt</span> <span class="pre">→</span> <span class="pre">Nowy</span></code> (<code class="docutils literal notranslate"><span class="pre">Ctrl+N</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Projekt</span> <span class="pre">→</span> <span class="pre">Zapisz</span> <span class="pre">jako…</span></code> (<code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+S</span></code>)</p></li>
+<li><p>Zapisz jako: <code class="docutils literal notranslate"><span class="pre">C1_cwiczenie.qgz</span></code></p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="zadanie-4-2-znajdz-i-wlacz-panele">
+<h3>Zadanie 4.2 — Znajdź i włącz panele<a class="headerlink" href="#zadanie-4-2-znajdz-i-wlacz-panele" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Element</p></th>
+<th class="head"><p>Jak włączyć</p></th>
+<th class="head"><p>Znalazłem?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Panel warstw</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Widok</span> <span class="pre">→</span> <span class="pre">Panele</span> <span class="pre">→</span> <span class="pre">Warstwy</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Panel przeglądarki</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Widok</span> <span class="pre">→</span> <span class="pre">Panele</span> <span class="pre">→</span> <span class="pre">Przeglądarka</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Skrzynka narzędzi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Processing</span> <span class="pre">→</span> <span class="pre">Panel</span> <span class="pre">algorytmów</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Pasek stanu</p></td>
+<td><p>zawsze widoczny na dole</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Pasek nawigacji</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Widok</span> <span class="pre">→</span> <span class="pre">Paski</span> <span class="pre">narzędzi</span> <span class="pre">→</span> <span class="pre">Nawigacja</span> <span class="pre">mapy</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="zadanie-4-3-uzupelnij-wlasciwosci-projektu">
+<h3>Zadanie 4.3 — Uzupełnij właściwości projektu<a class="headerlink" href="#zadanie-4-3-uzupelnij-wlasciwosci-projektu" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Projekt</span> <span class="pre">→</span> <span class="pre">Właściwości</span> <span class="pre">projektu</span></code> (<code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code>)</p></li>
+<li><p>Zakładka <strong>Ogólne</strong>: wpisz Tytuł i Autora</p></li>
+<li><p>Zakładka <strong>CRS</strong>: sprawdź domyślny układ współrzędnych</p></li>
+<li><p>OK i zapisz projekt (<code class="docutils literal notranslate"><span class="pre">Ctrl+S</span></code>)</p></li>
+</ol>
+<p><strong>Sprawdź:</strong></p>
+<p><strong>Jaki CRS jest ustawiony domyślnie w nowym projekcie?</strong></p>
+<p><strong>Jaki jest kod EPSG tego układu?</strong></p>
+<p><strong>Do czego służy Skrzynka narzędzi przetwarzania? (1-2 zdania)</strong></p>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="wczytywanie-warstw-wektorowych-i-rastrowych">
+<h2>5. Wczytywanie warstw wektorowych i rastrowych<a class="headerlink" href="#wczytywanie-warstw-wektorowych-i-rastrowych" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-5-1-pobierz-dane-testowe">
+<h3>Zadanie 5.1 — Pobierz dane testowe<a class="headerlink" href="#zadanie-5-1-pobierz-dane-testowe" title="Permalink to this heading">#</a></h3>
+<p><strong>Natural Earth (kraje świata):</strong>
+<a class="reference external" href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/">https://www.naturalearthdata.com/downloads/110m-cultural-vectors/</a>
+Pobierz: <em>Admin 0 - Countries</em> (Shapefile)</p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-5-2-wczytaj-warstwe-trzema-metodami">
+<h3>Zadanie 5.2 — Wczytaj warstwę trzema metodami<a class="headerlink" href="#zadanie-5-2-wczytaj-warstwe-trzema-metodami" title="Permalink to this heading">#</a></h3>
+<p><strong>Metoda 1 — przez menu:</strong>
+<code class="docutils literal notranslate"><span class="pre">Warstwa</span> <span class="pre">→</span> <span class="pre">Dodaj</span> <span class="pre">warstwę</span> <span class="pre">→</span> <span class="pre">Dodaj</span> <span class="pre">warstwę</span> <span class="pre">wektorową…</span></code></p>
+<p><strong>Metoda 2 — przez Panel przeglądarki:</strong>
+Nawiguj do folderu → kliknij dwukrotnie plik <code class="docutils literal notranslate"><span class="pre">.shp</span></code></p>
+<p><strong>Metoda 3 — przeciągnij i upuść:</strong>
+Przeciągnij plik <code class="docutils literal notranslate"><span class="pre">.shp</span></code> z eksploratora plików na obszar mapy</p>
+<p><strong>UWAGA</strong>: Dla Shapefile wszystkie pliki (<code class="docutils literal notranslate"><span class="pre">.shp</span></code>, <code class="docutils literal notranslate"><span class="pre">.dbf</span></code>, <code class="docutils literal notranslate"><span class="pre">.shx</span></code>, <code class="docutils literal notranslate"><span class="pre">.prj</span></code>) muszą być w tym samym folderze!</p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-5-3-dodaj-podklad-rastrowy">
+<h3>Zadanie 5.3 — Dodaj podkład rastrowy<a class="headerlink" href="#zadanie-5-3-dodaj-podklad-rastrowy" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Wykorzystaj</span> <span class="pre">wtyczkę</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-5-4-sprawdz-wlasciwosci-warstwy">
+<h3>Zadanie 5.4 — Sprawdź właściwości warstwy<a class="headerlink" href="#zadanie-5-4-sprawdz-wlasciwosci-warstwy" title="Permalink to this heading">#</a></h3>
+<p>Prawym przyciskiem → <code class="docutils literal notranslate"><span class="pre">Właściwości…</span></code>:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Informacja</p></th>
+<th class="head"><p>Zakładka</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Liczba obiektów</p></td>
+<td><p>Informacje</p></td>
+</tr>
+<tr class="row-odd"><td><p>Typ geometrii</p></td>
+<td><p>Informacje</p></td>
+</tr>
+<tr class="row-even"><td><p>CRS warstwy</p></td>
+<td><p>Źródło</p></td>
+</tr>
+<tr class="row-odd"><td><p>Liczba pól atrybutów</p></td>
+<td><p>Pola</p></td>
+</tr>
+<tr class="row-even"><td><p>Zasięg przestrzenny</p></td>
+<td><p>Informacje</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="tabela-atrybutow-i-podstawowe-zapytania">
+<h2>6.Tabela atrybutów i podstawowe zapytania<a class="headerlink" href="#tabela-atrybutow-i-podstawowe-zapytania" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-6-1-otworz-tabele-atrybutow">
+<h3>Zadanie 6.1 — Otwórz tabelę atrybutów<a class="headerlink" href="#zadanie-6-1-otworz-tabele-atrybutow" title="Permalink to this heading">#</a></h3>
+<p>Prawym przyciskiem na warstwę → <code class="docutils literal notranslate"><span class="pre">Otwórz</span> <span class="pre">tabelę</span> <span class="pre">atrybutów</span></code> (lub <code class="docutils literal notranslate"><span class="pre">F6</span></code>)</p>
+<p>Każdy wiersz = jeden obiekt. Każda kolumna = jedno pole atrybutu.</p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-6-2-selekcja-reczna">
+<h3>Zadanie 6.2 — Selekcja ręczna<a class="headerlink" href="#zadanie-6-2-selekcja-reczna" title="Permalink to this heading">#</a></h3>
+<p><strong>Na mapie:</strong></p>
+<ol class="arabic simple">
+<li><p>Narzędzie selekcji: klawisz <code class="docutils literal notranslate"><span class="pre">S</span></code></p></li>
+<li><p>Kliknij kilka obiektów — podświetlą się na żółto</p></li>
+<li><p>W tabeli kliknij <em>Pokaż tylko zaznaczone</em> (lewy dolny róg)</p></li>
+</ol>
+<p>Odznacz wszystko: <code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+A</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-6-3-zapytanie-przez-wyrazenie">
+<h3>Zadanie 6.3 — Zapytanie przez wyrażenie<a class="headerlink" href="#zadanie-6-3-zapytanie-przez-wyrazenie" title="Permalink to this heading">#</a></h3>
+<p>W tabeli atrybutów kliknij <strong>Zaznacz obiekty według wyrażenia</strong> (lub <code class="docutils literal notranslate"><span class="pre">Ctrl+F3</span></code>)</p>
+<p>Przykładowe wyrażenia:</p>
+<p>Dla Natural Earth:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;continent&quot;</span> <span class="o">=</span> <span class="s1">&#39;Europe&#39;</span>
+</pre></div>
+</div>
+<p><strong>UWAGA</strong>: Nazwy pól: cudzysłowy <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&quot;</span></code>. Wartości tekstowe: apostrofy <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">'</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-6-4-eksport-zaznaczonych-obiektow">
+<h3>Zadanie 6.4 — Eksport zaznaczonych obiektów<a class="headerlink" href="#zadanie-6-4-eksport-zaznaczonych-obiektow" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Prawym przyciskiem → <code class="docutils literal notranslate"><span class="pre">Eksportuj</span> <span class="pre">→</span> <span class="pre">Zapisz</span> <span class="pre">zaznaczone</span> <span class="pre">obiekty</span> <span class="pre">jako…</span></code></p></li>
+<li><p>Format: <strong>GeoPackage (.gpkg)</strong></p></li>
+<li><p>Nazwa: <code class="docutils literal notranslate"><span class="pre">wynik_selekcji.gpkg</span></code></p></li>
+<li><p>OK</p></li>
+</ol>
+<p><strong>Sprawdź:</strong></p>
+<p><strong>Ile obiektów wybrało Twoje wyrażenie?</strong></p>
+<p><strong>Jakie wyrażenie wpisałeś/aś?</strong></p>
+<p><strong>Czym różni się GeoPackage od Shapefile? (1-2 zdania)</strong></p>
+<hr class="docutils" />
+<p><a id='s7'></a></p>
+</section>
+</section>
+<section id="symbolizacja-i-styl-warstwy">
+<h2>7. Symbolizacja i styl warstwy<a class="headerlink" href="#symbolizacja-i-styl-warstwy" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-7-1-pojedynczy-symbol">
+<h3>Zadanie 7.1 — Pojedynczy symbol<a class="headerlink" href="#zadanie-7-1-pojedynczy-symbol" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Kliknij dwukrotnie warstwę → zakładka <strong>Styl (Symbologia)</strong></p></li>
+<li><p>Tryb: <code class="docutils literal notranslate"><span class="pre">Pojedynczy</span> <span class="pre">symbol</span></code></p></li>
+<li><p>Kliknij podgląd symbolu i zmień:</p>
+<ul class="simple">
+<li><p>Kolor wypełnienia: dowolny (np. jasnoniebieski)</p></li>
+<li><p>Kolor obrysu: ciemnoszary</p></li>
+<li><p>Szerokość obrysu: <code class="docutils literal notranslate"><span class="pre">0.3</span></code></p></li>
+</ul>
+</li>
+<li><p>OK</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="zadanie-7-2-symbolizacja-kategoryzowana">
+<h3>Zadanie 7.2 — Symbolizacja kategoryzowana<a class="headerlink" href="#zadanie-7-2-symbolizacja-kategoryzowana" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Właściwości → Styl → zmień na <code class="docutils literal notranslate"><span class="pre">Kategoryzowany</span></code></p></li>
+<li><p>Pole <strong>Wartość</strong>: kolumna tekstowa (np. <code class="docutils literal notranslate"><span class="pre">continent</span></code>)</p></li>
+<li><p>Kliknij <code class="docutils literal notranslate"><span class="pre">Klasyfikuj</span></code> → OK</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="zadanie-7-3-symbolizacja-stopniowana-choropleta">
+<h3>Zadanie 7.3 — Symbolizacja stopniowana (choropleta)<a class="headerlink" href="#zadanie-7-3-symbolizacja-stopniowana-choropleta" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Styl → zmień na <code class="docutils literal notranslate"><span class="pre">Stopniowany</span></code></p></li>
+<li><p>Pole <strong>Wartość</strong>: kolumna numeryczna (np. <code class="docutils literal notranslate"><span class="pre">pop_est</span></code>)</p></li>
+<li><p>Paleta: <code class="docutils literal notranslate"><span class="pre">YlOrRd</span></code>, liczba klas: <code class="docutils literal notranslate"><span class="pre">5</span></code>, metoda: <code class="docutils literal notranslate"><span class="pre">Kwantyle</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Klasyfikuj</span></code> → OK</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="zadanie-7-4-etykiety">
+<h3>Zadanie 7.4 — Etykiety<a class="headerlink" href="#zadanie-7-4-etykiety" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Właściwości → <strong>Etykiety</strong> → <code class="docutils literal notranslate"><span class="pre">Pojedyncze</span> <span class="pre">etykiety</span></code></p></li>
+<li><p>Pole <strong>Wartość</strong>: np. <code class="docutils literal notranslate"><span class="pre">name</span></code></p></li>
+<li><p>Czcionka: Arial 8pt → OK</p></li>
+</ol>
+<p><strong>Sprawdź:</strong></p>
+<p><strong>Jakie pole wybrałeś/aś do symbolizacji stopniowanej?</strong></p>
+<p><strong>Co oznacza metoda klasyfikacji Kwantyle? (1 zdanie)</strong></p>
+<p><strong>Czym różni się symbolizacja kategoryzowana od stopniowanej? (1-2 zdania)</strong></p>
+<hr class="docutils" />
+<p><a id='s8'></a></p>
+</section>
+</section>
+<section id="uklady-wspolrzednych-crs">
+<h2>8. Układy współrzędnych — CRS<a class="headerlink" href="#uklady-wspolrzednych-crs" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-8-1-sprawdz-crs-warstw">
+<h3>Zadanie 8.1 — Sprawdź CRS warstw<a class="headerlink" href="#zadanie-8-1-sprawdz-crs-warstw" title="Permalink to this heading">#</a></h3>
+<p>Prawym przyciskiem → <code class="docutils literal notranslate"><span class="pre">Właściwości</span> <span class="pre">→</span> <span class="pre">Źródło</span></code>:</p>
+</section>
+<section id="crs-projektu-vs-crs-warstwy">
+<h3>8.2 CRS projektu vs CRS warstwy<a class="headerlink" href="#crs-projektu-vs-crs-warstwy" title="Permalink to this heading">#</a></h3>
+<p><strong>Ważne rozróżnienie:</strong></p>
+<ul class="simple">
+<li><p><strong>CRS projektu</strong> — układ wyświetlania (prawy dolny róg okna)</p></li>
+<li><p><strong>CRS warstwy</strong> — układ zapisany w pliku danych</p></li>
+</ul>
+<p>QGIS transformuje warstwy w locie — <strong>nie zmienia pliku źródłowego</strong>.</p>
+</section>
+<section id="zadanie-8-2-zmien-crs-projektu-i-obserwuj">
+<h3>Zadanie 8.2 — Zmień CRS projektu i obserwuj<a class="headerlink" href="#zadanie-8-2-zmien-crs-projektu-i-obserwuj" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Kliknij kod CRS w prawym dolnym rogu (np. <code class="docutils literal notranslate"><span class="pre">EPSG:4326</span></code>)</p></li>
+<li><p>Wybierz kolejno:</p>
+<ul class="simple">
+<li><p><strong>EPSG:3857</strong> (Web Mercator) — obserwuj zniekształcenia</p></li>
+<li><p><strong>EPSG:2180</strong> (Polska CS92) — Polska wygląda najlepiej</p></li>
+<li><p><strong>EPSG:3035</strong> - odwzorowanie płaszczyznowe</p></li>
+<li><p><strong>EPSG:4326</strong> (WGS 84) — przywróć na koniec</p></li>
+</ul>
+</li>
+</ol>
+<p>Przy EPSG:3857 Grenlandia wygląda tak samo duża jak Afryka.</p>
+</section>
+<hr class="docutils" />
+<section id="zadanie-8-3-reprojekcja-warstwy">
+<h3>Zadanie 8.3 — Reprojekcja warstwy<a class="headerlink" href="#zadanie-8-3-reprojekcja-warstwy" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Prawym przyciskiem → <code class="docutils literal notranslate"><span class="pre">Eksportuj</span> <span class="pre">→</span> <span class="pre">Zapisz</span> <span class="pre">obiekty</span> <span class="pre">jako…</span></code></p></li>
+<li><p>Format: GeoPackage</p></li>
+<li><p>CRS: <code class="docutils literal notranslate"><span class="pre">EPSG:2180</span> <span class="pre">—</span> <span class="pre">ETRS89</span> <span class="pre">/</span> <span class="pre">Poland</span> <span class="pre">CS92</span></code></p></li>
+<li><p>Nazwa: <code class="docutils literal notranslate"><span class="pre">warstwa_PL1992.gpkg</span></code> → OK</p></li>
+<li><p>Wczytaj plik i sprawdź jego CRS</p></li>
+</ol>
+<p><strong>Sprawdź:</strong></p>
+<p><strong>Jaki CRS miała Twoja warstwa wektorowa?</strong></p>
+<p><strong>Co zauważyłeś/aś zmieniając CRS projektu z 4326 na 3857? (1-2 zdania)</strong></p>
+<p><strong>Jaka jest różnica między zmianą CRS projektu a reprojekcją warstwy? (1-2 zdania)</strong></p>
+<hr class="docutils" />
+<p><a id='s9'></a></p>
+</section>
+</section>
+<section id="zadanie-podsumowujace">
+<h2>9. Zadanie podsumowujące<a class="headerlink" href="#zadanie-podsumowujace" title="Permalink to this heading">#</a></h2>
+<p>Wykonaj samodzielnie poniższe zadanie, łącząc umiejętności z całego ćwiczenia.</p>
+<hr class="docutils" />
+<section id="zadanie-koncowe-mapa-tematyczna-wybranego-obszaru">
+<h3>Zadanie końcowe — Mapa tematyczna wybranego obszaru<a class="headerlink" href="#zadanie-koncowe-mapa-tematyczna-wybranego-obszaru" title="Permalink to this heading">#</a></h3>
+<p><strong>Kroki:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Dane</strong> — wczytaj co najmniej jedną warstwę wektorową</p></li>
+<li><p><strong>Selekcja</strong> — za pomocą wyrażenia wybierz grupę obiektów</p></li>
+<li><p><strong>Eksport</strong> — zapisz zaznaczone obiekty do GeoPackage (EPSG:4326)</p></li>
+<li><p><strong>Symbolizacja</strong> — zastosuj symbolizację stopniową</p></li>
+<li><p><strong>Etykiety</strong> — włącz etykiety z nazwami obiektów</p></li>
+<li><p><strong>CRS projektu</strong> — ustaw CRS odpowiedni do obszaru danych</p></li>
+<li><p><strong>Zapis</strong> — zapisz projekt QGIS (<code class="docutils literal notranslate"><span class="pre">Ctrl+S</span></code>)</p></li>
+</ol>
+<p><strong>Pytania podsumowujące:</strong></p>
+<p><strong>1. Do czego w praktyce może służyć symbolizacja stopniowana? (2 przykłady)</strong></p>
+<p><strong>2. Dlaczego ważne jest sprawdzanie CRS przed analizą przestrzenną?</strong></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Wykład 1: Wprowadzenie do GIS i QGIS</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje-uzywane-w-tym-notatniku">Konwencje używane w tym notatniku</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacja-qgis-do-wykonania-w-domu-na-wlasnych-komputerach">1. Instalacja QGIS (do wykonania w domu na własnych komputerach)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-pobierz-i-zainstaluj-qgis-ltr">Zadanie 1.1  — Pobierz i zainstaluj QGIS LTR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-sprawdz-wersje">Zadanie 1.2 — Sprawdź wersję</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konfiguracja-srodowiska-qgis">3. Konfiguracja środowiska QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-ustaw-jezyk-interfejsu">Zadanie 3.1 — Ustaw język interfejsu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-zainstaluj-wtyczki">Zadanie 3.2 — Zainstaluj wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-otworz-konsole-pythona-qgis">Zadanie 3.3 — Otwórz Konsolę Pythona QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksploracja-interfejsu-qgis">4. Eksploracja interfejsu QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-utworz-nowy-projekt">Zadanie 4.1 — Utwórz nowy projekt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-znajdz-i-wlacz-panele">Zadanie 4.2 — Znajdź i włącz panele</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-3-uzupelnij-wlasciwosci-projektu">Zadanie 4.3 — Uzupełnij właściwości projektu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-warstw-wektorowych-i-rastrowych">5. Wczytywanie warstw wektorowych i rastrowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-pobierz-dane-testowe">Zadanie 5.1 — Pobierz dane testowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-wczytaj-warstwe-trzema-metodami">Zadanie 5.2 — Wczytaj warstwę trzema metodami</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-3-dodaj-podklad-rastrowy">Zadanie 5.3 — Dodaj podkład rastrowy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-4-sprawdz-wlasciwosci-warstwy">Zadanie 5.4 — Sprawdź właściwości warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabela-atrybutow-i-podstawowe-zapytania">6.Tabela atrybutów i podstawowe zapytania</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-otworz-tabele-atrybutow">Zadanie 6.1 — Otwórz tabelę atrybutów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-2-selekcja-reczna">Zadanie 6.2 — Selekcja ręczna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-3-zapytanie-przez-wyrazenie">Zadanie 6.3 — Zapytanie przez wyrażenie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-4-eksport-zaznaczonych-obiektow">Zadanie 6.4 — Eksport zaznaczonych obiektów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbolizacja-i-styl-warstwy">7. Symbolizacja i styl warstwy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-pojedynczy-symbol">Zadanie 7.1 — Pojedynczy symbol</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-2-symbolizacja-kategoryzowana">Zadanie 7.2 — Symbolizacja kategoryzowana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-3-symbolizacja-stopniowana-choropleta">Zadanie 7.3 — Symbolizacja stopniowana (choropleta)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-4-etykiety">Zadanie 7.4 — Etykiety</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uklady-wspolrzednych-crs">8. Układy współrzędnych — CRS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-1-sprawdz-crs-warstw">Zadanie 8.1 — Sprawdź CRS warstw</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crs-projektu-vs-crs-warstwy">8.2 CRS projektu vs CRS warstwy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-2-zmien-crs-projektu-i-obserwuj">Zadanie 8.2 — Zmień CRS projektu i obserwuj</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-3-reprojekcja-warstwy">Zadanie 8.3 — Reprojekcja warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-podsumowujace">9. Zadanie podsumowujące</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-koncowe-mapa-tematyczna-wybranego-obszaru">Zadanie końcowe — Mapa tematyczna wybranego obszaru</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak, Saeid Haji-Aghajany
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

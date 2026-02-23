@@ -2,26 +2,6 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: 1. AI 1
+root: 1. Wyklad_1_Wprowadzenie_do_GIS_i_QGIS
 chapters:
-- file: AI_Exercise_1
-- file: 2. AI 2
-- file: 3. AI 3
-- file: AI_Exercise_2
-- file: AI_Exercise_3
-- file: 4. AI 4
-- file: AI_Exercise_4
-- file: 5. AI 5
-- file: AI_Exercise_5
-- file: AI_Exercise_6
-- file: 6. AI 6
-- file: 7. AI 7
-- file: AI_Exercise_7
-- file: 8. AI 8
-- file: AI_Exercise_8
-- file: 9. AI 9
-- file: AI_Exercise_9
-- file: 10. AI 10
-- file: AI_Exercise_10
-- file: 11. AI 11
-- file: AI_Exercise_11
+- file: 2. Ćwiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS 
