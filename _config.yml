@@ -1,8 +1,8 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Artificial Intelligence
-author: Kamil Smolak, Saeid Haji-Aghajany
+title: Programowanie w systemach GIS
+author: Kamil Smolak
 logo: logo.jpg
 
 # Force re-execution of notebooks on each build.
