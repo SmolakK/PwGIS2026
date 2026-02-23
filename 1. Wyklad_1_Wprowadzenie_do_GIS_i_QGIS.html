@@ -1,0 +1,1254 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Wykład 1: Wprowadzenie do GIS i QGIS &#8212; Artificial Intelligence</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1. Wyklad_1_Wprowadzenie_do_GIS_i_QGIS';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artificial Intelligence</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1. Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/1. Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Wykład 1: Wprowadzenie do GIS i QGIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kurs-programowanie-w-gis">Kurs: Programowanie w GIS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zakres-materialu-na-kursie">Zakres materiału na kursie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#warunki-zaliczenia">Warunki zaliczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-gis-krotkie-przypomnienie">1. Czym jest GIS? — Krótkie przypomnienie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-warto-programowac-w-gis">Dlaczego warto <em>programować</em> w GIS?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modele-danych-przestrzennych-wektor-i-raster">2.  Modele danych przestrzennych — Wektor i Raster</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dane-wektorowe">2.1 Dane wektorowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dane-rastrowe">2.2 Dane rastrowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ktory-model-wybrac">2.3 Który model wybrać?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uklady-odniesienia-wspolrzednych-crs">3. Układy odniesienia współrzędnych (CRS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geograficzny-a-odwzorowany-crs">3.1 Geograficzny a odwzorowany CRS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kody-epsg">3.2 Kody EPSG</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-crs-ma-znaczenie">3.3 Dlaczego CRS ma znaczenie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wprowadzenie-do-qgis">4. Wprowadzenie do QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-qgis-na-tym-kursie">Dlaczego QGIS na tym kursie?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wersja-qgis">Wersja QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qgis-a-inne-oprogramowanie-gis">QGIS a inne oprogramowanie GIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-w-qgis-trzy-sposoby-programowania">5. Python w QGIS — trzy sposoby programowania</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-pyqgis">Skrypt PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wtyczka-qgis">Wtyczka QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteka-zewnetrzna-poza-qgis">Biblioteka zewnętrzna (poza QGIS)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interfejs-qgis-przewodnik">6. Interfejs QGIS — Przewodnik</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#opis-kluczowych-obszarow">Opis kluczowych obszarów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architektura-qgis-struktura-klasowa">7.  Architektura QGIS — struktura klasowa</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#glowne-moduly-pyqgis">7.1 Główne moduły PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#najwazniejsze-klasy-mapa-mysli">7.2 Najważniejsze klasy — mapa myśli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singleton-qgsproject">7.3 Singleton QgsProject</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#od-warstwy-do-geometrii-hierarchia-obiektow">7.4 Od warstwy do geometrii — hierarchia obiektów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dokumentacja-pyqgis-jak-z-niej-korzystac">8. Dokumentacja PyQGIS — jak z niej korzystać</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyqgis-developer-cookbook">8.1 PyQGIS Developer Cookbook</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference-c-python">8.2 API Reference (C++ / Python)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konsola-pythona-w-qgis-help">8.3 Konsola Pythona w QGIS + <code class="docutils literal notranslate"><span class="pre">help()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-czytac-dokumentacje-api-przyklad">8.4 Jak czytać dokumentację API — przykład</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-kluczowe-pojecia">9. Podsumowanie i kluczowe pojęcia</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-wykladzie-2">Na Wykładzie 2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quiz">10. Quiz</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-danych">Typy danych</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literatura-i-zasoby">11. Literatura i zasoby</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oficjalna-dokumentacja">Oficjalna dokumentacja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ksiazki">Książki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zasoby-online">Zasoby online</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="wyklad-1-wprowadzenie-do-gis-i-qgis">
+<h1>Wykład 1: Wprowadzenie do GIS i QGIS<a class="headerlink" href="#wyklad-1-wprowadzenie-do-gis-i-qgis" title="Permalink to this heading">#</a></h1>
+<section id="kurs-programowanie-w-gis">
+<h2>Kurs: Programowanie w GIS<a class="headerlink" href="#kurs-programowanie-w-gis" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="zakres-materialu-na-kursie">
+<h2>Zakres materiału na kursie<a class="headerlink" href="#zakres-materialu-na-kursie" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>QGIS - programowanie w QGIS z poziomu skryptów</p></li>
+<li><p>QGIS - tworzenie własnych wtyczek w QGIS (projekt grupowy)</p></li>
+<li><p>Możliwości pracy z danymi przestrzennymi poza środowiskiem GIS:
+** Dane wektorowe (geopandas)
+** Dane rastrowe (rasterio)</p></li>
+</ul>
+</section>
+<section id="warunki-zaliczenia">
+<h2>Warunki zaliczenia<a class="headerlink" href="#warunki-zaliczenia" title="Permalink to this heading">#</a></h2>
+<p>Przedmiot składa się z 15 ćwiczeń i 7.5 wykładów. Warunkiem zaliczenia przedmiotu są:</p>
+<blockquote>
+<div><p>Napisanie 3 kolokwiów na pozytywną ocenę
+Oddanie ćwiczeń (list zadań)
+Oddanie projektu końcowego (grupowego)</p>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Wykład:</strong> 1 z 7<br />
+<strong>Tematy:</strong> Czym jest GIS? | Dane wektorowe i rastrowe | Interfejs QGIS | Twoja pierwsza mapa<br />
+<strong>Wymagania wstępne:</strong> Podstawowe pojęcia z zakresu GIS</p>
+</div></blockquote>
+<hr class="docutils" />
+<p><a id='1'></a></p>
+</section>
+<section id="czym-jest-gis-krotkie-przypomnienie">
+<h2>1. Czym jest GIS? — Krótkie przypomnienie<a class="headerlink" href="#czym-jest-gis-krotkie-przypomnienie" title="Permalink to this heading">#</a></h2>
+<p>Masz już pewne podstawy z zakresu GIS, więc odnieśmy je do kontekstu tego kursu.</p>
+<p><strong>System Informacji Geograficznej (GIS)</strong> to środowisko posiadające zdolności do pracy z danymi przestrzennymi. Jego funkcjonalności to:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Funkcja</p></th>
+<th class="head"><p>Opis</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Pozyskiwanie</strong></p></td>
+<td><p>Gromadzenie danych przestrzennych i atrybutowych</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Przechowywanie</strong></p></td>
+<td><p>Zapis danych w formatach takich jak Shapefile, GeoPackage, PostGIS</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Zapytania</strong></p></td>
+<td><p>Filtrowanie i selekcja obiektów według lokalizacji lub atrybutów</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Analiza</strong></p></td>
+<td><p>Wykonywanie operacji przestrzennych (buforowanie, nakładanie, wyznaczanie tras…)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Wizualizacja</strong></p></td>
+<td><p>Renderowanie map i dashboardów</p></td>
+</tr>
+</tbody>
+</table>
+<section id="dlaczego-warto-programowac-w-gis">
+<h3>Dlaczego warto <em>programować</em> w GIS?<a class="headerlink" href="#dlaczego-warto-programowac-w-gis" title="Permalink to this heading">#</a></h3>
+<p>Klikanie w interfejsie desktopowego GIS jest świetne do eksploracji, ale nie do tworzenia narzędzi i operacji na skalę przemysłową.
+Programowanie pozwala:</p>
+<ul class="simple">
+<li><p><strong>Automatyzować</strong> powtarzalne zadania (przetwarzanie wsadowe setek plików)</p></li>
+<li><p><strong>Odtwarzać</strong> cały proces za pomocą jednego skryptu</p></li>
+<li><p><strong>Integrować</strong> GIS z bazami danych, API i usługami internetowymi</p></li>
+<li><p><strong>Rozszerzać</strong> QGIS o własne narzędzia i wtyczki</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Zastanów się:</strong> Wyobraź sobie, że musisz przyciąć 200 zobrazowań satelitarnych do granicy obszaru badań. Ile czasu zajęłoby to ręcznie? A ile za pomocą 10-linijkowego skryptu?</p>
+</div></blockquote>
+<hr class="docutils" />
+<p><a id='2'></a></p>
+</section>
+</section>
+<section id="modele-danych-przestrzennych-wektor-i-raster">
+<h2>2.  Modele danych przestrzennych — Wektor i Raster<a class="headerlink" href="#modele-danych-przestrzennych-wektor-i-raster" title="Permalink to this heading">#</a></h2>
+<p>Wszystkie dane GIS mieszczą się w dwóch podstawowych modelach:</p>
+<section id="dane-wektorowe">
+<h3>2.1 Dane wektorowe<a class="headerlink" href="#dane-wektorowe" title="Permalink to this heading">#</a></h3>
+<p>Reprezentują świat jako dyskretne <strong>obiekty geometryczne</strong> z powiązanymi <strong>atrybutami</strong>.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Typ geometrii</p></th>
+<th class="head"><p>Przykład ze świata rzeczywistego</p></th>
+<th class="head"><p>Ikona QGIS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Punkt</strong></p></td>
+<td><p>Drzewa, przystanki autobusowe, epicentra trzęsień ziemi</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Linia (Polilinia)</strong></p></td>
+<td><p>Drogi, rzeki, rurociągi</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Wielokąt (Poligon)</strong></p></td>
+<td><p>Budynki, jeziora, jednostki administracyjne</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>Popularne formaty wektorowe: <strong>Shapefile (.shp)</strong>, <strong>GeoJSON (.geojson)</strong>, <strong>GeoPackage (.gpkg)</strong></p>
+</section>
+<hr class="docutils" />
+<section id="dane-rastrowe">
+<h3>2.2 Dane rastrowe<a class="headerlink" href="#dane-rastrowe" title="Permalink to this heading">#</a></h3>
+<p>Reprezentują świat jako <strong>siatkę komórek (pikseli)</strong>, z których każda przechowuje wartość.</p>
+<ul class="simple">
+<li><p>Każda komórka pokrywa ten sam obszar na ziemi → <strong>rozdzielczość przestrzenna</strong> (np. 10 m × 10 m)</p></li>
+<li><p>Mogą być <strong>jednokanałowe</strong> (wysokość terenu) lub <strong>wielokanałowe</strong> (zobrazowanie satelitarne RGB)</p></li>
+</ul>
+<p>Popularne formaty rastrowe: <strong>GeoTIFF (.tif)</strong>, <strong>NetCDF (.nc)</strong>, <strong>JPEG2000</strong></p>
+</section>
+<hr class="docutils" />
+<section id="ktory-model-wybrac">
+<h3>2.3 Który model wybrać?<a class="headerlink" href="#ktory-model-wybrac" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sytuacja</p></th>
+<th class="head"><p>Najlepszy model</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Dyskretne, identyfikowalne obiekty (drogi, działki)</p></td>
+<td><p><strong>Wektor</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Zjawiska ciągłe (temperatura, wysokość terenu, pokrycie terenu)</p></td>
+<td><p><strong>Raster</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Wysokorozdzielcze zobrazowania lotnicze lub satelitarne</p></td>
+<td><p><strong>Raster</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Granice administracyjne</p></td>
+<td><p><strong>Wektor</strong></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><a id='3'></a></p>
+</section>
+</section>
+<section id="uklady-odniesienia-wspolrzednych-crs">
+<h2>3. Układy odniesienia współrzędnych (CRS)<a class="headerlink" href="#uklady-odniesienia-wspolrzednych-crs" title="Permalink to this heading">#</a></h2>
+<p>Zanim cokolwiek umieścimy na mapie, musimy ustalić <strong>gdzie</strong> dany obiekt się znajduje.<br />
+Za to odpowiada <strong>Układ Odniesienia Współrzędnych (CRS — Coordinate Reference System)</strong>.</p>
+<section id="geograficzny-a-odwzorowany-crs">
+<h3>3.1 Geograficzny a odwzorowany CRS<a class="headerlink" href="#geograficzny-a-odwzorowany-crs" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Typ</p></th>
+<th class="head"><p>Współrzędne</p></th>
+<th class="head"><p>Jednostki</p></th>
+<th class="head"><p>Przykład</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Geograficzny (GCS)</strong></p></td>
+<td><p>Długość, Szerokość geograficzna</p></td>
+<td><p>Stopnie</p></td>
+<td><p>WGS 84 (EPSG:4326)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Odwzorowany (PCS)</strong></p></td>
+<td><p>X (Easting), Y (Northing)</p></td>
+<td><p>Metry / Stopy</p></td>
+<td><p>UTM, ETRS89 / EPSG:2180</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="kody-epsg">
+<h3>3.2 Kody EPSG<a class="headerlink" href="#kody-epsg" title="Permalink to this heading">#</a></h3>
+<p>Każdy CRS posiada unikalny <strong>kod EPSG</strong> — skrócony identyfikator.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>EPSG</p></th>
+<th class="head"><p>Nazwa</p></th>
+<th class="head"><p>Zastosowanie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>4326</strong></p></td>
+<td><p>WGS 84</p></td>
+<td><p>GPS, mapy internetowe, globalne zbiory danych</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>3857</strong></p></td>
+<td><p>Web Mercator</p></td>
+<td><p>Google Maps, kafelki OpenStreetMap</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>2180</strong></p></td>
+<td><p>ETRS89 / Polska CS92</p></td>
+<td><p>Krajowe kartowanie Polski</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>32634</strong></p></td>
+<td><p>WGS 84 / UTM Strefa 34N</p></td>
+<td><p>Metryczna analiza przestrzenna w Europie Środkowej</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dlaczego-crs-ma-znaczenie">
+<h3>3.3 Dlaczego CRS ma znaczenie<a class="headerlink" href="#dlaczego-crs-ma-znaczenie" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>Jeśli dwie warstwy mają <strong>różne CRS</strong>, mogą się nie pokrywać poprawnie w QGIS.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Jeśli chcesz wykonywać operacje <strong>pomiaru</strong>, warstwa w mierze kątowej będzie skutkowała wynikami podawanymi w stopniach! (Wyobrażasz sobie powierzchnię w stopniach kwadratowych?)</p>
+</div></blockquote>
+<blockquote>
+<div><p>Zawsze sprawdzaj i transformuj warstwy w razie potrzeby!</p>
+</div></blockquote>
+<p>W QGIS możesz sprawdzić i zmienić CRS warstwy przez:<br />
+<strong>Właściwości warstwy → Źródło → Przypisany CRS</strong></p>
+<p>Ta sama lokalizacja, dwa układy CRS:</p>
+<p>CRS : WGS 84 (EPSG:4326)
+X   : 17.0385 stopnie
+Y   : 51.1079 stopnie</p>
+<p>CRS : UTM Strefa 33N (EPSG:32633)
+X   : 348500 metry
+Y   : 5663200 metry</p>
+<hr class="docutils" />
+<p><a id='4'></a></p>
+</section>
+</section>
+<section id="wprowadzenie-do-qgis">
+<h2>4. Wprowadzenie do QGIS<a class="headerlink" href="#wprowadzenie-do-qgis" title="Permalink to this heading">#</a></h2>
+<p><strong>QGIS</strong> (dawniej znany jako <em>Quantum GIS</em>) to <strong>bezpłatna, otwartoźródłowa</strong> aplikacja GIS.<br />
+Działa na systemach Windows, macOS i Linux.</p>
+<section id="dlaczego-qgis-na-tym-kursie">
+<h3>Dlaczego QGIS na tym kursie?<a class="headerlink" href="#dlaczego-qgis-na-tym-kursie" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Cecha</p></th>
+<th class="head"><p>Szczegóły</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Bezpłatny i otwarty</strong></p></td>
+<td><p>Brak opłat licencyjnych, rozwijany przez społeczność</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Python API (PyQGIS)</strong></p></td>
+<td><p>Pełne skryptowanie i tworzenie wtyczek w Pythonie</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Ekosystem wtyczek</strong></p></td>
+<td><p>Ponad 1000 wtyczek dostępnych przez Menedżer wtyczek</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Obsługa formatów</strong></p></td>
+<td><p>Odczyt/zapis ponad 200 formatów przestrzennych</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Narzędzia geoprzetwarzania</strong></p></td>
+<td><p>Ponad 1000 wbudowanych algorytmów</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Aktywna społeczność</strong></p></td>
+<td><p>Obszerna dokumentacja, fora, tutoriale</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wersja-qgis">
+<h3>Wersja QGIS<a class="headerlink" href="#wersja-qgis" title="Permalink to this heading">#</a></h3>
+<p>Na tym kursie używamy <strong>QGIS 3.4 (Long Term Release)</strong>. Zawsze wybieraj wersję LTR dla stabilności.</p>
+<p>Pobierz: <a class="reference external" href="https://qgis.org/download/">qgis.org/download</a></p>
+</section>
+<section id="qgis-a-inne-oprogramowanie-gis">
+<h3>QGIS a inne oprogramowanie GIS<a class="headerlink" href="#qgis-a-inne-oprogramowanie-gis" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Oprogramowanie</p></th>
+<th class="head"><p>Koszt</p></th>
+<th class="head"><p>Programowanie</p></th>
+<th class="head"><p>Najlepsze zastosowanie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>QGIS</strong></p></td>
+<td><p>Bezpłatny</p></td>
+<td><p>Python (PyQGIS)</p></td>
+<td><p>Ogólny GIS, edukacja, otwarte workflow</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ArcGIS Pro</strong></p></td>
+<td><p>Płatny</p></td>
+<td><p>Python (ArcPy)</p></td>
+<td><p>Korporacyjny GIS</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>GRASS GIS</strong></p></td>
+<td><p>Bezpłatny</p></td>
+<td><p>Python / CLI</p></td>
+<td><p>Zaawansowana analiza rastrowa</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>PostGIS</strong></p></td>
+<td><p>Bezpłatny</p></td>
+<td><p>SQL</p></td>
+<td><p>Bazy danych przestrzennych</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><a id='5'></a></p>
+</section>
+</section>
+<section id="python-w-qgis-trzy-sposoby-programowania">
+<h2>5. Python w QGIS — trzy sposoby programowania<a class="headerlink" href="#python-w-qgis-trzy-sposoby-programowania" title="Permalink to this heading">#</a></h2>
+<p>W tym kursie będziemy programować w <strong>Pythonie</strong> — języku, który stał się standardem
+w świecie GIS i analizy danych przestrzennych. QGIS oferuje pełną integrację z Pythonem
+poprzez swoje API o nazwie <strong>PyQGIS</strong>.</p>
+<p>Istnieją <strong>trzy główne sposoby</strong> korzystania z Pythona w kontekście QGIS:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sposób</p></th>
+<th class="head"><p>Gdzie działa</p></th>
+<th class="head"><p>Kiedy używać</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>1. Skrypt PyQGIS</strong></p></td>
+<td><p>Wewnątrz QGIS (Konsola Pythona lub edytor skryptów)</p></td>
+<td><p>Automatyzacja jednorazowych zadań, przetwarzanie wsadowe</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>2. Wtyczka QGIS</strong></p></td>
+<td><p>Wewnątrz QGIS (instalowana przez Menedżer wtyczek)</p></td>
+<td><p>Tworzenie narzędzi wielokrotnego użytku z własnym interfejsem graficznym</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>3. Biblioteka zewnętrzna</strong></p></td>
+<td><p>Poza QGIS (Jupyter, terminal, IDE)</p></td>
+<td><p>Analiza danych, wizualizacja, integracja z innymi narzędziami</p></td>
+</tr>
+</tbody>
+</table>
+<section id="skrypt-pyqgis">
+<h3>Skrypt PyQGIS<a class="headerlink" href="#skrypt-pyqgis" title="Permalink to this heading">#</a></h3>
+<p>Skrypty uruchamiane bezpośrednio w <strong>Konsoli Pythona QGIS</strong> (<code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">→</span> <span class="pre">Konsola</span> <span class="pre">Pythona</span></code>)
+lub w wbudowanym edytorze skryptów. Mają pełny dostęp do otwartego projektu QGIS —
+warstw, atrybutów, algorytmów przetwarzania. To najszybszy sposób na automatyzację pracy.</p>
+</section>
+<section id="wtyczka-qgis">
+<h3>Wtyczka QGIS<a class="headerlink" href="#wtyczka-qgis" title="Permalink to this heading">#</a></h3>
+<p>Wtyczka to gotowe narzędzie z własnym <strong>interfejsem graficznym (GUI)</strong>, które pojawia się
+w menu lub pasku narzędzi QGIS. Jej tworzenie wymaga więcej pracy, ale efektem jest
+narzędzie, które można udostępnić innym użytkownikom przez oficjalne repozytorium wtyczek.</p>
+</section>
+<section id="biblioteka-zewnetrzna-poza-qgis">
+<h3>Biblioteka zewnętrzna (poza QGIS)<a class="headerlink" href="#biblioteka-zewnetrzna-poza-qgis" title="Permalink to this heading">#</a></h3>
+<p>Python możemy uruchamiać <strong>całkowicie niezależnie od aplikacji QGIS</strong> — np. w Jupyterze
+(tak jak teraz!) lub w dowolnym IDE. Używamy wtedy bibliotek takich jak <code class="docutils literal notranslate"><span class="pre">geopandas</span></code>,
+<code class="docutils literal notranslate"><span class="pre">shapely</span></code>, <code class="docutils literal notranslate"><span class="pre">rasterio</span></code> czy <code class="docutils literal notranslate"><span class="pre">pyproj</span></code>. To podejście jest idealne do eksploracji danych,
+tworzenia raportów i integracji GIS z szerszym ekosystemem data science.</p>
+<blockquote>
+<div><p><strong>Na tym kursie</strong> poznamy wszystkie trzy podejścia. Zaczniemy od bibliotek zewnętrznych
+(Jupyter + geopandas), przejdziemy przez skrypty PyQGIS, a na końcu stworzymy prostą wtyczkę.</p>
+</div></blockquote>
+<hr class="docutils" />
+<p><a id='5'></a></p>
+</section>
+</section>
+<section id="interfejs-qgis-przewodnik">
+<h2>6. Interfejs QGIS — Przewodnik<a class="headerlink" href="#interfejs-qgis-przewodnik" title="Permalink to this heading">#</a></h2>
+<p>Po otwarciu QGIS zobaczysz kilka kluczowych obszarów. Poznajmy je:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌─────────────────────────────────────────────────────────────────────┐
+│  Pasek menu  (Projekt | Warstwa | Wektor | Raster | Przetwarzanie | │
+├─────────────────────────────────────────────────────────────────────┤
+│  Paski narzędzi  (Nawigacja | Atrybuty | Digitalizacja | …)         │
+├───────────────┬─────────────────────────────────┬───────────────────┤
+│               │                                 │                   │
+│  Panel        │                                 │  Przeglądarka /   │
+│  Warstw       │       OBSZAR MAPY               │  Skrzynka         │
+│               │                                 │  narzędzi         │
+│  (TOC)        │                                 │                   |
+│               │                                 │                   │
+├───────────────┴─────────────────────────────────┴───────────────────┤
+│  Pasek stanu  (Współrzędne | Skala | CRS | Obrót | …)               │
+└─────────────────────────────────────────────────────────────────────┘
+</pre></div>
+</div>
+<section id="opis-kluczowych-obszarow">
+<h3>Opis kluczowych obszarów<a class="headerlink" href="#opis-kluczowych-obszarow" title="Permalink to this heading">#</a></h3>
+<p><strong>Pasek menu</strong> — dostęp do wszystkich funkcji QGIS:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Projekt</span></code> → Nowy, Otwórz, Zapisz, Układ wydruku</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Warstwa</span></code> → Dodaj warstwy (wektorowe, rastrowe, WMS…)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wektor</span> <span class="pre">/</span> <span class="pre">Raster</span></code> → Narzędzia geoprzetwarzania</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Przetwarzanie</span></code> → Skrzynka narzędzi przetwarzania</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wtyczki</span></code> → Zarządzaj i instaluj wtyczki</p></li>
+</ul>
+<p><strong>Paski narzędzi</strong> — szybki dostęp do najczęściej używanych funkcji.<br />
+Kliknij prawym przyciskiem obszar paska narzędzi, aby włączyć/wyłączyć poszczególne paski.</p>
+<p><strong>Panel warstw (Spis treści)</strong> — lista wszystkich załadowanych warstw.</p>
+<ul class="simple">
+<li><p>Zaznacz/odznacz, aby pokazać/ukryć</p></li>
+<li><p>Przeciągaj, aby zmieniać kolejność</p></li>
+<li><p>Kliknij prawym przyciskiem, aby otworzyć właściwości, przybliżyć do warstwy itp.</p></li>
+</ul>
+<p><strong>Obszar mapy</strong> — główny widok wizualny.</p>
+<ul class="simple">
+<li><p>Scroll do przybliżania, środkowy przycisk myszy + przeciąganie do przesuwania</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+F</span></code> → Przybliż do pełnego zasięgu</p></li>
+</ul>
+<p><strong>Panel przeglądarki</strong> — nawigacja po systemie plików, bazach danych i usługach internetowych.<br />
+Przeciągnij pliki bezpośrednio na obszar mapy, aby je dodać.</p>
+<p><strong>Skrzynka narzędzi przetwarzania</strong> — wyszukiwanie i uruchamianie algorytmów geoprzetwarzania.<br />
+Otwórz przez <code class="docutils literal notranslate"><span class="pre">Processing</span> <span class="pre">-&gt;</span> <span class="pre">Panel</span> <span class="pre">Algorytmów</span></code> lub naciśnij <code class="docutils literal notranslate"><span class="pre">Ctrl+Alt+T</span></code>.</p>
+<p><strong>Pasek stanu</strong> — zawsze wyświetla: aktualny CRS, skalę mapy i współrzędne kursora.</p>
+<hr class="docutils" />
+<p><a id='7'></a></p>
+</section>
+</section>
+<section id="architektura-qgis-struktura-klasowa">
+<h2>7.  Architektura QGIS — struktura klasowa<a class="headerlink" href="#architektura-qgis-struktura-klasowa" title="Permalink to this heading">#</a></h2>
+<p>QGIS nie jest monolitem — to zbiór modułów napisanych w C++,
+w pełni dostępnych z poziomu Pythona przez <strong>PyQGIS</strong>.
+Zanim napiszemy pierwszy skrypt, warto zrozumieć, jak QGIS
+jest zorganizowany od środka.</p>
+<section id="glowne-moduly-pyqgis">
+<h3>7.1 Główne moduły PyQGIS<a class="headerlink" href="#glowne-moduly-pyqgis" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Moduł</p></th>
+<th class="head"><p>Zawiera</p></th>
+<th class="head"><p>Przykładowe klasy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.core</span></code></p></td>
+<td><p>Logika GIS — warstwy, geometrie, dane</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QgsProject</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsRasterLayer</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsGeometry</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.gui</span></code></p></td>
+<td><p>Interfejs graficzny — widgety, obszar mapy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QgsMapCanvas</span></code>, <code class="docutils literal notranslate"><span class="pre">QgisInterface</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsLayerTreeView</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.analysis</span></code></p></td>
+<td><p>Algorytmy analityczne</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QgsZonalStatistics</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsInterpolator</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.processing</span></code></p></td>
+<td><p>Dostęp do Processing Toolbox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">processing.run()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="najwazniejsze-klasy-mapa-mysli">
+<h3>7.2 Najważniejsze klasy — mapa myśli<a class="headerlink" href="#najwazniejsze-klasy-mapa-mysli" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>QgsProject  (singleton — jeden projekt QGIS)
+│
+├── QgsLayerTree  (drzewo warstw — Panel warstw)
+│   └── QgsMapLayer  (abstrakcyjna klasa bazowa)
+│       ├── QgsVectorLayer   (dane wektorowe)
+│       └── QgsRasterLayer   (dane rastrowe)
+│
+├── QgsVectorLayer
+│   ├── QgsFeature       (pojedynczy obiekt)
+│   │   ├── QgsGeometry  (kształt obiektu)
+│   │   └── QgsFields    (atrybuty obiektu)
+│   └── QgsVectorDataProvider  (połączenie z plikiem/bazą)
+│
+└── QgsCoordinateReferenceSystem  (układ współrzędnych)
+</pre></div>
+</div>
+</section>
+<section id="singleton-qgsproject">
+<h3>7.3 Singleton QgsProject<a class="headerlink" href="#singleton-qgsproject" title="Permalink to this heading">#</a></h3>
+<p>Cały otwarty projekt QGIS jest dostępny przez jeden obiekt — <strong>QgsProject.instance()</strong>.
+To punkt wejścia do wszystkich warstw, ustawień CRS i metadanych projektu.</p>
+<blockquote>
+<div><p><strong>Analogia:</strong> QgsProject to jak skoroszyt w Excelu —
+zawiera wszystkie arkusze (warstwy) i globalne ustawienia.</p>
+</div></blockquote>
+</section>
+<section id="od-warstwy-do-geometrii-hierarchia-obiektow">
+<h3>7.4 Od warstwy do geometrii — hierarchia obiektów<a class="headerlink" href="#od-warstwy-do-geometrii-hierarchia-obiektow" title="Permalink to this heading">#</a></h3>
+<p>Typowa ścieżka dostępu do danych w PyQGIS wygląda tak:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>QgsProject.instance()
+    → .mapLayers()          # słownik wszystkich warstw
+        → QgsVectorLayer
+            → .getFeatures()    # iterator po obiektach
+                → QgsFeature
+                    → .geometry()   # kształt
+                    → .attributes() # wartości atrybutów
+</pre></div>
+</div>
+<p>Tę hierarchię będziemy przemierzać na każdych ćwiczeniach.
+Warto ją zapamiętać już teraz.</p>
+<hr class="docutils" />
+<p><a id='7'></a></p>
+</section>
+</section>
+<section id="dokumentacja-pyqgis-jak-z-niej-korzystac">
+<h2>8. Dokumentacja PyQGIS — jak z niej korzystać<a class="headerlink" href="#dokumentacja-pyqgis-jak-z-niej-korzystac" title="Permalink to this heading">#</a></h2>
+<p>Dokumentacja jest Twoim najważniejszym narzędziem.
+W PyQGIS mamy do dyspozycji trzy główne źródła.</p>
+<section id="pyqgis-developer-cookbook">
+<h3>8.1 PyQGIS Developer Cookbook<a class="headerlink" href="#pyqgis-developer-cookbook" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook</a></p>
+<p>Oficjalny <strong>przewodnik praktyczny</strong> — pokazuje jak wykonywać typowe zadania
+(wczytywanie warstw, edycja atrybutów, tworzenie wtyczek).
+Używaj go gdy pytasz <strong>„jak to zrobić?”</strong>.</p>
+</section>
+<section id="api-reference-c-python">
+<h3>8.2 API Reference (C++ / Python)<a class="headerlink" href="#api-reference-c-python" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://api.qgis.org/api/">api.qgis.org/api/</a></p>
+<p>Pełna <strong>dokumentacja wszystkich klas i metod</strong> — generowana automatycznie z kodu źródłowego.
+Używaj jej gdy pytasz <strong>„jakie metody ma ta klasa?”</strong> lub <strong>„co zwraca ta funkcja?”</strong>.</p>
+<blockquote>
+<div><p><strong>Wskazówka:</strong> Szukaj klas po nazwach zaczynających się od <code class="docutils literal notranslate"><span class="pre">Qgs</span></code>
+(np. <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>) — to konwencja nazewnicza całego QGIS.</p>
+</div></blockquote>
+</section>
+<section id="konsola-pythona-w-qgis-help">
+<h3>8.3 Konsola Pythona w QGIS + <code class="docutils literal notranslate"><span class="pre">help()</span></code><a class="headerlink" href="#konsola-pythona-w-qgis-help" title="Permalink to this heading">#</a></h3>
+<p>Bezpośrednio w konsoli QGIS możesz sprawdzić dokumentację każdej klasy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># W konsoli Pythona QGIS:</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">help</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>           <span class="c1"># pełna dokumentacja klasy</span>
+<span class="nb">dir</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>            <span class="c1"># lista wszystkich metod i atrybutów</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>           <span class="c1"># sprawdź typ obiektu</span>
+</pre></div>
+</div>
+</section>
+<section id="jak-czytac-dokumentacje-api-przyklad">
+<h3>8.4 Jak czytać dokumentację API — przykład<a class="headerlink" href="#jak-czytac-dokumentacje-api-przyklad" title="Permalink to this heading">#</a></h3>
+<p>Szukamy jak pobrać nazwę warstwy. Wchodzimy na <a class="reference external" href="http://api.qgis.org">api.qgis.org</a>,
+znajdujemy klasę <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code> i widzimy metodę:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QString</span> <span class="n">QgsMapLayer</span><span class="p">::</span><span class="n">name</span><span class="p">()</span> <span class="n">const</span>
+</pre></div>
+</div>
+<p>Co to znaczy?</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">QString</span></code> → zwraca tekst (w Pythonie: <code class="docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsMapLayer::name</span></code> → metoda <code class="docutils literal notranslate"><span class="pre">name</span></code> klasy <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span></code> → nie modyfikuje obiektu (tylko odczyt)</p></li>
+</ul>
+<p>W Pythonie wywołamy to po prostu jako:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>  <span class="c1"># zwraca nazwę warstwy jako string</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Zapamiętaj:</strong> Dokumentacja jest pisana w C++,
+ale PyQGIS tłumaczy typy automatycznie:
+<code class="docutils literal notranslate"><span class="pre">QString</span></code> → <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">QList</span></code> → <code class="docutils literal notranslate"><span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">bool</span></code> → <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+</div></blockquote>
+<hr class="docutils" />
+<p><a id='9'></a></p>
+</section>
+</section>
+<section id="podsumowanie-i-kluczowe-pojecia">
+<h2>9. Podsumowanie i kluczowe pojęcia<a class="headerlink" href="#podsumowanie-i-kluczowe-pojecia" title="Permalink to this heading">#</a></h2>
+<p>Świetna robota! Oto co omówiliśmy na Wykładzie 1:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pojęcie</p></th>
+<th class="head"><p>Definicja</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>GIS</strong></p></td>
+<td><p>System pozyskiwania, przechowywania, wyszukiwania, analizy i wizualizacji danych przestrzennych</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Dane wektorowe</strong></p></td>
+<td><p>Dane przestrzenne reprezentowane jako punkty, linie lub wielokąty z atrybutami</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Dane rastrowe</strong></p></td>
+<td><p>Dane przestrzenne reprezentowane jako siatka komórek, z których każda ma wartość</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CRS</strong></p></td>
+<td><p>Układ odniesienia współrzędnych — określa sposób odwzorowania współrzędnych na powierzchnię Ziemi</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Kod EPSG</strong></p></td>
+<td><p>Numeryczny identyfikator konkretnego CRS</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Shapefile</strong></p></td>
+<td><p>Popularny (choć przestarzały) format wektorowy — składa się faktycznie z 3–7 plików</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>GeoPackage</strong></p></td>
+<td><p>Nowoczesny, jednolikowy format przechowywania danych wektorowych (i rastrowych)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>QGIS</strong></p></td>
+<td><p>Bezpłatna, otwartoźródłowa aplikacja GIS z API Pythona</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>PyQGIS</strong></p></td>
+<td><p>API Pythona dla QGIS — temat kolejnych wykładów</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GeoPandas</strong></p></td>
+<td><p>Biblioteka Pythona do pracy z wektorowymi danymi przestrzennymi</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>rasterio</strong></p></td>
+<td><p>Biblioteka Pythona do pracy z danymi rastrowymi</p></td>
+</tr>
+</tbody>
+</table>
+<section id="na-wykladzie-2">
+<h3>Na Wykładzie 2<a class="headerlink" href="#na-wykladzie-2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Wprowadzenie do <strong>PyQGIS</strong> — sterowanie QGIS z poziomu Pythona</p></li>
+<li><p>Programowe wczytywanie i inspekcja warstw</p></li>
+<li><p>Korzystanie z <strong>Konsoli Pythona QGIS</strong></p></li>
+<li><p>Pisanie pierwszego skryptu QGIS</p></li>
+</ul>
+<hr class="docutils" />
+<p><a id='10'></a></p>
+</section>
+</section>
+<section id="quiz">
+<h2>10. Quiz<a class="headerlink" href="#quiz" title="Permalink to this heading">#</a></h2>
+<section id="typy-danych">
+<h3>Typy danych<a class="headerlink" href="#typy-danych" title="Permalink to this heading">#</a></h3>
+<p>Uzupełnij luki wpisując <code class="docutils literal notranslate"><span class="pre">'vector'</span></code> lub <code class="docutils literal notranslate"><span class="pre">'raster'</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Sieć drogowa                    → ________
+Zobrazowanie satelitarne        → ________
+Granice administracyjne         → ________
+Numeryczny Model Terenu (NMT)   → ________
+Lokalizacje przystanków bus.    → ________
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='11'></a></p>
+</section>
+</section>
+<section id="literatura-i-zasoby">
+<h2>11. Literatura i zasoby<a class="headerlink" href="#literatura-i-zasoby" title="Permalink to this heading">#</a></h2>
+<section id="oficjalna-dokumentacja">
+<h3>Oficjalna dokumentacja<a class="headerlink" href="#oficjalna-dokumentacja" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.qgis.org/latest/en/docs/">Dokumentacja QGIS</a> — obszerna, oficjalna, bezpłatna</p></li>
+<li><p><a class="reference external" href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> — Twój podręcznik na wszystkie kolejne wykłady</p></li>
+<li><p><a class="reference external" href="https://geopandas.org/en/stable/docs.html">Dokumentacja GeoPandas</a></p></li>
+</ul>
+</section>
+<section id="ksiazki">
+<h3>Książki<a class="headerlink" href="#ksiazki" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><em>QGIS Map Design</em> — Anita Graser &amp; Gretchen Peterson</p></li>
+<li><p><em>Python Scripting for ArcGIS and QGIS</em> — Paul Zandbergen</p></li>
+<li><p><em>Geographic Data Science with Python</em> — Rey, Arribas-Bel, Wolf (dostępna bezpłatnie online)</p></li>
+</ul>
+</section>
+<section id="zasoby-online">
+<h3>Zasoby online<a class="headerlink" href="#zasoby-online" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.qgistutorials.com/">QGIS Tutorials</a> — tutoriale krok po kroku dla wszystkich poziomów</p></li>
+<li><p><a class="reference external" href="https://spatialthoughts.com/">Spatial Thoughts</a> — doskonałe bezpłatne kursy</p></li>
+<li><p><a class="reference external" href="https://gis.stackexchange.com/">GIS Stack Exchange</a> — społeczność Q&amp;A</p></li>
+</ul>
+<p><em>Notatnik stworzony na potrzeby kursu Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="right-next"
+       href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kurs-programowanie-w-gis">Kurs: Programowanie w GIS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zakres-materialu-na-kursie">Zakres materiału na kursie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#warunki-zaliczenia">Warunki zaliczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-gis-krotkie-przypomnienie">1. Czym jest GIS? — Krótkie przypomnienie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-warto-programowac-w-gis">Dlaczego warto <em>programować</em> w GIS?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modele-danych-przestrzennych-wektor-i-raster">2.  Modele danych przestrzennych — Wektor i Raster</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dane-wektorowe">2.1 Dane wektorowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dane-rastrowe">2.2 Dane rastrowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ktory-model-wybrac">2.3 Który model wybrać?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uklady-odniesienia-wspolrzednych-crs">3. Układy odniesienia współrzędnych (CRS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geograficzny-a-odwzorowany-crs">3.1 Geograficzny a odwzorowany CRS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kody-epsg">3.2 Kody EPSG</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-crs-ma-znaczenie">3.3 Dlaczego CRS ma znaczenie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wprowadzenie-do-qgis">4. Wprowadzenie do QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-qgis-na-tym-kursie">Dlaczego QGIS na tym kursie?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wersja-qgis">Wersja QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qgis-a-inne-oprogramowanie-gis">QGIS a inne oprogramowanie GIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-w-qgis-trzy-sposoby-programowania">5. Python w QGIS — trzy sposoby programowania</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-pyqgis">Skrypt PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wtyczka-qgis">Wtyczka QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteka-zewnetrzna-poza-qgis">Biblioteka zewnętrzna (poza QGIS)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interfejs-qgis-przewodnik">6. Interfejs QGIS — Przewodnik</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#opis-kluczowych-obszarow">Opis kluczowych obszarów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architektura-qgis-struktura-klasowa">7.  Architektura QGIS — struktura klasowa</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#glowne-moduly-pyqgis">7.1 Główne moduły PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#najwazniejsze-klasy-mapa-mysli">7.2 Najważniejsze klasy — mapa myśli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singleton-qgsproject">7.3 Singleton QgsProject</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#od-warstwy-do-geometrii-hierarchia-obiektow">7.4 Od warstwy do geometrii — hierarchia obiektów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dokumentacja-pyqgis-jak-z-niej-korzystac">8. Dokumentacja PyQGIS — jak z niej korzystać</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyqgis-developer-cookbook">8.1 PyQGIS Developer Cookbook</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference-c-python">8.2 API Reference (C++ / Python)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konsola-pythona-w-qgis-help">8.3 Konsola Pythona w QGIS + <code class="docutils literal notranslate"><span class="pre">help()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-czytac-dokumentacje-api-przyklad">8.4 Jak czytać dokumentację API — przykład</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-kluczowe-pojecia">9. Podsumowanie i kluczowe pojęcia</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-wykladzie-2">Na Wykładzie 2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quiz">10. Quiz</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-danych">Typy danych</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literatura-i-zasoby">11. Literatura i zasoby</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oficjalna-dokumentacja">Oficjalna dokumentacja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ksiazki">Książki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zasoby-online">Zasoby online</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak, Saeid Haji-Aghajany
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
