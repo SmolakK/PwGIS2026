@@ -397,7 +397,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbolizacja-i-styl-warstwy">7. Symbolizacja i styl warstwy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-pojedynczy-symbol">Zadanie 7.1 — Pojedynczy symbol</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-2-symbolizacja-kategoryzowana">Zadanie 7.2 — Symbolizacja kategoryzowana</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-3-symbolizacja-stopniowana-choropleta">Zadanie 7.3 — Symbolizacja stopniowana (choropleta)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-3-symbolizacja-stopniowana">Zadanie 7.3 — Symbolizacja stopniowana</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-4-etykiety">Zadanie 7.4 — Etykiety</a></li>
 </ul>
 </li>
@@ -406,6 +406,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crs-projektu-vs-crs-warstwy">8.2 CRS projektu vs CRS warstwy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-2-zmien-crs-projektu-i-obserwuj">Zadanie 8.2 — Zmień CRS projektu i obserwuj</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-3-reprojekcja-warstwy">Zadanie 8.3 — Reprojekcja warstwy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-4-policz-powierzchnie-w-projekcji">Zadanie 8.4 — Policz powierzchnię w projekcji</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-podsumowujace">9. Zadanie podsumowujące</a><ul class="nav section-nav flex-column">
@@ -540,7 +541,9 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  BRAK geopandas       NIE ZAINSTALOWANA
-  OK   matplotlib      3.8.2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  OK   matplotlib      3.8.2
   OK   numpy           1.25.2
   OK   shapely         2.0.7
 
@@ -599,7 +602,7 @@ Jesli widzisz BRAK — zainstaluj: pip install nazwa_biblioteki
 <p><strong>Sprawdź:</strong></p>
 <p><strong>Jakie wtyczki udało Ci się zainstalować?</strong></p>
 <p><strong>Jaki numer wersji wyświetliła Konsola Pythona?</strong></p>
-<p><strong>Czy QuickMapServices działa? (tak/nie)</strong></p>
+<p><strong>Czy OpenLayers działa? (tak/nie)</strong></p>
 <hr class="docutils" />
 <p><a id='s4'></a></p>
 </section>
@@ -794,8 +797,8 @@ Przeciągnij plik <code class="docutils literal notranslate"><span class="pre">.
 </ol>
 </section>
 <hr class="docutils" />
-<section id="zadanie-7-3-symbolizacja-stopniowana-choropleta">
-<h3>Zadanie 7.3 — Symbolizacja stopniowana (choropleta)<a class="headerlink" href="#zadanie-7-3-symbolizacja-stopniowana-choropleta" title="Permalink to this heading">#</a></h3>
+<section id="zadanie-7-3-symbolizacja-stopniowana">
+<h3>Zadanie 7.3 — Symbolizacja stopniowana<a class="headerlink" href="#zadanie-7-3-symbolizacja-stopniowana" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Styl → zmień na <code class="docutils literal notranslate"><span class="pre">Stopniowany</span></code></p></li>
 <li><p>Pole <strong>Wartość</strong>: kolumna numeryczna (np. <code class="docutils literal notranslate"><span class="pre">pop_est</span></code>)</p></li>
@@ -847,7 +850,7 @@ Przeciągnij plik <code class="docutils literal notranslate"><span class="pre">.
 </ul>
 </li>
 </ol>
-<p>Przy EPSG:3857 Grenlandia wygląda tak samo duża jak Afryka.</p>
+<p>Przy EPSG:3857 Grenlandia jest podobnej wielkości do Afryki</p>
 </section>
 <hr class="docutils" />
 <section id="zadanie-8-3-reprojekcja-warstwy">
@@ -858,6 +861,13 @@ Przeciągnij plik <code class="docutils literal notranslate"><span class="pre">.
 <li><p>CRS: <code class="docutils literal notranslate"><span class="pre">EPSG:2180</span> <span class="pre">—</span> <span class="pre">ETRS89</span> <span class="pre">/</span> <span class="pre">Poland</span> <span class="pre">CS92</span></code></p></li>
 <li><p>Nazwa: <code class="docutils literal notranslate"><span class="pre">warstwa_PL1992.gpkg</span></code> → OK</p></li>
 <li><p>Wczytaj plik i sprawdź jego CRS</p></li>
+</ol>
+</section>
+<section id="zadanie-8-4-policz-powierzchnie-w-projekcji">
+<h3>Zadanie 8.4 — Policz powierzchnię w projekcji<a class="headerlink" href="#zadanie-8-4-policz-powierzchnie-w-projekcji" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Znajdź sposób by policzyć powierzchnię Grenlandii i Afryki dla dwóch układów 3857 i 4326</p></li>
+<li><p>Sprawdź wyniki wizualnie i liczbowo, upewnij się, że są poprawne</p></li>
 </ol>
 <p><strong>Sprawdź:</strong></p>
 <p><strong>Jaki CRS miała Twoja warstwa wektorowa?</strong></p>
@@ -981,7 +991,7 @@ Przeciągnij plik <code class="docutils literal notranslate"><span class="pre">.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbolizacja-i-styl-warstwy">7. Symbolizacja i styl warstwy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-pojedynczy-symbol">Zadanie 7.1 — Pojedynczy symbol</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-2-symbolizacja-kategoryzowana">Zadanie 7.2 — Symbolizacja kategoryzowana</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-3-symbolizacja-stopniowana-choropleta">Zadanie 7.3 — Symbolizacja stopniowana (choropleta)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-3-symbolizacja-stopniowana">Zadanie 7.3 — Symbolizacja stopniowana</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-4-etykiety">Zadanie 7.4 — Etykiety</a></li>
 </ul>
 </li>
@@ -990,6 +1000,7 @@ Przeciągnij plik <code class="docutils literal notranslate"><span class="pre">.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#crs-projektu-vs-crs-warstwy">8.2 CRS projektu vs CRS warstwy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-2-zmien-crs-projektu-i-obserwuj">Zadanie 8.2 — Zmień CRS projektu i obserwuj</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-3-reprojekcja-warstwy">Zadanie 8.3 — Reprojekcja warstwy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-4-policz-powierzchnie-w-projekcji">Zadanie 8.4 — Policz powierzchnię w projekcji</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-podsumowujace">9. Zadanie podsumowujące</a><ul class="nav section-nav flex-column">
