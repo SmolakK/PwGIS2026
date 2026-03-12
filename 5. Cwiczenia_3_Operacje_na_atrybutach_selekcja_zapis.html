@@ -1,0 +1,1067 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C3: Operacje na atrybutach, selekcja i zapis danych &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '5. Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F5. Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/5. Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>C3: Operacje na atrybutach, selekcja i zapis danych</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">1. Selekcja programowa</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-samodzielne">Zadanie 1.3 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tryb-edycji-i-zmiana-atrybutow">2. Tryb edycji i zmiana atrybutow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1">Zadanie 2.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2">Zadanie 2.2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-nowych-obiektow">3. Dodawanie nowych obiektow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1">Zadanie 3.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-samodzielne">Zadanie 3.2 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usuwanie-obiektow">4. Usuwanie obiektow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1">Zadanie 4.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-samodzielne">Zadanie 4.2 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-do-pliku">5. Zapis do pliku</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1">Zadanie 5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-samodzielne">Zadanie 5.2 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">6. Zadanie laczace</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-skrypt-przetwarzania-wsadowego">Zadanie 6.1 — Skrypt przetwarzania wsadowego</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c3">Podsumowanie C3</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c4">Na C4</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="c3-operacje-na-atrybutach-selekcja-i-zapis-danych">
+<h1>C3: Operacje na atrybutach, selekcja i zapis danych<a class="headerlink" href="#c3-operacje-na-atrybutach-selekcja-i-zapis-danych" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-cwiczenia">
+<h2>Programowanie w GIS — Ćwiczenia<a class="headerlink" href="#programowanie-w-gis-cwiczenia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Ćwiczenie:</strong> C3<br />
+<strong>Powiązany wykład:</strong> W2<br />
+<strong>Czas:</strong> ~90 minut</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="cele-cwiczenia">
+<h2>Cele ćwiczenia<a class="headerlink" href="#cele-cwiczenia" title="Permalink to this heading">#</a></h2>
+<p>Po ukonczeniu tego cwiczenia bedziesz potrafil/a:</p>
+<ul class="simple">
+<li><p>programowo zaznaczac obiekty warstwy przez wyrazenie i przez zasieg przestrzenny,</p></li>
+<li><p>modyfikowac wartosci atrybutow w trybie edycji,</p></li>
+<li><p>dodawac nowe obiekty do warstwy,</p></li>
+<li><p>usuwac obiekty spelniajace podany warunek,</p></li>
+<li><p>zapisywac warstwe do nowego pliku GeoPackage.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="konwencje">
+<h2>Konwencje<a class="headerlink" href="#konwencje" title="Permalink to this heading">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Oznaczenie</p></th>
+<th class="head"><p>Znaczenie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Zadanie</strong></p></td>
+<td><p>Polecenie do samodzielnego wykonania</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Wskazowka</strong></p></td>
+<td><p>Pomocna podpowiedz</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Pytanie</strong></p></td>
+<td><p>Odpowiedz wpisz w komurce ponizej</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[QGIS]</span></code></p></td>
+<td><p>Kod do uruchomienia w Konsoli Pythona QGIS</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</section>
+<section id="przygotowanie">
+<h2>Przygotowanie<a class="headerlink" href="#przygotowanie" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Uruchom QGIS z projektem z poprzedniego cwiczenia.</p></li>
+<li><p>Upewnij sie ze masz zaladowana warstwe wektorowa z polem tekstowym i numerycznym.</p></li>
+<li><p><strong>Zrob kopie warstwy</strong> zanim zaczniesz modyfikacje:
+prawym przyciskiem na warstwe -&gt; <code class="docutils literal notranslate"><span class="pre">Eksportuj</span> <span class="pre">-&gt;</span> <span class="pre">Zapisz</span> <span class="pre">obiekty</span> <span class="pre">jako...</span></code>
+-&gt; format GeoPackage -&gt; nazwa <code class="docutils literal notranslate"><span class="pre">cwiczenie_c3.gpkg</span></code>.
+Dalej pracuj na tej kopii, nie na oryginale.</p></li>
+<li><p>Otworz Konsole Pythona i edytor skryptow.</p></li>
+</ol>
+</section>
+<section id="spis-tresci">
+<h2>Spis tresci<a class="headerlink" href="#spis-tresci" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><span class="xref myst">Selekcja programowa</span></p></li>
+<li><p><span class="xref myst">Tryb edycji i zmiana atrybutow</span></p></li>
+<li><p><span class="xref myst">Dodawanie nowych obiektow</span></p></li>
+<li><p><span class="xref myst">Usuwanie obiektow</span></p></li>
+<li><p><span class="xref myst">Zapis do pliku</span></p></li>
+<li><p><span class="xref myst">Zadanie laczace</span></p></li>
+</ol>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="selekcja-programowa">
+<h2>1. Selekcja programowa<a class="headerlink" href="#selekcja-programowa" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-1-1">
+<h3>Zadanie 1.1<a class="headerlink" href="#zadanie-1-1" title="Permalink to this heading">#</a></h3>
+<p>Zaladuj kopie warstwy (<code class="docutils literal notranslate"><span class="pre">cwiczenie_c3.gpkg</span></code>) do projektu jesli jeszcze tego
+nie zrobiles/zrobilias. Nastepnie uruchom ponizszy kod:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;cwiczenie_c3&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Zaznacz obiekty przez wyrazenie</span>
+<span class="c1"># Zmien pole i wartosc na odpowiednie dla Twojej warstwy</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">selectByExpression</span><span class="p">(</span><span class="s1">&#39;&quot;continent&quot; = </span><span class="se">\&#39;</span><span class="s1">Europe</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zaznaczono: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">selectedFeatureCount</span><span class="p">()</span><span class="si">}</span><span class="s1"> obiektow&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wszystkich: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sprawdz czy zaznaczenie jest widoczne na mapie (zolte podswietlenie).</p>
+<p><strong>Pytanie 1.1</strong> — Podaj wyrazenie ktore zaznaczy obiekty
+spelniajace jednoczesnie dwa warunki: nalezace do Europy
+ORAZ majace populacje powyzej 10 milionow.
+Jak laczymy wiele warunkow w wyrazeniu QGIS?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz i wyrazenie:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-1-2">
+<h3>Zadanie 1.2<a class="headerlink" href="#zadanie-1-2" title="Permalink to this heading">#</a></h3>
+<p>Sprawdz roznice miedzy metodami selekcji:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;cwiczenie_c3&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Metoda 1: selectByExpression</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">selectByExpression</span><span class="p">(</span><span class="s1">&#39;&quot;continent&quot; = </span><span class="se">\&#39;</span><span class="s1">Europe</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;selectByExpression: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">selectedFeatureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Metoda 2: select przez liste id</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">removeSelection</span><span class="p">()</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">ob</span><span class="o">.</span><span class="n">id</span><span class="p">()</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span> <span class="k">if</span> <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;select(ids)        : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">selectedFeatureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Iteracja po zaznaczonych</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pierwsze 3 zaznaczone:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ob</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">selectedFeatures</span><span class="p">()):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">break</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">ob</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">removeSelection</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 1.2</strong> — Obie metody daja ten sam wynik, ale dzialaja inaczej.
+Ktora jest bardziej wydajna dla duzych warstw i dlaczego?
+W jakich sytuacjach wolalbys/wolalabys uzyc metody z lista <code class="docutils literal notranslate"><span class="pre">ids</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-1-3-samodzielne">
+<h3>Zadanie 1.3 — Samodzielne<a class="headerlink" href="#zadanie-1-3-samodzielne" title="Permalink to this heading">#</a></h3>
+<p>Napisz kod ktory zaznacza obiekty w <strong>zasięgu przestrzennym</strong> ograniczonym
+do Europy Srodkowej (przyblizony bbox: lon 10–25, lat 46–55).</p>
+<p>Wskazowka: uzyj <code class="docutils literal notranslate"><span class="pre">layer.selectByRect(QgsRectangle(...))</span></code>.
+Zaimportuj <code class="docutils literal notranslate"><span class="pre">QgsRectangle</span></code> z <code class="docutils literal notranslate"><span class="pre">qgis.core</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="tryb-edycji-i-zmiana-atrybutow">
+<h2>2. Tryb edycji i zmiana atrybutow<a class="headerlink" href="#tryb-edycji-i-zmiana-atrybutow" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-2-1">
+<h3>Zadanie 2.1<a class="headerlink" href="#zadanie-2-1" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod i zaobserwuj co sie dzieje gdy probujemy zmienic
+atrybut bez wlaczania trybu edycji:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;cwiczenie_c3&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Proba zmiany BEZ trybu edycji</span>
+<span class="n">pierwszy</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">())</span>
+<span class="n">fid</span> <span class="o">=</span> <span class="n">pierwszy</span><span class="o">.</span><span class="n">id</span><span class="p">()</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>  <span class="c1"># zmien na pole ktore masz</span>
+
+<span class="n">wynik</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">changeAttributeValue</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;TEST_BEZ_EDYCJI&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wynik bez trybu edycji: </span><span class="si">{</span><span class="n">wynik</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Teraz z trybem edycji</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+<span class="n">wynik2</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">changeAttributeValue</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;TEST_Z_EDYCJA&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wynik z trybem edycji: </span><span class="si">{</span><span class="n">wynik2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Sprawdz czy zmiana jest widoczna</span>
+<span class="n">zmieniony</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeature</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wartosc po zmianie: </span><span class="si">{</span><span class="n">zmieniony</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Na razie odrzuc zmiany</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">rollBack</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zmiany odrzucone.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 2.1</strong> — Jaka wartosc zwraca <code class="docutils literal notranslate"><span class="pre">changeAttributeValue()</span></code>
+gdy tryb edycji jest wylaczony? Co oznacza ta wartosc?
+Dlaczego QGIS wymaga jawnego wlaczenia trybu edycji
+zamiast robic to automatycznie?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-2-2">
+<h3>Zadanie 2.2<a class="headerlink" href="#zadanie-2-2" title="Permalink to this heading">#</a></h3>
+<p>Napisz skrypt ktory dla <strong>wszystkich obiektow</strong> warstwy
+dodaje nowe pole <code class="docutils literal notranslate"><span class="pre">'name_upper'</span></code> zawierajace wartosc pola <code class="docutils literal notranslate"><span class="pre">'name'</span></code>
+zamieniona na wielkie litery.</p>
+<p>Wskazowka: nowe pole mozna dodac przez:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsField</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QVariant</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="n">QgsField</span><span class="p">(</span><span class="s1">&#39;name_upper&#39;</span><span class="p">,</span> <span class="n">QVariant</span><span class="o">.</span><span class="n">String</span><span class="p">))</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Dopiero po dodaniu pola mozesz zapisywac do niego wartosci
+(w osobnym bloku <code class="docutils literal notranslate"><span class="pre">startEditing</span> <span class="pre">/</span> <span class="pre">commitChanges</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kompletny skrypt:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 2.2</strong> — Dlaczego dodanie pola i wypelnienie go wartosciami
+wymagaja <strong>dwoch osobnych</strong> blokow <code class="docutils literal notranslate"><span class="pre">startEditing</span> <span class="pre">/</span> <span class="pre">commitChanges</span></code>
+a nie jednego? Sprawdz co sie stanie gdy sprobujemy to zrobic w jednym bloku.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="dodawanie-nowych-obiektow">
+<h2>3. Dodawanie nowych obiektow<a class="headerlink" href="#dodawanie-nowych-obiektow" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-3-1">
+<h3>Zadanie 3.1<a class="headerlink" href="#zadanie-3-1" title="Permalink to this heading">#</a></h3>
+<p>Zapoznaj sie z kodem dodajacym nowy obiekt punktowy,
+a nastepnie uruchom go na swojej warstwie <strong>punktowej</strong>
+(jesli nie masz warstwy punktowej, dodaj ja przez
+<code class="docutils literal notranslate"><span class="pre">Warstwa</span> <span class="pre">-&gt;</span> <span class="pre">Nowa</span> <span class="pre">-&gt;</span> <span class="pre">Nowa</span> <span class="pre">warstwa</span> <span class="pre">wektorowa</span></code> z geometria punktowa):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;moja_warstwa_punktowa&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+
+<span class="n">nowy</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
+<span class="n">nowy</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">21.01</span><span class="p">,</span> <span class="mf">52.23</span><span class="p">)))</span>
+
+<span class="c1"># Ustaw atrybuty — dostosuj do pol w Twojej warstwie</span>
+<span class="n">nowy</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Punkt testowy&#39;</span>
+
+<span class="n">czy_dodano</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">addFeature</span><span class="p">(</span><span class="n">nowy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Dodano obiekt: </span><span class="si">{</span><span class="n">czy_dodano</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+
+<span class="c1"># Odswicz mape</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">triggerRepaint</span><span class="p">()</span>
+<span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba obiektow po dodaniu: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 3.1</strong> — Co sie stanie jesli przy tworzeniu obiektu
+przez <code class="docutils literal notranslate"><span class="pre">QgsFeature(layer.fields())</span></code> nie ustawimy geometrii (<code class="docutils literal notranslate"><span class="pre">setGeometry()</span></code>)?
+Czy taki obiekt zostanie dodany do warstwy?
+Sprawdz to w konsoli i opisz wynik.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz i wynik testu:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-3-2-samodzielne">
+<h3>Zadanie 3.2 — Samodzielne<a class="headerlink" href="#zadanie-3-2-samodzielne" title="Permalink to this heading">#</a></h3>
+<p>Napisz skrypt ktory dodaje do warstwy punktowej
+<strong>trzy nowe punkty</strong> rozmieszczone w roznych miejscach Polski
+(mozesz wybrac Warszawa, Krakow, Wroclaw lub inne miasta).</p>
+<p>Wymagania:</p>
+<ul class="simple">
+<li><p>dodaj wszystkie trzy obiekty w <strong>jednym</strong> bloku <code class="docutils literal notranslate"><span class="pre">startEditing</span> <span class="pre">/</span> <span class="pre">commitChanges</span></code>,</p></li>
+<li><p>ustaw dla kazdego punktu wartosc pola z nazwa (jesli takie pole istnieje),</p></li>
+<li><p>po zatwierdzeniu wyswietl nowa liczbe obiektow w warstwie.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj skrypt:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="usuwanie-obiektow">
+<h2>4. Usuwanie obiektow<a class="headerlink" href="#usuwanie-obiektow" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-4-1">
+<h3>Zadanie 4.1<a class="headerlink" href="#zadanie-4-1" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod ktory usuwa obiekty spelniajace warunek.
+Dostosuj nazwe warstwy, pole i wartosc do swoich danych:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;cwiczenie_c3&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Zbierz id obiektow do usuniecia</span>
+<span class="n">do_usuniecia</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ob</span><span class="o">.</span><span class="n">id</span><span class="p">()</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Antarctica&#39;</span>  <span class="c1"># zmien warunek</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Obiektow do usuniecia: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">do_usuniecia</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba przed usuniecie: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">deleteFeatures</span><span class="p">(</span><span class="n">do_usuniecia</span><span class="p">)</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba po usunieciu   : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 4.1</strong> — Zauwaz ze najpierw zbieramy liste <code class="docutils literal notranslate"><span class="pre">id</span></code> do usuniecia,
+a dopiero potem uruchamiamy <code class="docutils literal notranslate"><span class="pre">startEditing()</span></code> i <code class="docutils literal notranslate"><span class="pre">deleteFeatures()</span></code>.
+Co by sie stalo gdybysmy probowali zbierac <code class="docutils literal notranslate"><span class="pre">id</span></code> i jednoczesnie
+usuwac obiekty wewnatrz jednej petli po <code class="docutils literal notranslate"><span class="pre">layer.getFeatures()</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-4-2-samodzielne">
+<h3>Zadanie 4.2 — Samodzielne<a class="headerlink" href="#zadanie-4-2-samodzielne" title="Permalink to this heading">#</a></h3>
+<p>Napisz skrypt ktory:</p>
+<ol class="arabic simple">
+<li><p>Pyta uzytkownika (przez <code class="docutils literal notranslate"><span class="pre">input()</span></code>) o nazwe pola i prog numeryczny.</p></li>
+<li><p>Wyswietla ile obiektow zostanie usunietych.</p></li>
+<li><p>Pyta o potwierdzenie (<code class="docutils literal notranslate"><span class="pre">'tak'</span></code> / <code class="docutils literal notranslate"><span class="pre">'nie'</span></code>).</p></li>
+<li><p>Jesli uzytkownik potwierdzi — usuwa obiekty i zatwierdza zmiany.</p></li>
+<li><p>Jesli nie — wyswietla komunikat i konczy bez zmian.</p></li>
+</ol>
+<p>Wskazowka: <code class="docutils literal notranslate"><span class="pre">input()</span></code> dziala rowniez w Konsoli Pythona QGIS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj skrypt:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="zapis-do-pliku">
+<h2>5. Zapis do pliku<a class="headerlink" href="#zapis-do-pliku" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-5-1">
+<h3>Zadanie 5.1<a class="headerlink" href="#zadanie-5-1" title="Permalink to this heading">#</a></h3>
+<p>Zapisz aktywna warstwe do nowego pliku GeoPackage
+uzywajac <code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorFileWriter</span><span class="p">,</span> <span class="n">QgsProject</span><span class="p">,</span> <span class="n">QgsCoordinateTransformContext</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">sciezka</span> <span class="o">=</span> <span class="s1">&#39;C:/GIS_kurs/wynik_c3.gpkg&#39;</span>  <span class="c1"># zmien sciezke</span>
+
+<span class="n">opcje</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">SaveVectorOptions</span><span class="p">()</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">driverName</span> <span class="o">=</span> <span class="s1">&#39;GPKG&#39;</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">fileEncoding</span> <span class="o">=</span> <span class="s1">&#39;UTF-8&#39;</span>
+
+<span class="n">blad</span><span class="p">,</span> <span class="n">komunikat</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">writeAsVectorFormatV3</span><span class="p">(</span>
+    <span class="n">layer</span><span class="p">,</span>
+    <span class="n">sciezka</span><span class="p">,</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">transformContext</span><span class="p">(),</span>
+    <span class="n">opcje</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">blad</span> <span class="o">==</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">NoError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zapisano pomyslnie: </span><span class="si">{</span><span class="n">sciezka</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Blad zapisu: </span><span class="si">{</span><span class="n">komunikat</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 5.1</strong> — Czym rozni sie zapis przez <code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code>
+od zapisu przez prawy przycisk myszy na warstwie
+(<code class="docutils literal notranslate"><span class="pre">Eksportuj</span> <span class="pre">-&gt;</span> <span class="pre">Zapisz</span> <span class="pre">obiekty</span> <span class="pre">jako...</span></code>)?
+Kiedy i dlaczego warto uzywac metody programowej?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-5-2-samodzielne">
+<h3>Zadanie 5.2 — Samodzielne<a class="headerlink" href="#zadanie-5-2-samodzielne" title="Permalink to this heading">#</a></h3>
+<p>Rozszerz skrypt z zadania 5.1 tak, zeby:</p>
+<ol class="arabic simple">
+<li><p>Przed zapisem reprojekcjonowal warstwe do ukladu <strong>EPSG:2180</strong> (Polska CS92).</p></li>
+<li><p>Zapisywal tylko <strong>zaznaczone obiekty</strong> (jesli jakies sa zaznaczone),
+a jesli nie ma zaznaczenia — zapisywal wszystkie.</p></li>
+</ol>
+<p>Wskazowka dla reprojekcji — ustaw w opcjach:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsCoordinateReferenceSystem</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">ct</span> <span class="o">=</span> <span class="n">QgsCoordinateTransform</span><span class="p">(</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+    <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">),</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Wskazowka dla tylko zaznaczonych:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">opcje</span><span class="o">.</span><span class="n">onlySelectedFeatures</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># jesli sa zaznaczone</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj skrypt:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="zadanie-laczace">
+<h2>6. Zadanie laczace<a class="headerlink" href="#zadanie-laczace" title="Permalink to this heading">#</a></h2>
+<p>Ponizsze zadanie wymaga polaczenia wszystkich umiejetnosci z C2 i C3.
+Napisz je w edytorze skryptow QGIS.</p>
+<section id="zadanie-6-1-skrypt-przetwarzania-wsadowego">
+<h3>Zadanie 6.1 — Skrypt przetwarzania wsadowego<a class="headerlink" href="#zadanie-6-1-skrypt-przetwarzania-wsadowego" title="Permalink to this heading">#</a></h3>
+<p>Napisz skrypt ktory wykonuje nastepujacy potok operacji
+na warstwie <code class="docutils literal notranslate"><span class="pre">cwiczenie_c3</span></code>:</p>
+<p><strong>Krok 1 — Raport wejsciowy:</strong>
+Wyswietl nazwe warstwy, liczbe obiektow i liste pol.</p>
+<p><strong>Krok 2 — Dodanie pola:</strong>
+Dodaj pole tekstowe <code class="docutils literal notranslate"><span class="pre">'opis'</span></code> do warstwy.</p>
+<p><strong>Krok 3 — Wypelnienie pola:</strong>
+Dla kazdego obiektu wpisz do pola <code class="docutils literal notranslate"><span class="pre">'opis'</span></code> tekst zlozony
+z nazwy obiektu i jego powierzchni zaokraglonej do 2 miejsc po przecinku,
+np.: <code class="docutils literal notranslate"><span class="pre">'Polska</span> <span class="pre">(312685.00</span> <span class="pre">km2)'</span></code>.
+Jesli warstwa nie jest poligonowa — wpisz dowolna kombinacje innych pol.</p>
+<p><strong>Krok 4 — Selekcja:</strong>
+Zaznacz programowo 5 obiektow o najwiekszej wartosci
+wybranego pola numerycznego.</p>
+<p><strong>Krok 5 — Eksport:</strong>
+Zapisz tylko zaznaczone obiekty do pliku <code class="docutils literal notranslate"><span class="pre">wynik_top5.gpkg</span></code>.</p>
+<p><strong>Krok 6 — Raport wyjsciowy:</strong>
+Wyswietl ile obiektow zapisano i sciezke pliku.</p>
+<p>Wymagania:</p>
+<ul class="simple">
+<li><p>caly potok ma byc jednym skryptem,</p></li>
+<li><p>kazdemu krokowi odpowiada osobna funkcja,</p></li>
+<li><p>skrypt nie moze sie wylozyc jesli warstwa ma mniej niz 5 obiektow
+(obsluż ten przypadek).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj skrypt (wklej tutaj po napisaniu w QGIS):</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 6.1</strong> — W kroku 4 musisz wybrac 5 obiektow o najwyzszej wartosci.
+Opisz dwa rozne sposoby jak mozna to zrobic w PyQGIS.
+Ktory z nich jest bardziej wydajny dla warstwy z 1 milionem obiektow?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="podsumowanie-c3">
+<h2>Podsumowanie C3<a class="headerlink" href="#podsumowanie-c3" title="Permalink to this heading">#</a></h2>
+<p>W tym cwiczeniu pracowales/pracowałas z:</p>
+<ul class="simple">
+<li><p>selekcja przez wyrazenie (<code class="docutils literal notranslate"><span class="pre">selectByExpression</span></code>) i zasieg (<code class="docutils literal notranslate"><span class="pre">selectByRect</span></code>),</p></li>
+<li><p>trybem edycji: <code class="docutils literal notranslate"><span class="pre">startEditing</span></code>, <code class="docutils literal notranslate"><span class="pre">commitChanges</span></code>, <code class="docutils literal notranslate"><span class="pre">rollBack</span></code>,</p></li>
+<li><p>zmiana atrybutow: <code class="docutils literal notranslate"><span class="pre">changeAttributeValue</span></code>, <code class="docutils literal notranslate"><span class="pre">addAttribute</span></code>,</p></li>
+<li><p>dodawaniem obiektow: <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsGeometry</span></code>, <code class="docutils literal notranslate"><span class="pre">addFeature</span></code>,</p></li>
+<li><p>usuwaniem obiektow: <code class="docutils literal notranslate"><span class="pre">deleteFeatures</span></code>,</p></li>
+<li><p>zapisem do pliku: <code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code>.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="na-c4">
+<h3>Na C4<a class="headerlink" href="#na-c4" title="Permalink to this heading">#</a></h3>
+<p>Nastepne cwiczenie poswiecone jest bibliotece GeoPandas:
+wczytywanie, filtrowanie i analiza danych wektorowych poza QGIS,
+w srodowisku Jupyter.</p>
+<hr class="docutils" />
+<p><em>Cwiczenie C3 — Programowanie w GIS (QGIS) — studia licencjackie.</em></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">1. Selekcja programowa</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-samodzielne">Zadanie 1.3 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tryb-edycji-i-zmiana-atrybutow">2. Tryb edycji i zmiana atrybutow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1">Zadanie 2.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2">Zadanie 2.2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-nowych-obiektow">3. Dodawanie nowych obiektow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1">Zadanie 3.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-samodzielne">Zadanie 3.2 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usuwanie-obiektow">4. Usuwanie obiektow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1">Zadanie 4.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-samodzielne">Zadanie 4.2 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-do-pliku">5. Zapis do pliku</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1">Zadanie 5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-samodzielne">Zadanie 5.2 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">6. Zadanie laczace</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-skrypt-przetwarzania-wsadowego">Zadanie 6.1 — Skrypt przetwarzania wsadowego</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c3">Podsumowanie C3</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c4">Na C4</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
