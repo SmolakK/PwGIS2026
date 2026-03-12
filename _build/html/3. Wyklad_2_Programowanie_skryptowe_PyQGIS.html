@@ -1,0 +1,1748 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Wyklad 2: Programowanie skryptowe w PyQGIS &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3. Wyklad_2_Programowanie_skryptowe_PyQGIS';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="C2: Konsola Pythona i pierwsza inspekcja projektu QGIS" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html" />
+    <link rel="prev" title="Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F3. Wyklad_2_Programowanie_skryptowe_PyQGIS.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/3. Wyklad_2_Programowanie_skryptowe_PyQGIS.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Wyklad 2: Programowanie skryptowe w PyQGIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentów I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-korzystac-z-tego-notatnika">Jak korzystac z tego notatnika</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-sposoby-programowania-w-qgis">1. Trzy sposoby programowania w QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-pyqgis">1.1 Skrypt PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wtyczka-qgis">1.2 Wtyczka QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteki-zewnetrzne-poza-qgis">1.3 Biblioteki zewnetrzne (poza QGIS)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsola-pythona-w-qgis">2. Konsola Pythona w QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uruchomienie">2.1 Uruchomienie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edytor-skryptow">2.2 Edytor skryptow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obiekty-globalne-w-konsoli-qgis">2.3 Obiekty globalne w konsoli QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architektura-pyqgis-moduly-i-klasy">3. Architektura PyQGIS — moduly i klasy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#glowne-moduly">3.1 Glowne moduly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencja-nazewnicza">3.2 Konwencja nazewnicza</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchia-obiektow">3.3 Hierarchia obiektow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-danych-python-vs-c">3.4 Typy danych — Python vs C++</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obiekt-qgsproject-punkt-wejscia-do-projektu">4. Obiekt QgsProject — punkt wejscia do projektu</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singleton">4.1 Singleton</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacje-o-projekcie">4.2 Informacje o projekcie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pobieranie-warstw">4.3 Pobieranie warstw</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-warstw">4.4 Typy warstw</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#praca-z-warstwami-wektorowymi">5. Praca z warstwami wektorowymi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasa-qgsvectorlayer">5.1 Klasa QgsVectorLayer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-geometrii">5.2 Typy geometrii</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pola-atrybutow">5.3 Pola atrybutow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#praca-z-obiektami-i-atrybutami">6. Praca z obiektami i atrybutami</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterator-getfeatures">6.1 Iterator getFeatures()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-przez-qgsfeaturerequest">6.2 Filtrowanie przez QgsFeatureRequest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dostep-do-geometrii">6.3 Dostep do geometrii</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">6.4 Selekcja programowa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-i-modyfikacja-danych">7. Zapis i modyfikacja danych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tryb-edycji">7.1 Tryb edycji</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zmiana-wartosci-atrybutu">7.2 Zmiana wartosci atrybutu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-nowego-obiektu">7.3 Dodawanie nowego obiektu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#usuwanie-obiektow">7.4 Usuwanie obiektow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odswiezanie-widoku">7.5 Odswiezanie widoku</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edytor-skryptow-pierwsze-kompletne-skrypty">8. Edytor skryptow — pierwsze kompletne skrypty</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktura-dobrego-skryptu-pyqgis">8.1 Struktura dobrego skryptu PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-1-raport-o-warstwach-projektu">8.2 Skrypt 1: Raport o warstwach projektu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-2-eksport-atrybutow-do-pliku-csv">8.3 Skrypt 2: Eksport atrybutow do pliku CSV</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-slownik-pojec">9. Podsumowanie i slownik pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-omowilismy-na-wykladzie-2">9.1 Co omowilismy na wykladzie 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-kluczowych-pojec">9.2 Slownik kluczowych pojec</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-wykladzie-3">9.3 Na Wykladzie 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literatura-i-zasoby">Literatura i zasoby</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="wyklad-2-programowanie-skryptowe-w-pyqgis">
+<h1>Wyklad 2: Programowanie skryptowe w PyQGIS<a class="headerlink" href="#wyklad-2-programowanie-skryptowe-w-pyqgis" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-kurs-dla-studentow-i-stopnia">
+<h2>Programowanie w GIS — Kurs dla studentów I stopnia<a class="headerlink" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Wyklad:</strong> 2 z 7<br />
+<strong>Tematy:</strong> Python w QGIS | Konsola Pythona | Architektura PyQGIS | Pierwsze skrypty<br />
+<strong>Wymagania wstepne:</strong> Wyklad 1, podstawowa znajomosc skladni Pythona</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="jak-korzystac-z-tego-notatnika">
+<h2>Jak korzystac z tego notatnika<a class="headerlink" href="#jak-korzystac-z-tego-notatnika" title="Permalink to this heading">#</a></h2>
+<p>Komorki <strong>Markdown</strong> (takie jak ta) zawieraja teorię i wyjasnienia.<br />
+Komorki <strong>Code</strong> zawieraja przyklady do uruchomienia w Konsoli Pythona QGIS<br />
+lub w edytorze skryptow — <strong>nie uruchamiaj ich bezposrednio w Jupyter</strong>.</p>
+<p>Komorki oznaczone jako <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[JUPYTER]</span></code> mozna uruchomic tutaj —<br />
+sprawdzaja srodowisko lub demonstruja skladnie Pythona niezalezna od QGIS.</p>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="trzy-sposoby-programowania-w-qgis">
+<h2>1. Trzy sposoby programowania w QGIS<a class="headerlink" href="#trzy-sposoby-programowania-w-qgis" title="Permalink to this heading">#</a></h2>
+<p>Python jest oficjalnym jezykiem skryptowym QGIS. Dostepny jest przez API o nazwie <strong>PyQGIS</strong>,
+ktore daje pelny dostep do wszystkich funkcji programu: warstw, geometrii, atrybutow,
+algorytmow przetwarzania i interfejsu uzytkownika.</p>
+<p>Istnieja trzy glowne konteksty, w ktorych piszemy kod Pythona w ekosystemie QGIS:</p>
+<section id="skrypt-pyqgis">
+<h3>1.1 Skrypt PyQGIS<a class="headerlink" href="#skrypt-pyqgis" title="Permalink to this heading">#</a></h3>
+<p>Kod uruchamiany wewnatrz dzialajacego QGIS — przez Konsole Pythona lub wbudowany edytor
+skryptow. Skrypt ma bezposredni dostep do otwartego projektu, zaladowanych warstw
+i algorytmow przetwarzania.</p>
+<p>Kiedy uzywac: automatyzacja jednorazowych zadan, przetwarzanie wsadowe plikow, szybkie
+operacje na otwartym projekcie.</p>
+<p><strong>Zalety:</strong> natychmiastowy dostep do projektu, prosta skladnia, brak konfiguracji.<br />
+<strong>Ograniczenia:</strong> dziala tylko wewnatrz uruchomionego QGIS, brak wlasnego GUI.</p>
+</section>
+<section id="wtyczka-qgis">
+<h3>1.2 Wtyczka QGIS<a class="headerlink" href="#wtyczka-qgis" title="Permalink to this heading">#</a></h3>
+<p>Rozszerzenie instalowane przez Menedzera wtyczek, wyposezone we wlasny interfejs graficzny.
+Pisana w Pythonie, ladowana przy starcie QGIS, mozna udostepniac przez oficjalne repozytorium.</p>
+<p>Kiedy uzywac: narzedzia wielokrotnego uzytku, dystrybucja funkcjonalnosci w zespole lub publicznie.</p>
+<p><strong>Zalety:</strong> wlasny GUI, trwalosc miedzy sesjami, mozliwosc publikacji.<br />
+<strong>Ograniczenia:</strong> wiekszy naklad pracy, wymagana znajomosc Qt i struktury wtyczki.</p>
+</section>
+<section id="biblioteki-zewnetrzne-poza-qgis">
+<h3>1.3 Biblioteki zewnetrzne (poza QGIS)<a class="headerlink" href="#biblioteki-zewnetrzne-poza-qgis" title="Permalink to this heading">#</a></h3>
+<p>Python uruchamiany calkowicie niezaleznie od QGIS — w Jupyterze, terminalu lub IDE.
+Zamiast PyQGIS uzywamy bibliotek takich jak <code class="docutils literal notranslate"><span class="pre">geopandas</span></code>, <code class="docutils literal notranslate"><span class="pre">shapely</span></code>, <code class="docutils literal notranslate"><span class="pre">rasterio</span></code>, <code class="docutils literal notranslate"><span class="pre">pyproj</span></code>.</p>
+<p>Kiedy uzywac: eksploracja danych, raporty analityczne, integracja GIS z data science.</p>
+<p><strong>Zalety:</strong> niezaleznosc od QGIS, pelna integracja z ekosystemem naukowym Pythona.<br />
+<strong>Ograniczenia:</strong> brak dostepu do projektu QGIS i jego algorytmow.</p>
+<hr class="docutils" />
+<p>Na tym wykladzie skupiamy sie na <strong>skryptach PyQGIS</strong>. Wtyczki omowimy na Wykladzie 7,
+biblioteki zewnetrzne na Wykladach 4 i 5.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [JUPYTER] Porownianie trzech podejsc — tylko ilustracja skladni</span>
+
+<span class="n">podejscia</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;nazwa&#39;</span><span class="p">:</span>        <span class="s1">&#39;Skrypt PyQGIS&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;srodowisko&#39;</span><span class="p">:</span>   <span class="s1">&#39;Konsola / edytor w QGIS&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;kiedy&#39;</span><span class="p">:</span>        <span class="s1">&#39;Automatyzacja, przetwarzanie wsadowe&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gui&#39;</span><span class="p">:</span>          <span class="s1">&#39;Nie&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;nazwa&#39;</span><span class="p">:</span>        <span class="s1">&#39;Wtyczka QGIS&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;srodowisko&#39;</span><span class="p">:</span>   <span class="s1">&#39;Wewnatrz QGIS (ladowana przy starcie)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;kiedy&#39;</span><span class="p">:</span>        <span class="s1">&#39;Narzedzia wielokrotnego uzytku&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gui&#39;</span><span class="p">:</span>          <span class="s1">&#39;Tak (Qt)&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;nazwa&#39;</span><span class="p">:</span>        <span class="s1">&#39;Biblioteki zewnetrzne&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;srodowisko&#39;</span><span class="p">:</span>   <span class="s1">&#39;Jupyter / terminal / IDE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;kiedy&#39;</span><span class="p">:</span>        <span class="s1">&#39;Analiza danych, data science&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gui&#39;</span><span class="p">:</span>          <span class="s1">&#39;Opcjonalnie&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Podejscie&#39;</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Srodowisko&#39;</span><span class="si">:</span><span class="s2">&lt;35</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;GUI&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">72</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">podejscia</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;nazwa&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;srodowisko&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;35</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;gui&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Podejscie                 Srodowisko                          GUI       
+------------------------------------------------------------------------
+Skrypt PyQGIS             Konsola / edytor w QGIS             Nie       
+Wtyczka QGIS              Wewnatrz QGIS (ladowana przy starcie) Tak (Qt)  
+Biblioteki zewnetrzne     Jupyter / terminal / IDE            Opcjonalnie
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="konsola-pythona-w-qgis">
+<h2>2. Konsola Pythona w QGIS<a class="headerlink" href="#konsola-pythona-w-qgis" title="Permalink to this heading">#</a></h2>
+<section id="uruchomienie">
+<h3>2.1 Uruchomienie<a class="headerlink" href="#uruchomienie" title="Permalink to this heading">#</a></h3>
+<p>Konsole Pythona otwieramy przez:</p>
+<ul class="simple">
+<li><p>menu: <code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">-&gt;</span> <span class="pre">Konsola</span> <span class="pre">Pythona</span></code></p></li>
+<li><p>skrot klawiszowy: <code class="docutils literal notranslate"><span class="pre">Ctrl+Alt+P</span></code></p></li>
+</ul>
+<p>Konsola sklada sie z dwoch obszarow:</p>
+<ul class="simple">
+<li><p><strong>obszar wyjscia</strong> (gorny) — wyswietla wyniki i komunikaty bledow</p></li>
+<li><p><strong>wiersz polecen</strong> (dolny) — miejsce wpisywania kodu</p></li>
+</ul>
+</section>
+<section id="edytor-skryptow">
+<h3>2.2 Edytor skryptow<a class="headerlink" href="#edytor-skryptow" title="Permalink to this heading">#</a></h3>
+<p>Klikniecie ikony <em>Pokaz edytor</em> otwiera wbudowany edytor obok konsoli.
+Pozwala pisac dluzsze skrypty, zapisywac je jako pliki <code class="docutils literal notranslate"><span class="pre">.py</span></code> i uruchamiac
+przyciskiem <em>Uruchom skrypt</em>.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Konsola</p></th>
+<th class="head"><p>Edytor skryptow</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Wykonanie linii po linii</p></td>
+<td><p>Wykonanie calego pliku naraz</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interaktywna praca</p></td>
+<td><p>Pisanie kompletnych skryptow</p></td>
+</tr>
+<tr class="row-even"><td><p>Brak zapisu</p></td>
+<td><p>Zapis do pliku <code class="docutils literal notranslate"><span class="pre">.py</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Szybkie testy</p></td>
+<td><p>Powtarzalne rozwiazania</p></td>
+</tr>
+</tbody>
+</table>
+<img src="img\1.png"/>
+</section>
+<section id="obiekty-globalne-w-konsoli-qgis">
+<h3>2.3 Obiekty globalne w konsoli QGIS<a class="headerlink" href="#obiekty-globalne-w-konsoli-qgis" title="Permalink to this heading">#</a></h3>
+<p>Wewnatrz Konsoli Pythona dostepne sa dwa specjalne obiekty globalne,
+ktorych nie trzeba importowac:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">iface</span>       <span class="c1"># QgisInterface — dostep do interfejsu uzytkownika QGIS</span>
+<span class="n">QgsProject</span>  <span class="c1"># klasa projektu — dostep do warstw i ustawien</span>
+</pre></div>
+</div>
+<p>Obiekt <code class="docutils literal notranslate"><span class="pre">iface</span></code> daje dostep do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>   <span class="c1"># aktywna warstwa (zaznaczona w Panelu warstw)</span>
+<span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span>     <span class="c1"># obszar mapy</span>
+<span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">()</span>    <span class="c1"># glowne okno aplikacji</span>
+<span class="n">iface</span><span class="o">.</span><span class="n">messageBar</span><span class="p">()</span>    <span class="c1"># pasek komunikatow</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Wklej do Konsoli Pythona w QGIS i uruchom</span>
+<span class="c1"># Sprawdza aktywna warstwe i wyswietla podstawowe informacje</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Brak aktywnej warstwy. Zaznacz warstwe w Panelu warstw.&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Nazwa warstwy : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Typ obiektu  : </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS          : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 4&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># [QGIS] Wklej do Konsoli Pythona w QGIS i uruchom</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># Sprawdza aktywna warstwe i wyswietla podstawowe informacje</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Brak aktywnej warstwy. Zaznacz warstwe w Panelu warstw.&#39;</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;iface&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="architektura-pyqgis-moduly-i-klasy">
+<h2>3. Architektura PyQGIS — moduly i klasy<a class="headerlink" href="#architektura-pyqgis-moduly-i-klasy" title="Permalink to this heading">#</a></h2>
+<section id="glowne-moduly">
+<h3>3.1 Glowne moduly<a class="headerlink" href="#glowne-moduly" title="Permalink to this heading">#</a></h3>
+<p>PyQGIS jest podzielony na kilka modulow, z ktorych kazdy odpowiada za inny obszar:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modul</p></th>
+<th class="head"><p>Zawartosc</p></th>
+<th class="head"><p>Przykladowe klasy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.core</span></code></p></td>
+<td><p>Logika GIS — warstwy, geometrie, dane, CRS</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QgsProject</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.gui</span></code></p></td>
+<td><p>Interfejs uzytkownika — widgety, obszar mapy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QgisInterface</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsMapCanvas</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.analysis</span></code></p></td>
+<td><p>Algorytmy analityczne</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QgsZonalStatistics</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsInterpolator</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qgis.processing</span></code></p></td>
+<td><p>Dostep do Processing Toolbox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">processing.run()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>W skryptach najczesciej pracujemy z modulem <code class="docutils literal notranslate"><span class="pre">qgis.core</span></code>.
+W Konsoli Pythona jest on importowany automatycznie.</p>
+</section>
+<section id="konwencja-nazewnicza">
+<h3>3.2 Konwencja nazewnicza<a class="headerlink" href="#konwencja-nazewnicza" title="Permalink to this heading">#</a></h3>
+<p>Wszystkie klasy PyQGIS zaczynaja sie od przedrostka <code class="docutils literal notranslate"><span class="pre">Qgs</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>QgsProject         — projekt QGIS
+QgsVectorLayer     — warstwa wektorowa
+QgsRasterLayer     — warstwa rastrowa
+QgsFeature         — pojedynczy obiekt wektorowy
+QgsGeometry        — geometria obiektu (punkt, linia, polygon)
+QgsField           — pojedyncze pole atrybutow
+QgsFields          — zbior pol atrybutow
+QgsPointXY         — punkt 2D (wspolrzedne X, Y)
+QgsCoordinateReferenceSystem  — uklad wspolrzednych
+</pre></div>
+</div>
+</section>
+<section id="hierarchia-obiektow">
+<h3>3.3 Hierarchia obiektow<a class="headerlink" href="#hierarchia-obiektow" title="Permalink to this heading">#</a></h3>
+<p>Typowa sciezka dostepu do danych w PyQGIS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span>         <span class="o">-&gt;</span> <span class="n">slownik</span> <span class="p">{</span><span class="nb">id</span><span class="p">:</span> <span class="n">QgsMapLayer</span><span class="p">}</span>
+    <span class="o">+--</span> <span class="o">.</span><span class="n">mapLayersByName</span><span class="p">()</span>   <span class="o">-&gt;</span> <span class="n">lista</span> <span class="n">warstw</span> <span class="n">o</span> <span class="n">podanej</span> <span class="n">nazwie</span>
+    <span class="o">|</span>
+    <span class="n">QgsVectorLayer</span>
+        <span class="o">|</span>
+        <span class="o">+--</span> <span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span>   <span class="o">-&gt;</span> <span class="n">iterator</span> <span class="n">po</span> <span class="n">obiektach</span>
+        <span class="o">|</span>
+        <span class="n">QgsFeature</span>
+            <span class="o">|</span>
+            <span class="o">+--</span> <span class="o">.</span><span class="n">geometry</span><span class="p">()</span>      <span class="o">-&gt;</span> <span class="n">QgsGeometry</span>
+            <span class="o">+--</span> <span class="o">.</span><span class="n">attributes</span><span class="p">()</span>    <span class="o">-&gt;</span> <span class="n">lista</span> <span class="n">wartosci</span>
+            <span class="o">+--</span> <span class="p">[</span><span class="s1">&#39;nazwa_pola&#39;</span><span class="p">]</span>   <span class="o">-&gt;</span> <span class="n">wartosc</span> <span class="n">konkretnego</span> <span class="n">pola</span>
+</pre></div>
+</div>
+</section>
+<section id="typy-danych-python-vs-c">
+<h3>3.4 Typy danych — Python vs C++<a class="headerlink" href="#typy-danych-python-vs-c" title="Permalink to this heading">#</a></h3>
+<p>Dokumentacja PyQGIS jest generowana z kodu C++. Tabela konwersji typow:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Typ C++</p></th>
+<th class="head"><p>Typ Python</p></th>
+<th class="head"><p>Przyklad</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QString</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p>nazwa warstwy</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>liczba obiektow</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p>dlugosc, pole powierzchni</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p>True / False</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QList&lt;T&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p></td>
+<td><p>lista warstw</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QMap&lt;K,V&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p></td>
+<td><p>slownik atrybutow</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QVariant</span></code></p></td>
+<td><p>dowolny typ</p></td>
+<td><p>wartosc atrybutu</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="obiekt-qgsproject-punkt-wejscia-do-projektu">
+<h2>4. Obiekt QgsProject — punkt wejscia do projektu<a class="headerlink" href="#obiekt-qgsproject-punkt-wejscia-do-projektu" title="Permalink to this heading">#</a></h2>
+<section id="singleton">
+<h3>4.1 Singleton<a class="headerlink" href="#singleton" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">QgsProject</span></code> jest klasa typu <strong>singleton</strong> — istnieje tylko jedna instancja dla calego projektu.
+Dostep uzyskujemy zawsze przez metode <code class="docutils literal notranslate"><span class="pre">.instance()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Nie tworzymy obiektu przez <code class="docutils literal notranslate"><span class="pre">QgsProject()</span></code> — zwrocilaby nowa, pusta instancje
+niepowiazana z otwartym projektem.</p>
+</section>
+<section id="informacje-o-projekcie">
+<h3>4.2 Informacje o projekcie<a class="headerlink" href="#informacje-o-projekcie" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">fileName</span><span class="p">())</span>       <span class="c1"># sciezka do pliku .qgz</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">homePath</span><span class="p">())</span>       <span class="c1"># folder projektu</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>          <span class="c1"># tytul projektu</span>
+
+<span class="n">crs</span> <span class="o">=</span> <span class="n">projekt</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">())</span>             <span class="c1"># np. EPSG:4326</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crs</span><span class="o">.</span><span class="n">description</span><span class="p">())</span>        <span class="c1"># pelna nazwa ukladu</span>
+</pre></div>
+</div>
+</section>
+<section id="pobieranie-warstw">
+<h3>4.3 Pobieranie warstw<a class="headerlink" href="#pobieranie-warstw" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="c1"># Slownik wszystkich warstw {id_warstwy: obiekt_warstwy}</span>
+<span class="n">wszystkie</span> <span class="o">=</span> <span class="n">projekt</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba warstw: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wszystkie</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Iteracja po wszystkich warstwach</span>
+<span class="k">for</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">wszystkie</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1"> — </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Pobranie warstwy po nazwie (zwraca liste)</span>
+<span class="n">warstwy</span> <span class="o">=</span> <span class="n">projekt</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;kraje&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">warstwy</span><span class="p">:</span>
+    <span class="n">warstwa</span> <span class="o">=</span> <span class="n">warstwy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">warstwa</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>Uwaga:</strong> <code class="docutils literal notranslate"><span class="pre">mapLayersByName()</span></code> zwraca <strong>liste</strong>, bo kilka warstw moze miec ta sama nazwe.
+Zawsze sprawdzaj czy lista nie jest pusta przed uzyciem jej pierwszego elementu.</p>
+</section>
+<section id="typy-warstw">
+<h3>4.4 Typy warstw<a class="headerlink" href="#typy-warstw" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsMapLayer</span>
+
+<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">VectorLayer</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wektorowa: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">RasterLayer</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Rastrowa:  </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [JUPYTER] Wzorzec Singleton w czystym Pythonie</span>
+<span class="c1"># Ilustruje dlaczego QgsProject.instance() zawsze zwraca ten sam obiekt</span>
+
+<span class="k">class</span> <span class="nc">Singleton</span><span class="p">:</span>
+    <span class="n">_instancja</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nazwa</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nazwa</span> <span class="o">=</span> <span class="n">nazwa</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warstwy</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">instance</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instancja</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_instancja</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;Projekt domyslny&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instancja</span>
+
+<span class="c1"># Zawsze ten sam obiekt</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">Singleton</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">Singleton</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p1 is p2: </span><span class="si">{</span><span class="n">p1</span> <span class="ow">is</span> <span class="n">p2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>   <span class="c1"># True — to ten sam obiekt</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id(p1): </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id(p2): </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;W PyQGIS dziala to identycznie:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  QgsProject.instance() is QgsProject.instance()  -&gt;  True&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p1 is p2: True
+id(p1): 1830812886592
+id(p2): 1830812886592
+
+W PyQGIS dziala to identycznie:
+  QgsProject.instance() is QgsProject.instance()  -&gt;  True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Wklej do Konsoli Pythona w QGIS</span>
+<span class="c1"># Wyswietla informacje o otwartym projekcie i jego warstwach</span>
+
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsProject</span><span class="p">,</span> <span class="n">QgsMapLayer</span>
+
+<span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=== Informacje o projekcie ===&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tytul     : </span><span class="si">{</span><span class="n">projekt</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;(brak)&quot;</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Plik      : </span><span class="si">{</span><span class="n">projekt</span><span class="o">.</span><span class="n">fileName</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;(niezapisany)&quot;</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS       : </span><span class="si">{</span><span class="n">projekt</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Warstwy   : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=== Lista warstw ===&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">projekt</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">typ</span> <span class="o">=</span> <span class="s1">&#39;wektorowa&#39;</span> <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">VectorLayer</span> <span class="k">else</span> <span class="s1">&#39;rastrowa&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  [</span><span class="si">{</span><span class="n">typ</span><span class="si">}</span><span class="s1">] </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">  (</span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="praca-z-warstwami-wektorowymi">
+<h2>5. Praca z warstwami wektorowymi<a class="headerlink" href="#praca-z-warstwami-wektorowymi" title="Permalink to this heading">#</a></h2>
+<section id="klasa-qgsvectorlayer">
+<h3>5.1 Klasa QgsVectorLayer<a class="headerlink" href="#klasa-qgsvectorlayer" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code> dziedziczy po <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code> i rozszerza ja o metody
+typowe dla danych wektorowych.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>              <span class="c1"># nazwa warstwy</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">source</span><span class="p">())</span>            <span class="c1"># sciezka do pliku</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">())</span>      <span class="c1"># kod EPSG, np. EPSG:4326</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">())</span>      <span class="c1"># liczba obiektow</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">wkbType</span><span class="p">())</span>           <span class="c1"># typ geometrii</span>
+
+<span class="n">zasieg</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">extent</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;xMin: </span><span class="si">{</span><span class="n">zasieg</span><span class="o">.</span><span class="n">xMinimum</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;xMax: </span><span class="si">{</span><span class="n">zasieg</span><span class="o">.</span><span class="n">xMaximum</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="typy-geometrii">
+<h3>5.2 Typy geometrii<a class="headerlink" href="#typy-geometrii" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Stala</p></th>
+<th class="head"><p>Opis</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsWkbTypes.Point</span></code></p></td>
+<td><p>Punkt</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QgsWkbTypes.LineString</span></code></p></td>
+<td><p>Linia</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsWkbTypes.Polygon</span></code></p></td>
+<td><p>Wielokat</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QgsWkbTypes.MultiPoint</span></code></p></td>
+<td><p>Multipunkt</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsWkbTypes.MultiLineString</span></code></p></td>
+<td><p>Multilinia</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QgsWkbTypes.MultiPolygon</span></code></p></td>
+<td><p>Multiwielokat</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsWkbTypes</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">displayString</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">wkbType</span><span class="p">()))</span>  <span class="c1"># np. &#39;Polygon&#39;</span>
+</pre></div>
+</div>
+<img src="img\3.png" />
+</section>
+<section id="pola-atrybutow">
+<h3>5.3 Pola atrybutow<a class="headerlink" href="#pola-atrybutow" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">pola</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba pol: </span><span class="si">{</span><span class="n">pola</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="n">pola</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">:</span><span class="s1">&lt;20</span><span class="si">}</span><span class="s1"> typ: </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">typeName</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Typy pol atrybutow:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Typ Qt</p></th>
+<th class="head"><p>Opis</p></th>
+<th class="head"><p>Przyklad</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QString</span></code></p></td>
+<td><p>Tekst</p></td>
+<td><p>‘Polska’</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Liczba calkowita</p></td>
+<td><p>42</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p>Liczba zmiennoprzecinkowa</p></td>
+<td><p>3.14</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QDate</span></code></p></td>
+<td><p>Data</p></td>
+<td><p>2024-01-15</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p>Wartosc logiczna</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Wklej do Konsoli Pythona w QGIS</span>
+<span class="c1"># Wyswietla szczegolowe informacje o polach aktywnej warstwy</span>
+
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsWkbTypes</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Brak aktywnej warstwy.&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Warstwa    : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Geometria  : </span><span class="si">{</span><span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">displayString</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">wkbType</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Obiekty    : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS        : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pola atrybutow (</span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s1">):&#39;</span><span class="p">);</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="s2">&quot;Nazwa&quot;</span><span class="si">:</span><span class="s1">&lt;25</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="s2">&quot;Typ&quot;</span><span class="si">:</span><span class="s1">&lt;15</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="s2">&quot;Dlugosc&quot;</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  &#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">:</span><span class="s1">&lt;25</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">typeName</span><span class="p">()</span><span class="si">:</span><span class="s1">&lt;15</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="praca-z-obiektami-i-atrybutami">
+<h2>6. Praca z obiektami i atrybutami<a class="headerlink" href="#praca-z-obiektami-i-atrybutami" title="Permalink to this heading">#</a></h2>
+<section id="iterator-getfeatures">
+<h3>6.1 Iterator getFeatures()<a class="headerlink" href="#iterator-getfeatures" title="Permalink to this heading">#</a></h3>
+<p>Metoda <code class="docutils literal notranslate"><span class="pre">.getFeatures()</span></code> zwraca <strong>iterator</strong> po wszystkich obiektach warstwy.
+Kazdy obiekt jest instancja klasy <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">obiekt</span><span class="o">.</span><span class="n">id</span><span class="p">())</span>           <span class="c1"># numeryczne id obiektu</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">obiekt</span><span class="o">.</span><span class="n">attributes</span><span class="p">())</span>   <span class="c1"># lista wartosci atrybutow</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>        <span class="c1"># wartosc konkretnego pola</span>
+</pre></div>
+</div>
+<p>Iterator jest wydajny pamieciowo — obiekty wczytywane sa jeden po jednym,
+nie wszystkie naraz. Dla warstw z milionami obiektow jest to kluczowe.</p>
+</section>
+<section id="filtrowanie-przez-qgsfeaturerequest">
+<h3>6.2 Filtrowanie przez QgsFeatureRequest<a class="headerlink" href="#filtrowanie-przez-qgsfeaturerequest" title="Permalink to this heading">#</a></h3>
+<p>Zamiast pobierac wszystkie obiekty i filtrowac je w Pythonie, lepiej przekazac
+warunek bezposrednio do bazy danych przez <code class="docutils literal notranslate"><span class="pre">QgsFeatureRequest</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeatureRequest</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="c1"># Filtrowanie przez wyrazenie</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setFilterExpression</span><span class="p">(</span><span class="s1">&#39;&quot;continent&quot; = </span><span class="se">\&#39;</span><span class="s1">Europe</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Inne mozliwosci <code class="docutils literal notranslate"><span class="pre">QgsFeatureRequest</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeatureRequest</span><span class="p">,</span> <span class="n">QgsRectangle</span>
+
+<span class="c1"># Filtrowanie przez zasieg przestrzenny</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">QgsRectangle</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">47.0</span><span class="p">,</span> <span class="mf">25.0</span><span class="p">,</span> <span class="mf">55.0</span><span class="p">)</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setFilterRect</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span>
+
+<span class="c1"># Ograniczenie zwracanych pol (szybciej, mniej pamieci)</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setSubsetOfAttributes</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;pop_est&#39;</span><span class="p">],</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
+
+<span class="c1"># Ograniczenie liczby obiektow</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setLimit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Laczenie warunkow</span>
+<span class="n">req</span> <span class="o">=</span> <span class="p">(</span><span class="n">QgsFeatureRequest</span><span class="p">()</span>
+       <span class="o">.</span><span class="n">setFilterExpression</span><span class="p">(</span><span class="s1">&#39;&quot;pop_est&quot; &gt; 1000000&#39;</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">setLimit</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="dostep-do-geometrii">
+<h3>6.3 Dostep do geometrii<a class="headerlink" href="#dostep-do-geometrii" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">obiekt</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>   <span class="c1"># polygon</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pole powierzchni: </span><span class="si">{</span><span class="n">geom</span><span class="o">.</span><span class="n">area</span><span class="p">()</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Obwod           : </span><span class="si">{</span><span class="n">geom</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>   <span class="c1"># linia</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Dlugosc: </span><span class="si">{</span><span class="n">geom</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Uwaga:</strong> <code class="docutils literal notranslate"><span class="pre">.area()</span></code> i <code class="docutils literal notranslate"><span class="pre">.length()</span></code> zwracaja wartosci w jednostkach CRS warstwy.
+Dla ukladow geograficznych (stopnie) wyniki nie maja fizycznego sensu —
+nalezy wczesniej transformowac geometrie do ukladu metrycznego.</p>
+</section>
+<section id="selekcja-programowa">
+<h3>6.4 Selekcja programowa<a class="headerlink" href="#selekcja-programowa" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="c1"># Zaznacz obiekty spelniajace warunek</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">selectByExpression</span><span class="p">(</span><span class="s1">&#39;&quot;continent&quot; = </span><span class="se">\&#39;</span><span class="s1">Europe</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zaznaczono: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">selectedFeatureCount</span><span class="p">()</span><span class="si">}</span><span class="s1"> obiektow&#39;</span><span class="p">)</span>
+
+<span class="c1"># Pobierz zaznaczone obiekty</span>
+<span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">selectedFeatures</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+
+<span class="c1"># Odznacz wszystko</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">removeSelection</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Wklej do Konsoli Pythona w QGIS</span>
+<span class="c1"># Iteracja po obiektach aktywnej warstwy z filtrowaniem</span>
+
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeatureRequest</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Brak aktywnej warstwy.&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Wyswietl pierwsze 5 obiektow</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pierwsze 5 obiektow z warstwy: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+
+    <span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setLimit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+        <span class="n">atrybuty</span> <span class="o">=</span> <span class="n">obiekt</span><span class="o">.</span><span class="n">attributes</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  id=</span><span class="si">{</span><span class="n">obiekt</span><span class="o">.</span><span class="n">id</span><span class="p">()</span><span class="si">:</span><span class="s1">&gt;5</span><span class="si">}</span><span class="s1"> | </span><span class="si">{</span><span class="n">atrybuty</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Lacznie obiektow w warstwie: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s7'></a></p>
+</section>
+</section>
+<section id="zapis-i-modyfikacja-danych">
+<h2>7. Zapis i modyfikacja danych<a class="headerlink" href="#zapis-i-modyfikacja-danych" title="Permalink to this heading">#</a></h2>
+<section id="tryb-edycji">
+<h3>7.1 Tryb edycji<a class="headerlink" href="#tryb-edycji" title="Permalink to this heading">#</a></h3>
+<p>Modyfikacja atrybutow i geometrii wymaga przelaczenia warstwy w <strong>tryb edycji</strong>.
+Jest to ta sama operacja co klikniecie przycisku <em>Przelacz edycje</em> w interfejsie QGIS.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>     <span class="c1"># wlacz tryb edycji</span>
+
+<span class="c1"># ... wprowadz zmiany ...</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>    <span class="c1"># zatwierdz i zapisz do pliku</span>
+<span class="c1"># LUB</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">rollBack</span><span class="p">()</span>         <span class="c1"># odrzuc zmiany</span>
+</pre></div>
+</div>
+<p>Schemat pracy z edycja:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>startEditing()
+    |
+    +-- changeAttributeValue()  — zmiana wartosci atrybutu
+    +-- changeGeometry()        — zmiana geometrii
+    +-- addFeature()            — dodanie nowego obiektu
+    +-- deleteFeatures()        — usuniecie obiektow
+    |
+    +-- commitChanges()         -&gt; zapis trwaly
+    lub rollBack()               -&gt; cofniecie zmian
+</pre></div>
+</div>
+</section>
+<section id="zmiana-wartosci-atrybutu">
+<h3>7.2 Zmiana wartosci atrybutu<a class="headerlink" href="#zmiana-wartosci-atrybutu" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="n">fid</span> <span class="o">=</span> <span class="n">obiekt</span><span class="o">.</span><span class="n">id</span><span class="p">()</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s1">&#39;nazwa_pola&#39;</span><span class="p">)</span>
+    <span class="n">nowa_wartosc</span> <span class="o">=</span> <span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;stare_pole&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">changeAttributeValue</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">nowa_wartosc</span><span class="p">)</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zmiany zapisane.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dodawanie-nowego-obiektu">
+<h3>7.3 Dodawanie nowego obiektu<a class="headerlink" href="#dodawanie-nowego-obiektu" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+
+<span class="n">nowy</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
+<span class="n">nowy</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">21.01</span><span class="p">,</span> <span class="mf">52.23</span><span class="p">)))</span>
+<span class="n">nowy</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Nowy punkt&#39;</span>
+<span class="n">nowy</span><span class="p">[</span><span class="s1">&#39;pop_est&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1800000</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">addFeature</span><span class="p">(</span><span class="n">nowy</span><span class="p">)</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="usuwanie-obiektow">
+<h3>7.4 Usuwanie obiektow<a class="headerlink" href="#usuwanie-obiektow" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+
+<span class="n">do_usuniecia</span> <span class="o">=</span> <span class="p">[</span><span class="n">ob</span><span class="o">.</span><span class="n">id</span><span class="p">()</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">ob</span><span class="p">[</span><span class="s1">&#39;pop_est&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">]</span>
+
+<span class="n">layer</span><span class="o">.</span><span class="n">deleteFeatures</span><span class="p">(</span><span class="n">do_usuniecia</span><span class="p">)</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Usunieto </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">do_usuniecia</span><span class="p">)</span><span class="si">}</span><span class="s1"> obiektow.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="odswiezanie-widoku">
+<h3>7.5 Odswiezanie widoku<a class="headerlink" href="#odswiezanie-widoku" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span><span class="o">.</span><span class="n">triggerRepaint</span><span class="p">()</span>
+<span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [JUPYTER] Ilustracja wzorca trybu edycji w czystym Pythonie</span>
+<span class="c1"># Pokazuje analogiczny mechanizm commit/rollback</span>
+
+<span class="k">class</span> <span class="nc">WarstwaDemo</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obiekty</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dane</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obiekty</span><span class="p">)</span>       <span class="c1"># dane zatwierdzone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bufor</span> <span class="o">=</span> <span class="kc">None</span>               <span class="c1"># bufor edycji</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tryb_edycji</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">startEditing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bufor</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dane</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tryb_edycji</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tryb edycji: WLACZONY&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">commitChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dane</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bufor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bufor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tryb_edycji</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zmiany ZATWIERDZONE.&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rollBack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bufor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tryb_edycji</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zmiany ODRZUCONE.&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">changeAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">pole</span><span class="p">,</span> <span class="n">wartosc</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tryb_edycji</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Najpierw wywolaj startEditing()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bufor</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">pole</span><span class="p">]</span> <span class="o">=</span> <span class="n">wartosc</span>
+
+    <span class="k">def</span> <span class="nf">getFeatures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dane</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bufor</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tryb_edycji</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dane</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">dane</span><span class="p">)</span>
+
+
+<span class="c1"># Demonstracja</span>
+<span class="n">warstwa</span> <span class="o">=</span> <span class="n">WarstwaDemo</span><span class="p">([</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;polska&#39;</span><span class="p">,</span>  <span class="s1">&#39;pop&#39;</span><span class="p">:</span> <span class="mi">38_000_000</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;niemcy&#39;</span><span class="p">,</span>  <span class="s1">&#39;pop&#39;</span><span class="p">:</span> <span class="mi">84_000_000</span><span class="p">},</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Przed edycja:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">warstwa</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">ob</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">warstwa</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+<span class="n">warstwa</span><span class="o">.</span><span class="n">changeAttr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;POLSKA&#39;</span><span class="p">)</span>   <span class="c1"># zmiana na wielkie litery</span>
+<span class="n">warstwa</span><span class="o">.</span><span class="n">changeAttr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;NIEMCY&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;W trakcie edycji (bufor):&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">warstwa</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">ob</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">warstwa</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Po zatwierdzeniu:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">warstwa</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">ob</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Przed edycja:
+  {&#39;id&#39;: 1, &#39;name&#39;: &#39;polska&#39;, &#39;pop&#39;: 38000000}
+  {&#39;id&#39;: 2, &#39;name&#39;: &#39;niemcy&#39;, &#39;pop&#39;: 84000000}
+Tryb edycji: WLACZONY
+W trakcie edycji (bufor):
+  {&#39;id&#39;: 1, &#39;name&#39;: &#39;POLSKA&#39;, &#39;pop&#39;: 38000000}
+  {&#39;id&#39;: 2, &#39;name&#39;: &#39;NIEMCY&#39;, &#39;pop&#39;: 84000000}
+Zmiany ZATWIERDZONE.
+Po zatwierdzeniu:
+  {&#39;id&#39;: 1, &#39;name&#39;: &#39;POLSKA&#39;, &#39;pop&#39;: 38000000}
+  {&#39;id&#39;: 2, &#39;name&#39;: &#39;NIEMCY&#39;, &#39;pop&#39;: 84000000}
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s8'></a></p>
+</section>
+</section>
+<section id="edytor-skryptow-pierwsze-kompletne-skrypty">
+<h2>8. Edytor skryptow — pierwsze kompletne skrypty<a class="headerlink" href="#edytor-skryptow-pierwsze-kompletne-skrypty" title="Permalink to this heading">#</a></h2>
+<section id="struktura-dobrego-skryptu-pyqgis">
+<h3>8.1 Struktura dobrego skryptu PyQGIS<a class="headerlink" href="#struktura-dobrego-skryptu-pyqgis" title="Permalink to this heading">#</a></h3>
+<p>Dobry skrypt powinien:</p>
+<ol class="arabic simple">
+<li><p>sprawdzac czy dane wejsciowe sa dostepne i poprawne,</p></li>
+<li><p>informowac uzytkownika o postepie przez komunikaty,</p></li>
+<li><p>obslugiwac bledy przez blok <code class="docutils literal notranslate"><span class="pre">try/except</span></code>,</p></li>
+<li><p>na koncu odswiezac widok mapy.</p></li>
+</ol>
+</section>
+<section id="skrypt-1-raport-o-warstwach-projektu">
+<h3>8.2 Skrypt 1: Raport o warstwach projektu<a class="headerlink" href="#skrypt-1-raport-o-warstwach-projektu" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Skrypt 1 — raport_warstw.py</span>
+<span class="c1"># Generuje raport o wszystkich warstwach otwartego projektu.</span>
+<span class="c1"># Wklej do edytora skryptow QGIS i uruchom.</span>
+
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsProject</span><span class="p">,</span> <span class="n">QgsMapLayer</span><span class="p">,</span> <span class="n">QgsWkbTypes</span>
+
+<span class="k">def</span> <span class="nf">raport_warstw</span><span class="p">():</span>
+    <span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">warstwy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Projekt : </span><span class="si">{</span><span class="n">projekt</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;(bez nazwy)&quot;</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Plik    : </span><span class="si">{</span><span class="n">projekt</span><span class="o">.</span><span class="n">fileName</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;(niezapisany)&quot;</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  CRS     : </span><span class="si">{</span><span class="n">projekt</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Warstwy : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">warstwy</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">warstwy</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  Warstwa: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">VectorLayer</span><span class="p">:</span>
+            <span class="n">geom_typ</span> <span class="o">=</span> <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">displayString</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">wkbType</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Typ geometrii : </span><span class="si">{</span><span class="n">geom_typ</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Liczba obiektow: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Liczba pol    : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">nazwy</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Pola          : </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nazwy</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">RasterLayer</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Pasma           : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">bandCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Rozdzielczosc X : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">rasterUnitsPerPixelX</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    CRS    : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Zrodlo : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">source</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Raport zakonczony.&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+
+<span class="n">raport_warstw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="skrypt-2-eksport-atrybutow-do-pliku-csv">
+<h3>8.3 Skrypt 2: Eksport atrybutow do pliku CSV<a class="headerlink" href="#skrypt-2-eksport-atrybutow-do-pliku-csv" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Skrypt 2 — eksport_csv.py</span>
+<span class="c1"># Eksportuje atrybuty aktywnej warstwy do pliku CSV.</span>
+<span class="c1"># Zmien sciezke_wyjsciowa przed uruchomieniem.</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsMapLayer</span><span class="p">,</span> <span class="n">QgsFeatureRequest</span>
+
+<span class="k">def</span> <span class="nf">eksportuj_do_csv</span><span class="p">(</span><span class="n">sciezka_wyjsciowa</span><span class="p">):</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Blad: brak aktywnej warstwy.&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">!=</span> <span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">VectorLayer</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Blad: aktywna warstwa nie jest wektorowa.&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">nazwy_pol</span> <span class="o">=</span> <span class="p">[</span><span class="n">pole</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Eksport: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">  (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> obiektow, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nazwy_pol</span><span class="p">)</span><span class="si">}</span><span class="s1"> pol)&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sciezka_wyjsciowa</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">nazwy_pol</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()):</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">obiekt</span><span class="o">.</span><span class="n">attributes</span><span class="p">())</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Przetworzono: </span><span class="si">{</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Gotowe. Plik zapisany: </span><span class="si">{</span><span class="n">sciezka_wyjsciowa</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Blad zapisu pliku: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># Zmien sciezke na swoja</span>
+<span class="n">eksportuj_do_csv</span><span class="p">(</span><span class="s1">&#39;C:/GIS_kurs/eksport.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [JUPYTER] Wersja demonstracyjna eksportu CSV — dziala w Jupyter</span>
+<span class="c1"># Uzywa danych testowych zamiast warstwy QGIS</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">io</span>
+
+<span class="c1"># Symulowane dane warstwy</span>
+<span class="n">pola</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="s1">&#39;pop_est&#39;</span><span class="p">]</span>
+<span class="n">obiekty</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Polska&#39;</span><span class="p">,</span>   <span class="s1">&#39;Europe&#39;</span><span class="p">,</span> <span class="mi">38_000_000</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Niemcy&#39;</span><span class="p">,</span>   <span class="s1">&#39;Europe&#39;</span><span class="p">,</span> <span class="mi">84_000_000</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Francja&#39;</span><span class="p">,</span>  <span class="s1">&#39;Europe&#39;</span><span class="p">,</span> <span class="mi">68_000_000</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Nigeria&#39;</span><span class="p">,</span>  <span class="s1">&#39;Africa&#39;</span><span class="p">,</span> <span class="mi">220_000_000</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Brazylia&#39;</span><span class="p">,</span> <span class="s1">&#39;South America&#39;</span><span class="p">,</span> <span class="mi">215_000_000</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="c1"># Zapis do strumienia tekstowego (zamiast pliku)</span>
+<span class="n">bufor</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">bufor</span><span class="p">)</span>
+<span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">pola</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">obiekty</span><span class="p">:</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">obiekt</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zawartosc wygenerowanego CSV:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bufor</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+<span class="c1"># W QGIS zastap bufor = io.StringIO() przez:</span>
+<span class="c1"># with open(&#39;sciezka.csv&#39;, &#39;w&#39;, newline=&#39;&#39;, encoding=&#39;utf-8&#39;) as bufor:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s9'></a></p>
+</section>
+</section>
+<section id="podsumowanie-i-slownik-pojec">
+<h2>9. Podsumowanie i slownik pojec<a class="headerlink" href="#podsumowanie-i-slownik-pojec" title="Permalink to this heading">#</a></h2>
+<section id="co-omowilismy-na-wykladzie-2">
+<h3>9.1 Co omowilismy na wykladzie 2<a class="headerlink" href="#co-omowilismy-na-wykladzie-2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>trzy konteksty programowania w Pythonie w ekosystemie QGIS: skrypt, wtyczka, biblioteki zewnetrzne,</p></li>
+<li><p>Konsole Pythona i edytor skryptow jako srodowisko pracy,</p></li>
+<li><p>glowne moduly PyQGIS: <code class="docutils literal notranslate"><span class="pre">qgis.core</span></code>, <code class="docutils literal notranslate"><span class="pre">qgis.gui</span></code>, <code class="docutils literal notranslate"><span class="pre">qgis.analysis</span></code>, <code class="docutils literal notranslate"><span class="pre">qgis.processing</span></code>,</p></li>
+<li><p>singleton <code class="docutils literal notranslate"><span class="pre">QgsProject.instance()</span></code> jako punkt wejscia do projektu,</p></li>
+<li><p>pobieranie i filtrowanie warstw przez <code class="docutils literal notranslate"><span class="pre">mapLayers()</span></code> i <code class="docutils literal notranslate"><span class="pre">mapLayersByName()</span></code>,</p></li>
+<li><p>iteracje po obiektach warstwy przez <code class="docutils literal notranslate"><span class="pre">getFeatures()</span></code> i <code class="docutils literal notranslate"><span class="pre">QgsFeatureRequest</span></code>,</p></li>
+<li><p>dostep do geometrii i atrybutow obiektow klasy <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code>,</p></li>
+<li><p>programowa selekcje obiektow,</p></li>
+<li><p>modyfikacje danych w trybie edycji: zmiana atrybutow, dodawanie i usuwanie obiektow,</p></li>
+<li><p>strukture kompletnego skryptu PyQGIS.</p></li>
+</ul>
+</section>
+<section id="slownik-kluczowych-pojec">
+<h3>9.2 Slownik kluczowych pojec<a class="headerlink" href="#slownik-kluczowych-pojec" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pojecie</p></th>
+<th class="head"><p>Definicja</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>PyQGIS</strong></p></td>
+<td><p>API Pythona dla QGIS — zestaw klas i modulow umozliwiajacych programowanie wszystkich funkcji QGIS</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>API</strong></p></td>
+<td><p>Application Programming Interface — interfejs programistyczny, zbior klas i metod udostepnionych przez aplikacje</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Singleton</strong></p></td>
+<td><p>Wzorzec projektowy, w ktorym klasa ma tylko jedna instancje; <code class="docutils literal notranslate"><span class="pre">QgsProject.instance()</span></code> zawsze zwraca ten sam obiekt</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">QgsProject</span></code></strong></p></td>
+<td><p>Klasa reprezentujaca otwarty projekt QGIS; zawiera wszystkie warstwy i ustawienia</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code></strong></p></td>
+<td><p>Klasa reprezentujaca warstwe wektorowa; daje dostep do obiektow, atrybutow i geometrii</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code></strong></p></td>
+<td><p>Pojedynczy obiekt warstwy wektorowej (wiersz w tabeli atrybutow + geometria)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">QgsGeometry</span></code></strong></p></td>
+<td><p>Geometria obiektu; daje dostep do metod pomiarowych i topologicznych</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">QgsFeatureRequest</span></code></strong></p></td>
+<td><p>Klasa do definiowania filtrow przy pobieraniu obiektow</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">iface</span></code></strong></p></td>
+<td><p>Globalny obiekt <code class="docutils literal notranslate"><span class="pre">QgisInterface</span></code> w konsoli QGIS; daje dostep do interfejsu uzytkownika</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>tryb edycji</strong></p></td>
+<td><p>Stan warstwy umozliwiajacy modyfikacje danych; startEditing() / commitChanges()</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>iterator</strong></p></td>
+<td><p>Obiekt zwracajacy elementy jeden po jednym; getFeatures() jest iteratorem, nie lista</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="na-wykladzie-3">
+<h3>9.3 Na Wykladzie 3<a class="headerlink" href="#na-wykladzie-3" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>operacje geometryczne: buforowanie, przeciecia, roznica, scalanie,</p></li>
+<li><p>reprojekcja geometrii miedzy ukladami wspolrzednych,</p></li>
+<li><p>tworzenie nowych warstw wektorowych od podstaw,</p></li>
+<li><p>zapis warstw do pliku (GeoPackage, Shapefile, GeoJSON),</p></li>
+<li><p>uruchamianie algorytmow Processing Toolbox z poziomu skryptu.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="literatura-i-zasoby">
+<h2>Literatura i zasoby<a class="headerlink" href="#literatura-i-zasoby" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>PyQGIS Developer Cookbook: <a class="reference external" href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/</a></p></li>
+<li><p>API Reference: <a class="reference external" href="https://api.qgis.org/api/">https://api.qgis.org/api/</a></p></li>
+<li><p>QgsVectorLayer: <a class="reference external" href="https://api.qgis.org/api/classQgsVectorLayer.html">https://api.qgis.org/api/classQgsVectorLayer.html</a></p></li>
+<li><p>Spatial Thoughts — kurs PyQGIS: <a class="reference external" href="https://courses.spatialthoughts.com/pyqgis-in-a-day.html">https://courses.spatialthoughts.com/pyqgis-in-a-day.html</a></p></li>
+</ul>
+<hr class="docutils" />
+<p><em>Wyklad 2 — Programowanie w GIS (QGIS) — studia licencjackie.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># [JUPYTER] Krotki quiz podsumowujacy — sprawdz wiedze z wykladu</span>
+
+<span class="n">pytania</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;pytanie&#39;</span><span class="p">:</span> <span class="s1">&#39;Jak uzyskac dostep do otwartego projektu QGIS?&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;odpowiedz&#39;</span><span class="p">:</span> <span class="s1">&#39;QgsProject.instance()&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;pytanie&#39;</span><span class="p">:</span> <span class="s1">&#39;Jaka metoda zwraca iterator po obiektach warstwy?&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;odpowiedz&#39;</span><span class="p">:</span> <span class="s1">&#39;layer.getFeatures()&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;pytanie&#39;</span><span class="p">:</span> <span class="s1">&#39;Jak wlaczyc tryb edycji warstwy?&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;odpowiedz&#39;</span><span class="p">:</span> <span class="s1">&#39;layer.startEditing()&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;pytanie&#39;</span><span class="p">:</span> <span class="s1">&#39;Co zwraca mapLayersByName() — liste czy slownik?&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;odpowiedz&#39;</span><span class="p">:</span> <span class="s1">&#39;Liste (list)&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;pytanie&#39;</span><span class="p">:</span> <span class="s1">&#39;Jakiego przedrostka uzywaja wszystkie klasy PyQGIS?&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;odpowiedz&#39;</span><span class="p">:</span> <span class="s1">&#39;Qgs (np. QgsVectorLayer, QgsFeature)&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=== Quiz: Wyklad 2 — PyQGIS ===&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pytania</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">. </span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s2">&quot;pytanie&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== Quiz: Wyklad 2 — PyQGIS ===
+  1. Jak uzyskac dostep do otwartego projektu QGIS?
+  2. Jaka metoda zwraca iterator po obiektach warstwy?
+  3. Jak wlaczyc tryb edycji warstwy?
+  4. Co zwraca mapLayersByName() — liste czy slownik?
+  5. Jakiego przedrostka uzywaja wszystkie klasy PyQGIS?
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentów I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-korzystac-z-tego-notatnika">Jak korzystac z tego notatnika</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-sposoby-programowania-w-qgis">1. Trzy sposoby programowania w QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-pyqgis">1.1 Skrypt PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wtyczka-qgis">1.2 Wtyczka QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteki-zewnetrzne-poza-qgis">1.3 Biblioteki zewnetrzne (poza QGIS)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsola-pythona-w-qgis">2. Konsola Pythona w QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uruchomienie">2.1 Uruchomienie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edytor-skryptow">2.2 Edytor skryptow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obiekty-globalne-w-konsoli-qgis">2.3 Obiekty globalne w konsoli QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architektura-pyqgis-moduly-i-klasy">3. Architektura PyQGIS — moduly i klasy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#glowne-moduly">3.1 Glowne moduly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencja-nazewnicza">3.2 Konwencja nazewnicza</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchia-obiektow">3.3 Hierarchia obiektow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-danych-python-vs-c">3.4 Typy danych — Python vs C++</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obiekt-qgsproject-punkt-wejscia-do-projektu">4. Obiekt QgsProject — punkt wejscia do projektu</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singleton">4.1 Singleton</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacje-o-projekcie">4.2 Informacje o projekcie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pobieranie-warstw">4.3 Pobieranie warstw</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-warstw">4.4 Typy warstw</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#praca-z-warstwami-wektorowymi">5. Praca z warstwami wektorowymi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasa-qgsvectorlayer">5.1 Klasa QgsVectorLayer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-geometrii">5.2 Typy geometrii</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pola-atrybutow">5.3 Pola atrybutow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#praca-z-obiektami-i-atrybutami">6. Praca z obiektami i atrybutami</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterator-getfeatures">6.1 Iterator getFeatures()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-przez-qgsfeaturerequest">6.2 Filtrowanie przez QgsFeatureRequest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dostep-do-geometrii">6.3 Dostep do geometrii</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">6.4 Selekcja programowa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-i-modyfikacja-danych">7. Zapis i modyfikacja danych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tryb-edycji">7.1 Tryb edycji</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zmiana-wartosci-atrybutu">7.2 Zmiana wartosci atrybutu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-nowego-obiektu">7.3 Dodawanie nowego obiektu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#usuwanie-obiektow">7.4 Usuwanie obiektow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odswiezanie-widoku">7.5 Odswiezanie widoku</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edytor-skryptow-pierwsze-kompletne-skrypty">8. Edytor skryptow — pierwsze kompletne skrypty</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktura-dobrego-skryptu-pyqgis">8.1 Struktura dobrego skryptu PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-1-raport-o-warstwach-projektu">8.2 Skrypt 1: Raport o warstwach projektu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skrypt-2-eksport-atrybutow-do-pliku-csv">8.3 Skrypt 2: Eksport atrybutow do pliku CSV</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-slownik-pojec">9. Podsumowanie i slownik pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-omowilismy-na-wykladzie-2">9.1 Co omowilismy na wykladzie 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-kluczowych-pojec">9.2 Slownik kluczowych pojec</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-wykladzie-3">9.3 Na Wykladzie 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literatura-i-zasoby">Literatura i zasoby</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

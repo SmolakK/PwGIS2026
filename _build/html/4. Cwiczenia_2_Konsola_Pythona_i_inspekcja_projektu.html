@@ -1,0 +1,1019 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C2: Konsola Pythona i pierwsza inspekcja projektu QGIS &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4. Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Wyklad 2: Programowanie skryptowe w PyQGIS" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F4. Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/4. Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rozgrzewka-konsola-pythona">1. Rozgrzewka — Konsola Pythona</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspekcja-projektu-przez-qgsproject">2. Inspekcja projektu przez QgsProject</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1">Zadanie 2.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2">Zadanie 2.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-3">Zadanie 2.3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pobieranie-i-filtrowanie-warstw">3. Pobieranie i filtrowanie warstw</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1">Zadanie 3.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2">Zadanie 3.2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wlasciwosci-warstwy-wektorowej">4. Wlasciwosci warstwy wektorowej</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1">Zadanie 4.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2">Zadanie 4.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-3-samodzielne">Zadanie 4.3 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracja-po-obiektach-i-atrybutach">5. Iteracja po obiektach i atrybutach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1">Zadanie 5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2">Zadanie 5.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-3">Zadanie 5.3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">6. Zadanie laczace</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-skrypt-statystyk-warstwy">Zadanie 6.1 — Skrypt statystyk warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c2">Podsumowanie C2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c3">Na C3</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="c2-konsola-pythona-i-pierwsza-inspekcja-projektu-qgis">
+<h1>C2: Konsola Pythona i pierwsza inspekcja projektu QGIS<a class="headerlink" href="#c2-konsola-pythona-i-pierwsza-inspekcja-projektu-qgis" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-cwiczenia">
+<h2>Programowanie w GIS — Ćwiczenia<a class="headerlink" href="#programowanie-w-gis-cwiczenia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Ćwiczenie:</strong> C2<br />
+<strong>Powiązany wykład:</strong> W2<br />
+<strong>Czas:</strong> ~90 minut</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="cele-cwiczenia">
+<h2>Cele ćwiczenia<a class="headerlink" href="#cele-cwiczenia" title="Permalink to this heading">#</a></h2>
+<p>Po ukończeniu tego ćwiczenia będziesz potrafić:</p>
+<ul class="simple">
+<li><p>swobodnie korzystać z Konsoli Pythona i edytora skryptów w QGIS,</p></li>
+<li><p>posługiwać się obiektem <code class="docutils literal notranslate"><span class="pre">QgsProject.instance()</span></code> do inspekcji projektu,</p></li>
+<li><p>pobierać warstwy po nazwie i typie,</p></li>
+<li><p>odczytywać podstawowe właściwości warstwy wektorowej,</p></li>
+<li><p>iterować po obiektach warstwy i odczytywać ich atrybuty.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="konwencje">
+<h2>Konwencje<a class="headerlink" href="#konwencje" title="Permalink to this heading">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Oznaczenie</p></th>
+<th class="head"><p>Znaczenie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Zadanie</strong></p></td>
+<td><p>Polecenie do samodzielnego wykonania</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Wskazowka</strong></p></td>
+<td><p>Pomocna podpowiedz — czytaj tylko jesli utkniesz</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Pytanie</strong></p></td>
+<td><p>Odpowiedz wpisz w komurce odpowiedzi ponizej</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[QGIS]</span></code></p></td>
+<td><p>Kod do uruchomienia w Konsoli Pythona QGIS</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[JUPYTER]</span></code></p></td>
+<td><p>Kod do uruchomienia tutaj, w Jupyter</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</section>
+<section id="przygotowanie">
+<h2>Przygotowanie<a class="headerlink" href="#przygotowanie" title="Permalink to this heading">#</a></h2>
+<p>Przed rozpoczeciem cwiczenia:</p>
+<ol class="arabic simple">
+<li><p>Uruchom QGIS.</p></li>
+<li><p>Wczytaj co najmniej dwie warstwy wektorowe (np. kraje swiata z Natural Earth oraz dowolna warstwe liniowa lub punktowa).
+<a class="reference external" href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/">https://www.naturalearthdata.com/downloads/110m-cultural-vectors/</a>
+<a class="reference external" href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/">https://www.naturalearthdata.com/downloads/110m-cultural-vectors/</a>
+<a class="reference external" href="https://www.geoportal.gov.pl/dane/panstwowy-rejestr-granic">https://www.geoportal.gov.pl/dane/panstwowy-rejestr-granic</a></p></li>
+<li><p>Upewnij sie, ze warstwy maja rozne typy geometrii.</p></li>
+<li><p>Otworz Konsole Pythona: <code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">-&gt;</span> <span class="pre">Konsola</span> <span class="pre">Pythona</span></code> (<code class="docutils literal notranslate"><span class="pre">Ctrl+Alt+P</span></code>).</p></li>
+<li><p>Kliknij <strong>Pokaz edytor</strong>, zeby miec dostep do edytora skryptow.</p></li>
+</ol>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="rozgrzewka-konsola-pythona">
+<h2>1. Rozgrzewka — Konsola Pythona<a class="headerlink" href="#rozgrzewka-konsola-pythona" title="Permalink to this heading">#</a></h2>
+<p>Zanim napiszemy wlasciwy kod, upewnijmy sie ze Konsola Pythona dziala poprawnie
+i ze rozumiemy roznice miedzy jej dwoma trybami pracy.</p>
+<section id="zadanie-1-1">
+<h3>Zadanie 1.1<a class="headerlink" href="#zadanie-1-1" title="Permalink to this heading">#</a></h3>
+<p>W Konsoli Pythona QGIS wpisz i uruchom ponizsze polecenia <strong>jedno po drugim</strong>
+(kazde osobno, wciskajac Enter po kazdym):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Konsola dziala&#39;</span><span class="p">)</span>
+<span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">iface</span><span class="p">)</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Zaobserwuj jak QGIS wyswietla wyniki w obszarze wyjscia.</p>
+</section>
+<section id="zadanie-1-2">
+<h3>Zadanie 1.2<a class="headerlink" href="#zadanie-1-2" title="Permalink to this heading">#</a></h3>
+<p>Przejdz do <strong>edytora skryptow</strong> (jesli go nie widzisz, kliknij ikone <em>Pokaz edytor</em>).</p>
+<p>Wpisz w edytorze:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;To jest edytor skryptow&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tutaj pisze sie dluzszy kod&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Suma: </span><span class="si">{</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Zapisz plik jako <code class="docutils literal notranslate"><span class="pre">test.py</span></code>, nastepnie uruchom przyciskiem <em>Uruchom skrypt</em>
+lub skrotem <code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+E</span></code>.</p>
+<p><strong>Pytanie 1.2</strong> — W jakim folderze domyslnie proponuje zapisac plik edytor skryptow QGIS?
+Co sie stanie jesli zamkniesz QGIS bez zapisania skryptu?</p>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="inspekcja-projektu-przez-qgsproject">
+<h2>2. Inspekcja projektu przez QgsProject<a class="headerlink" href="#inspekcja-projektu-przez-qgsproject" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-2-1">
+<h3>Zadanie 2.1<a class="headerlink" href="#zadanie-2-1" title="Permalink to this heading">#</a></h3>
+<p>W Konsoli Pythona wpisz ponizszy kod i uruchom go:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">fileName</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">homePath</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">projekt</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Jesli projekt nie ma tytulu, metoda <code class="docutils literal notranslate"><span class="pre">title()</span></code> zwroci pusty ciag znakow <code class="docutils literal notranslate"><span class="pre">''</span></code>.
+Ustaw tytul przez <code class="docutils literal notranslate"><span class="pre">Projekt</span> <span class="pre">-&gt;</span> <span class="pre">Wlasciwosci</span> <span class="pre">projektu</span> <span class="pre">-&gt;</span> <span class="pre">Ogolne</span></code>, a nastepnie
+uruchom kod ponownie i zaobserwuj zmiane.</p>
+<p><strong>Pytanie 2.1</strong> — Jaka wartosc zwrocila metoda <code class="docutils literal notranslate"><span class="pre">fileName()</span></code> przed zapisem projektu?
+Co to oznacza i jak sie nazywa taki stan projektu?</p>
+</section>
+<section id="zadanie-2-2">
+<h3>Zadanie 2.2<a class="headerlink" href="#zadanie-2-2" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod i przeanalizuj wynik:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="n">p1</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span> <span class="ow">is</span> <span class="n">p2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">p1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">p2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Wskazowka: przypomnij sobie pojecie <strong>singleton</strong> z wykladu.</p>
+<p><strong>Pytanie 2.2</strong> — Co oznacza wynik <code class="docutils literal notranslate"><span class="pre">True</span></code> dla operatora <code class="docutils literal notranslate"><span class="pre">is</span></code>?
+Dlaczego <code class="docutils literal notranslate"><span class="pre">QgsProject</span></code> jest zaprojektowany jako singleton
+i jakie praktyczne konsekwencje ma to dla pisania skryptow?</p>
+</section>
+<section id="zadanie-2-3">
+<h3>Zadanie 2.3<a class="headerlink" href="#zadanie-2-3" title="Permalink to this heading">#</a></h3>
+<p>Sprawdz ile warstw jest zaladowanych w projekcie oraz wylistuj je:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+<span class="n">warstwy</span> <span class="o">=</span> <span class="n">projekt</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">warstwy</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">warstwy</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">warstwy</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">layer_id</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 2.3</strong> — Jakiego typu obiektem jest wynik <code class="docutils literal notranslate"><span class="pre">mapLayers()</span></code>?
+Czym jest <code class="docutils literal notranslate"><span class="pre">layer_id</span></code> — jak wyglada i do czego sluzy?</p>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="pobieranie-i-filtrowanie-warstw">
+<h2>3. Pobieranie i filtrowanie warstw<a class="headerlink" href="#pobieranie-i-filtrowanie-warstw" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-3-1">
+<h3>Zadanie 3.1<a class="headerlink" href="#zadanie-3-1" title="Permalink to this heading">#</a></h3>
+<p>Pobierz warstwe po nazwie, a nastepnie sprawdz co sie stanie
+jesli podasz nazwe warstwy ktora nie istnieje:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="c1"># Zmien &#39;kraje&#39; na nazwe jednej z Twoich warstw</span>
+<span class="n">wynik</span> <span class="o">=</span> <span class="n">projekt</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;kraje&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">wynik</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wynik</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wynik</span><span class="p">)</span>
+
+<span class="c1"># Teraz podaj nazwe ktora nie istnieje</span>
+<span class="n">brak</span> <span class="o">=</span> <span class="n">projekt</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;warstwa_ktora_nie_istnieje&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">brak</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 3.1</strong> — <code class="docutils literal notranslate"><span class="pre">mapLayersByName()</span></code> zwraca liste, a nie pojedynczy obiekt.
+Dlaczego tak zostalo zaprojektowane to API?
+Napisz fragment kodu ktory bezpiecznie pobiera pierwsza warstwe
+o podanej nazwie i nie spowoduje bledu gdy jej nie ma.</p>
+</section>
+<section id="zadanie-3-2">
+<h3>Zadanie 3.2<a class="headerlink" href="#zadanie-3-2" title="Permalink to this heading">#</a></h3>
+<p>Wylistuj tylko warstwy wektorowe z projektu, pomijajac rastrowe:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsMapLayer</span>
+
+<span class="n">projekt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">projekt</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Przyjrzyj sie wartosciom <code class="docutils literal notranslate"><span class="pre">layer.type()</span></code> dla roznych warstw.
+Nastepnie zmodyfikuj petlę tak, zeby drukowala tylko warstwy wektorowe.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tu zapisz kod:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 3.2</strong> — Jaka wartosc liczbowa odpowiada typowi <code class="docutils literal notranslate"><span class="pre">VectorLayer</span></code>,
+a jaka <code class="docutils literal notranslate"><span class="pre">RasterLayer</span></code>? Sprawdz to w konsoli:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsMapLayer</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">VectorLayer</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">RasterLayer</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="wlasciwosci-warstwy-wektorowej">
+<h2>4. Wlasciwosci warstwy wektorowej<a class="headerlink" href="#wlasciwosci-warstwy-wektorowej" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-4-1">
+<h3>Zadanie 4.1<a class="headerlink" href="#zadanie-4-1" title="Permalink to this heading">#</a></h3>
+<p>Wybierz jedna ze swoich warstw wektorowych i odczytaj jej podstawowe wlasciwosci.
+Uruchom ponizszy kod (dostosuj nazwe warstwy):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsWkbTypes</span>
+
+<span class="n">warstwy</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;kraje&#39;</span><span class="p">)</span>  <span class="c1"># zmien nazwe</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">warstwy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Nazwa          : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zrodlo         : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">source</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS            : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Typ geometrii  : </span><span class="si">{</span><span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">displayString</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">wkbType</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba obiektow: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba pol     : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">zasieg</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">extent</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zasieg xMin    : </span><span class="si">{</span><span class="n">zasieg</span><span class="o">.</span><span class="n">xMinimum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zasieg xMax    : </span><span class="si">{</span><span class="n">zasieg</span><span class="o">.</span><span class="n">xMaximum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zasieg yMin    : </span><span class="si">{</span><span class="n">zasieg</span><span class="o">.</span><span class="n">yMinimum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zasieg yMax    : </span><span class="si">{</span><span class="n">zasieg</span><span class="o">.</span><span class="n">yMaximum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 4.1</strong> — Co oznacza wartosc zwrocona przez <code class="docutils literal notranslate"><span class="pre">layer.source()</span></code>?
+Czym rozni sie <code class="docutils literal notranslate"><span class="pre">source()</span></code> od <code class="docutils literal notranslate"><span class="pre">fileName()</span></code> w kontekscie warstwy?</p>
+</section>
+<section id="zadanie-4-2">
+<h3>Zadanie 4.2<a class="headerlink" href="#zadanie-4-2" title="Permalink to this heading">#</a></h3>
+<p>Wylistuj wszystkie pola atrybutow wybranej warstwy wraz z ich typami.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;kraje&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># zmien nazwe</span>
+
+<span class="n">pola</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba pol: </span><span class="si">{</span><span class="n">pola</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="n">pola</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">:</span><span class="s1">&lt;20</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">typeName</span><span class="p">()</span><span class="si">:</span><span class="s1">&lt;12</span><span class="si">}</span><span class="s1"> dlugosc: </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Nastepnie odpowiedz na pytanie ponizej.</p>
+<p><strong>Pytanie 4.2</strong> — Znajdz w wyniku pole przechowujace liczbe ludnosci
+(lub inne pole numeryczne). Jaki ma typ? Czym rozni sie typ <code class="docutils literal notranslate"><span class="pre">Integer</span></code>
+od <code class="docutils literal notranslate"><span class="pre">Real</span></code> w kontekscie atrybutow GIS?</p>
+</section>
+<section id="zadanie-4-3-samodzielne">
+<h3>Zadanie 4.3 — Samodzielne<a class="headerlink" href="#zadanie-4-3-samodzielne" title="Permalink to this heading">#</a></h3>
+<p>Bez korzystania z gotowego kodu z wykladu, napisz w edytorze skryptow
+fragment ktory dla aktywnej warstwy wypisuje:</p>
+<ul class="simple">
+<li><p>nazwe warstwy,</p></li>
+<li><p>kod EPSG jej ukladu wspolrzednych,</p></li>
+<li><p>typ geometrii jako czytelny napis (np. <code class="docutils literal notranslate"><span class="pre">'Polygon'</span></code>),</p></li>
+<li><p>liczbe obiektow,</p></li>
+<li><p>liste nazw wszystkich pol atrybutow w jednej linii oddzielonych przecinkami.</p></li>
+</ul>
+<p>Wskazowka: uzyj <code class="docutils literal notranslate"><span class="pre">iface.activeLayer()</span></code> zeby pobrac aktywna warstwe.
+Zaznacz warstwe w Panelu warstw i uruchom skrypt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod (wklej tutaj po napisaniu w QGIS):</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="iteracja-po-obiektach-i-atrybutach">
+<h2>5. Iteracja po obiektach i atrybutach<a class="headerlink" href="#iteracja-po-obiektach-i-atrybutach" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-5-1">
+<h3>Zadanie 5.1<a class="headerlink" href="#zadanie-5-1" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod na warstwie wektorowej i przeanalizuj wynik:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;kraje&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># zmien nazwe</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pierwsze 3 obiekty:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id         : </span><span class="si">{</span><span class="n">obiekt</span><span class="o">.</span><span class="n">id</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;atrybuty   : </span><span class="si">{</span><span class="n">obiekt</span><span class="o">.</span><span class="n">attributes</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;typ geom   : </span><span class="si">{</span><span class="n">obiekt</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">type</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 5.1</strong> — <code class="docutils literal notranslate"><span class="pre">obiekt.attributes()</span></code> zwraca liste wartosci.
+Jak odniesiesz konkretna wartosc do nazwy pola?
+Napisz dwa sposoby dostepu do wartosci pola o nazwie <code class="docutils literal notranslate"><span class="pre">'name'</span></code>:
+jeden przez indeks, drugi przez nazwe pola.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz i dwa sposoby dostepu:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-5-2">
+<h3>Zadanie 5.2<a class="headerlink" href="#zadanie-5-2" title="Permalink to this heading">#</a></h3>
+<p>Policz ile obiektow warstwy ma wartosc w pewnym polu numerycznym
+wiekszą od progu ktory sam/a ustalisz. Na przykład, liczba krajów w populacji powyżej 10 mln ludzi. Uzupelnij ponizszy szablon:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;kraje&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># zmien nazwe</span>
+
+<span class="n">POLE</span> <span class="o">=</span> <span class="s1">&#39;pop_est&#39;</span>    <span class="c1"># zmien na nazwe pola numerycznego w Twojej warstwie</span>
+<span class="n">PROG</span> <span class="o">=</span> <span class="mi">10_000_000</span>   <span class="c1"># zmien na dowolna wartosc</span>
+
+<span class="n">licznik</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">obiekt</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="n">wartosc</span> <span class="o">=</span> <span class="n">obiekt</span><span class="p">[</span><span class="n">POLE</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">wartosc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">wartosc</span> <span class="o">&gt;</span> <span class="n">PROG</span><span class="p">:</span>
+        <span class="n">licznik</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Obiektow z </span><span class="si">{</span><span class="n">POLE</span><span class="si">}</span><span class="s1"> &gt; </span><span class="si">{</span><span class="n">PROG</span><span class="si">:</span><span class="s1">,</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">licznik</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wszystkich obiektow      : </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 5.2</strong> — Dlaczego w warunku sprawdzamy <code class="docutils literal notranslate"><span class="pre">wartosc</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code>
+zanim porowniemy ja z progiem? Co sie stanie jesli tego nie zrobimy
+i w warstwie jest obiekt z pusta wartoscia w danym polu?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-5-3">
+<h3>Zadanie 5.3<a class="headerlink" href="#zadanie-5-3" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod i zaobserwuj roznice w czasie wykonania:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeatureRequest</span>
+
+<span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;kraje&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># zmien nazwe</span>
+<span class="n">POLE</span> <span class="o">=</span> <span class="s1">&#39;continent&#39;</span>
+<span class="n">WARTOSC</span> <span class="o">=</span> <span class="s1">&#39;Europe&#39;</span>
+
+<span class="c1"># Sposob 1: filtrowanie w Pythonie</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">wynik1</span> <span class="o">=</span> <span class="p">[</span><span class="n">ob</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span> <span class="k">if</span> <span class="n">ob</span><span class="p">[</span><span class="n">POLE</span><span class="p">]</span> <span class="o">==</span> <span class="n">WARTOSC</span><span class="p">]</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Filtrowanie Python : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wynik1</span><span class="p">)</span><span class="si">}</span><span class="s1"> obiektow w </span><span class="si">{</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> s&#39;</span><span class="p">)</span>
+
+<span class="c1"># Sposob 2: filtrowanie przez QgsFeatureRequest</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setFilterExpression</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">POLE</span><span class="si">}</span><span class="s1">&quot; = </span><span class="se">\&#39;</span><span class="si">{</span><span class="n">WARTOSC</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">wynik2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">req</span><span class="p">))</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;QgsFeatureRequest  : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wynik2</span><span class="p">)</span><span class="si">}</span><span class="s1"> obiektow w </span><span class="si">{</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> s&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 5.3</strong> — Ktory sposob jest szybszy i dlaczego?
+Przy jakiej wielkosci warstwy roznica staje sie istotna w praktyce?
+Kiedy mimo to mogloby byc lepiej filtrowac w Pythonie?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="zadanie-laczace">
+<h2>6. Zadanie laczace<a class="headerlink" href="#zadanie-laczace" title="Permalink to this heading">#</a></h2>
+<p>Ponizsze zadanie laczy umiejetnosci z calego cwiczenia.
+Napisz je samodzielnie w edytorze skryptow QGIS, a nastepnie wklej kod ponizej.</p>
+<section id="zadanie-6-1-skrypt-statystyk-warstwy">
+<h3>Zadanie 6.1 — Skrypt statystyk warstwy<a class="headerlink" href="#zadanie-6-1-skrypt-statystyk-warstwy" title="Permalink to this heading">#</a></h3>
+<p>Napisz skrypt ktory dla <strong>aktywnej warstwy wektorowej</strong> wyswietla:</p>
+<ol class="arabic simple">
+<li><p>Nazwe warstwy, typ geometrii i liczbe obiektow.</p></li>
+<li><p>Liste pol atrybutow z ich typami.</p></li>
+<li><p>Dla kazdego pola <strong>numerycznego</strong> — minimalna i maksymalna wartosc wsrod obiektow
+(iteruj po obiektach i szukaj min/max recznie, bez uzycia bibliotek statystycznych).</p></li>
+<li><p>Komunikat bledu jesli aktywna warstwa nie jest wektorowa lub jesli brak aktywnej warstwy.</p></li>
+</ol>
+<p>Wymagania dotyczace kodu:</p>
+<ul class="simple">
+<li><p>uzyj <code class="docutils literal notranslate"><span class="pre">iface.activeLayer()</span></code>,</p></li>
+<li><p>sprawdz typ warstwy przed iteracja,</p></li>
+<li><p>pomijaj wartosci <code class="docutils literal notranslate"><span class="pre">None</span></code> przy obliczaniu min/max,</p></li>
+<li><p>typ pola numerycznego to <code class="docutils literal notranslate"><span class="pre">'Integer'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Real'</span></code> lub <code class="docutils literal notranslate"><span class="pre">'Integer64'</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj skrypt (wklej tutaj po napisaniu w QGIS):</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 6.1</strong> — Co zrobilbys/zrobilabys inaczej, gdyby warstwa miala milion obiektow
+zamiast kilkuset? Czy Twoj skrypt nadal by dzialal? Co mozna by zoptymalizowac?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="podsumowanie-c2">
+<h2>Podsumowanie C2<a class="headerlink" href="#podsumowanie-c2" title="Permalink to this heading">#</a></h2>
+<p>W tym cwiczeniu pracowales/pracowałas z:</p>
+<ul class="simple">
+<li><p>Konsola Pythona i edytorem skryptow w QGIS,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsProject.instance()</span></code> — inspekcja projektu, pobieranie warstw,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code> — wlasciwosci warstwy, pola atrybutow, zasieg,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getFeatures()</span></code> — iteracja po obiektach i odczyt atrybutow,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsFeatureRequest</span></code> — wydajne filtrowanie po stronie dostawcy danych.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="na-c3">
+<h3>Na C3<a class="headerlink" href="#na-c3" title="Permalink to this heading">#</a></h3>
+<p>Nastepne cwiczenie poswiecone jest operacjom na atrybutach:
+selekcja programowa, modyfikacja wartosci w trybie edycji
+oraz zapis wynikow do nowych plikow.</p>
+<hr class="docutils" />
+<p><em>Cwiczenie C2 — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Wyklad 2: Programowanie skryptowe w PyQGIS</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rozgrzewka-konsola-pythona">1. Rozgrzewka — Konsola Pythona</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspekcja-projektu-przez-qgsproject">2. Inspekcja projektu przez QgsProject</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1">Zadanie 2.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2">Zadanie 2.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-3">Zadanie 2.3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pobieranie-i-filtrowanie-warstw">3. Pobieranie i filtrowanie warstw</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1">Zadanie 3.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2">Zadanie 3.2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wlasciwosci-warstwy-wektorowej">4. Wlasciwosci warstwy wektorowej</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1">Zadanie 4.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2">Zadanie 4.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-3-samodzielne">Zadanie 4.3 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracja-po-obiektach-i-atrybutach">5. Iteracja po obiektach i atrybutach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1">Zadanie 5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2">Zadanie 5.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-3">Zadanie 5.3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">6. Zadanie laczace</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-skrypt-statystyk-warstwy">Zadanie 6.1 — Skrypt statystyk warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c2">Podsumowanie C2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c3">Na C3</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
