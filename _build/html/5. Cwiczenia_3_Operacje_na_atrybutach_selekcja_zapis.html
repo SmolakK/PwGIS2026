@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '5. Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -164,10 +165,12 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
 </ul>
 
     </div>
@@ -365,7 +368,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">1. Selekcja programowa</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
@@ -471,17 +473,6 @@ prawym przyciskiem na warstwe -&gt; <code class="docutils literal notranslate"><
 -&gt; format GeoPackage -&gt; nazwa <code class="docutils literal notranslate"><span class="pre">cwiczenie_c3.gpkg</span></code>.
 Dalej pracuj na tej kopii, nie na oryginale.</p></li>
 <li><p>Otworz Konsole Pythona i edytor skryptow.</p></li>
-</ol>
-</section>
-<section id="spis-tresci">
-<h2>Spis tresci<a class="headerlink" href="#spis-tresci" title="Permalink to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><span class="xref myst">Selekcja programowa</span></p></li>
-<li><p><span class="xref myst">Tryb edycji i zmiana atrybutow</span></p></li>
-<li><p><span class="xref myst">Dodawanie nowych obiektow</span></p></li>
-<li><p><span class="xref myst">Usuwanie obiektow</span></p></li>
-<li><p><span class="xref myst">Zapis do pliku</span></p></li>
-<li><p><span class="xref myst">Zadanie laczace</span></p></li>
 </ol>
 <hr class="docutils" />
 <p><a id='s1'></a></p>
@@ -697,7 +688,7 @@ Sprawdz to w konsoli i opisz wynik.</p>
 <h3>Zadanie 3.2 — Samodzielne<a class="headerlink" href="#zadanie-3-2-samodzielne" title="Permalink to this heading">#</a></h3>
 <p>Napisz skrypt ktory dodaje do warstwy punktowej
 <strong>trzy nowe punkty</strong> rozmieszczone w roznych miejscach Polski
-(mozesz wybrac Warszawa, Krakow, Wroclaw lub inne miasta).</p>
+(mozesz wybrac Warszawa, Krakow, Wroclaw lub inne miasta) - jakie wpiszesz wspólrzędne?</p>
 <p>Wymagania:</p>
 <ul class="simple">
 <li><p>dodaj wszystkie trzy obiekty w <strong>jednym</strong> bloku <code class="docutils literal notranslate"><span class="pre">startEditing</span> <span class="pre">/</span> <span class="pre">commitChanges</span></code>,</p></li>
@@ -922,7 +913,7 @@ Ktory z nich jest bardziej wydajny dla warstwy z 1 milionem obiektow?</p>
 wczytywanie, filtrowanie i analiza danych wektorowych poza QGIS,
 w srodowisku Jupyter.</p>
 <hr class="docutils" />
-<p><em>Cwiczenie C3 — Programowanie w GIS (QGIS) — studia licencjackie.</em></p>
+<p><em>Cwiczenie C3 — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
 </section>
 </section>
 </section>
@@ -957,6 +948,15 @@ w srodowisku Jupyter.</p>
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -976,7 +976,6 @@ w srodowisku Jupyter.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele ćwiczenia</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">1. Selekcja programowa</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
