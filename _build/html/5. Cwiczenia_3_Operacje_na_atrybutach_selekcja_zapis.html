@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '5. Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html" />
     <link rel="prev" title="Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -171,6 +172,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
 </ul>
 
     </div>
@@ -371,7 +373,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">1. Selekcja programowa</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-samodzielne">Zadanie 1.3 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3">Zadanie 1.3</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tryb-edycji-i-zmiana-atrybutow">2. Tryb edycji i zmiana atrybutow</a><ul class="nav section-nav flex-column">
@@ -381,27 +383,24 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-nowych-obiektow">3. Dodawanie nowych obiektow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1">Zadanie 3.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-samodzielne">Zadanie 3.2 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2">Zadanie 3.2</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usuwanie-obiektow">4. Usuwanie obiektow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1">Zadanie 4.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-samodzielne">Zadanie 4.2 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2">Zadanie 4.2</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-do-pliku">5. Zapis do pliku</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1">Zadanie 5.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-samodzielne">Zadanie 5.2 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2">Zadanie 5.2</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">6. Zadanie laczace</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-skrypt-przetwarzania-wsadowego">Zadanie 6.1 — Skrypt przetwarzania wsadowego</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c3">Podsumowanie C3</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c4">Na C4</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c3">Podsumowanie C3</a></li>
 </ul>
             </nav>
         </div>
@@ -468,10 +467,6 @@ document.write(`
 <ol class="arabic simple">
 <li><p>Uruchom QGIS z projektem z poprzedniego cwiczenia.</p></li>
 <li><p>Upewnij sie ze masz zaladowana warstwe wektorowa z polem tekstowym i numerycznym.</p></li>
-<li><p><strong>Zrob kopie warstwy</strong> zanim zaczniesz modyfikacje:
-prawym przyciskiem na warstwe -&gt; <code class="docutils literal notranslate"><span class="pre">Eksportuj</span> <span class="pre">-&gt;</span> <span class="pre">Zapisz</span> <span class="pre">obiekty</span> <span class="pre">jako...</span></code>
--&gt; format GeoPackage -&gt; nazwa <code class="docutils literal notranslate"><span class="pre">cwiczenie_c3.gpkg</span></code>.
-Dalej pracuj na tej kopii, nie na oryginale.</p></li>
 <li><p>Otworz Konsole Pythona i edytor skryptow.</p></li>
 </ol>
 <hr class="docutils" />
@@ -481,7 +476,7 @@ Dalej pracuj na tej kopii, nie na oryginale.</p></li>
 <h2>1. Selekcja programowa<a class="headerlink" href="#selekcja-programowa" title="Permalink to this heading">#</a></h2>
 <section id="zadanie-1-1">
 <h3>Zadanie 1.1<a class="headerlink" href="#zadanie-1-1" title="Permalink to this heading">#</a></h3>
-<p>Zaladuj kopie warstwy (<code class="docutils literal notranslate"><span class="pre">cwiczenie_c3.gpkg</span></code>) do projektu jesli jeszcze tego
+<p>Zaladuj kopie warstwy do projektu jesli jeszcze tego
 nie zrobiles/zrobilias. Nastepnie uruchom ponizszy kod:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;cwiczenie_c3&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -505,6 +500,7 @@ Jak laczymy wiele warunkow w wyrazeniu QGIS?</p>
 </div>
 </div>
 </div>
+<p><strong>Pytanie 1.2</strong> — Zmień programistycznie kolor podświetlenia. Użyj zapisu koloru w HEX (<a class="reference external" href="https://htmlcolorcodes.com/color-picker/">https://htmlcolorcodes.com/color-picker/</a>)</p>
 </section>
 <section id="zadanie-1-2">
 <h3>Zadanie 1.2<a class="headerlink" href="#zadanie-1-2" title="Permalink to this heading">#</a></h3>
@@ -541,8 +537,8 @@ W jakich sytuacjach wolalbys/wolalabys uzyc metody z lista <code class="docutils
 </div>
 </div>
 </section>
-<section id="zadanie-1-3-samodzielne">
-<h3>Zadanie 1.3 — Samodzielne<a class="headerlink" href="#zadanie-1-3-samodzielne" title="Permalink to this heading">#</a></h3>
+<section id="zadanie-1-3">
+<h3>Zadanie 1.3<a class="headerlink" href="#zadanie-1-3" title="Permalink to this heading">#</a></h3>
 <p>Napisz kod ktory zaznacza obiekty w <strong>zasięgu przestrzennym</strong> ograniczonym
 do Europy Srodkowej (przyblizony bbox: lon 10–25, lat 46–55).</p>
 <p>Wskazowka: uzyj <code class="docutils literal notranslate"><span class="pre">layer.selectByRect(QgsRectangle(...))</span></code>.
@@ -684,9 +680,9 @@ Sprawdz to w konsoli i opisz wynik.</p>
 </div>
 </div>
 </section>
-<section id="zadanie-3-2-samodzielne">
-<h3>Zadanie 3.2 — Samodzielne<a class="headerlink" href="#zadanie-3-2-samodzielne" title="Permalink to this heading">#</a></h3>
-<p>Napisz skrypt ktory dodaje do warstwy punktowej
+<section id="zadanie-3-2">
+<h3>Zadanie 3.2<a class="headerlink" href="#zadanie-3-2" title="Permalink to this heading">#</a></h3>
+<p>Napisz skrypt ktory dodaje do warstwy punktowej (może być tymczasowa warstwa punktowa lub istniejąca)
 <strong>trzy nowe punkty</strong> rozmieszczone w roznych miejscach Polski
 (mozesz wybrac Warszawa, Krakow, Wroclaw lub inne miasta) - jakie wpiszesz wspólrzędne?</p>
 <p>Wymagania:</p>
@@ -744,8 +740,8 @@ usuwac obiekty wewnatrz jednej petli po <code class="docutils literal notranslat
 </div>
 </div>
 </section>
-<section id="zadanie-4-2-samodzielne">
-<h3>Zadanie 4.2 — Samodzielne<a class="headerlink" href="#zadanie-4-2-samodzielne" title="Permalink to this heading">#</a></h3>
+<section id="zadanie-4-2">
+<h3>Zadanie 4.2<a class="headerlink" href="#zadanie-4-2" title="Permalink to this heading">#</a></h3>
 <p>Napisz skrypt ktory:</p>
 <ol class="arabic simple">
 <li><p>Pyta uzytkownika (przez <code class="docutils literal notranslate"><span class="pre">input()</span></code>) o nazwe pola i prog numeryczny.</p></li>
@@ -808,11 +804,11 @@ Kiedy i dlaczego warto uzywac metody programowej?</p>
 </div>
 </div>
 </section>
-<section id="zadanie-5-2-samodzielne">
-<h3>Zadanie 5.2 — Samodzielne<a class="headerlink" href="#zadanie-5-2-samodzielne" title="Permalink to this heading">#</a></h3>
+<section id="zadanie-5-2">
+<h3>Zadanie 5.2<a class="headerlink" href="#zadanie-5-2" title="Permalink to this heading">#</a></h3>
 <p>Rozszerz skrypt z zadania 5.1 tak, zeby:</p>
 <ol class="arabic simple">
-<li><p>Przed zapisem reprojekcjonowal warstwe do ukladu <strong>EPSG:2180</strong> (Polska CS92).</p></li>
+<li><p>Przed zapisem transformowal warstwe do ukladu <strong>EPSG:2180</strong> (Polska CS92).</p></li>
 <li><p>Zapisywal tylko <strong>zaznaczone obiekty</strong> (jesli jakies sa zaznaczone),
 a jesli nie ma zaznaczenia — zapisywal wszystkie.</p></li>
 </ol>
@@ -907,14 +903,7 @@ Ktory z nich jest bardziej wydajny dla warstwy z 1 milionem obiektow?</p>
 <li><p>zapisem do pliku: <code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code>.</p></li>
 </ul>
 <hr class="docutils" />
-<section id="na-c4">
-<h3>Na C4<a class="headerlink" href="#na-c4" title="Permalink to this heading">#</a></h3>
-<p>Nastepne cwiczenie poswiecone jest bibliotece GeoPandas:
-wczytywanie, filtrowanie i analiza danych wektorowych poza QGIS,
-w srodowisku Jupyter.</p>
-<hr class="docutils" />
 <p><em>Cwiczenie C3 — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
-</section>
 </section>
 </section>
 
@@ -957,6 +946,15 @@ w srodowisku Jupyter.</p>
         <p class="prev-next-title">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</p>
       </div>
     </a>
+    <a class="right-next"
+       href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -979,7 +977,7 @@ w srodowisku Jupyter.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selekcja-programowa">1. Selekcja programowa</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1">Zadanie 1.1</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2">Zadanie 1.2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-samodzielne">Zadanie 1.3 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3">Zadanie 1.3</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tryb-edycji-i-zmiana-atrybutow">2. Tryb edycji i zmiana atrybutow</a><ul class="nav section-nav flex-column">
@@ -989,27 +987,24 @@ w srodowisku Jupyter.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-nowych-obiektow">3. Dodawanie nowych obiektow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1">Zadanie 3.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-samodzielne">Zadanie 3.2 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2">Zadanie 3.2</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usuwanie-obiektow">4. Usuwanie obiektow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1">Zadanie 4.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-samodzielne">Zadanie 4.2 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2">Zadanie 4.2</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-do-pliku">5. Zapis do pliku</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1">Zadanie 5.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-samodzielne">Zadanie 5.2 — Samodzielne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2">Zadanie 5.2</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">6. Zadanie laczace</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-skrypt-przetwarzania-wsadowego">Zadanie 6.1 — Skrypt przetwarzania wsadowego</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c3">Podsumowanie C3</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c4">Na C4</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c3">Podsumowanie C3</a></li>
 </ul>
   </nav></div>
 
