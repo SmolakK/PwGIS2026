@@ -1,0 +1,2420 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '8. Wyklad_4_GeoPandas';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="C4: QgsGeometry, QgsFeature i praca z warstwami" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html" />
+    <link rel="prev" title="Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F8. Wyklad_4_GeoPandas.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/8. Wyklad_4_GeoPandas.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentow I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-ten-wyklad">Czym jest ten wyklad</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacja">Instalacja</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geopandas-kontra-pyqgis-kiedy-co-uzyc">1. GeoPandas kontra PyQGIS — kiedy co uzyc</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamentalna-roznica">1.1 Fundamentalna roznica</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-uzyc-pyqgis">1.2 Kiedy uzyc PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-uzyc-geopandas">1.3 Kiedy uzyc GeoPandas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odpowiedz">1.4 Odpowiedz</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geodataframe-struktura-danych">2. GeoDataFrame — struktura danych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-to-jest-geodataframe">2.1 Co to jest GeoDataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogia-pyqgis-geopandas">2.2 Analogia PyQGIS — GeoPandas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowa-struktura">2.3 Podstawowa struktura</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-i-zapis-danych">3. Wczytywanie i zapis danych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-read-file">3.1 Wczytywanie — read_file()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-to-file">3.2 Zapis — to_file()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-geodataframe-od-podstaw">3.3 Tworzenie GeoDataFrame od podstaw</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uklady-wspolrzednych-w-geopandas">4. Uklady wspolrzednych w GeoPandas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sprawdzanie-i-ustawianie-crs">4.1 Sprawdzanie i ustawianie CRS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-crs-vs-to-crs-krytyczna-roznica">4.2 set_crs vs to_crs — krytyczna roznica</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reprojekcja-calej-warstwy">4.3 Reprojekcja calej warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-i-eksploracja-atrybutow">5. Filtrowanie i eksploracja atrybutow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-atrybutowe">5.1 Filtrowanie atrybutowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-na-kolumnach">5.2 Operacje na kolumnach</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wizualizacja-od-prostej-mapy-do-choropletycznej">6. Wizualizacja — od prostej mapy do choropletycznej</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowa-mapa">6.1 Podstawowa mapa</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametry-plot">6.2 Parametry plot()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contextily-podklady-mapowe">6.3 Contextily — podklady mapowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metody-klasyfikacji-mapclassify">6.4 Metody klasyfikacji (mapclassify)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-przestrzenne-overlay-i-spatial-join">7. Operacje przestrzenne — overlay i spatial join</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-join-sjoin">7.1 Spatial Join — sjoin()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overlay-naklada-dane-geometrycznie">7.2 Overlay — naklada dane geometrycznie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dissolve-scalanie-obiektow">8. Dissolve — scalanie obiektow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-dissolve">8.1 Czym jest dissolve</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typowe-funkcje-agregacji">8.2 Typowe funkcje agregacji</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pomiary-geometryczne">9. Pomiary geometryczne</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wbudowane-wlasciwosci-geometry">9.1 Wbudowane wlasciwosci geometry</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pomiary-metryczne">9.2 Pomiary metryczne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-slownik-pojec">10. Podsumowanie i slownik pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-omowilismy-na-wykladzie-4">10.1 Co omowilismy na wykladzie 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-najwazniejszych-metod-i-klas">10.2 Slownik najważniejszych metod i klas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literatura-i-zasoby">Literatura i zasoby</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="wyklad-4-geopandas-analiza-danych-przestrzennych-poza-qgis">
+<h1>Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS<a class="headerlink" href="#wyklad-4-geopandas-analiza-danych-przestrzennych-poza-qgis" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-kurs-dla-studentow-i-stopnia">
+<h2>Programowanie w GIS — Kurs dla studentow I stopnia<a class="headerlink" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Wyklad:</strong> 4 z 7<br />
+<strong>Tematy:</strong> GeoDataFrame | Wczytywanie i zapis | CRS | Wizualizacja | Operacje przestrzenne | GeoPandas vs PyQGIS<br />
+<strong>Wymagania wstepne:</strong> Python, podstawy Pandas, Wyklad 3</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="czym-jest-ten-wyklad">
+<h2>Czym jest ten wyklad<a class="headerlink" href="#czym-jest-ten-wyklad" title="Permalink to this heading">#</a></h2>
+<p>Po trzech wykladach o PyQGIS robimy krok wstecz i patrzymy na dane przestrzenne
+z innej perspektywy. <strong>GeoPandas</strong> pozwala analizowac dane wektorowe
+calkowicie poza aplikacja QGIS — w Jupyterze, skryptach automatycznych,
+pipeline’ach danych i srodowiskach serwerowych.</p>
+<p>Ten notatnik dziala <strong>bez QGIS</strong> — uruchamiaj wszystkie komorki tutaj, w Jupyter.</p>
+<hr class="docutils" />
+</section>
+<section id="instalacja">
+<h2>Instalacja<a class="headerlink" href="#instalacja" title="Permalink to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install geopandas matplotlib contextily mapclassify
+</pre></div>
+</div>
+</section>
+<section id="spis-tresci">
+<h2>Spis tresci<a class="headerlink" href="#spis-tresci" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><span class="xref myst">GeoPandas kontra PyQGIS — kiedy co uzyc</span></p></li>
+<li><p><span class="xref myst">GeoDataFrame — struktura danych</span></p></li>
+<li><p><span class="xref myst">Wczytywanie i zapis danych</span></p></li>
+<li><p><span class="xref myst">Uklady wspolrzednych w GeoPandas</span></p></li>
+<li><p><span class="xref myst">Filtrowanie i eksploracja atrybutow</span></p></li>
+<li><p><span class="xref myst">Wizualizacja — od prostej mapy do choropletycznej</span></p></li>
+<li><p><span class="xref myst">Operacje przestrzenne — overlay i spatial join</span></p></li>
+<li><p><span class="xref myst">Dissolve — scalanie obiektow</span></p></li>
+<li><p><span class="xref myst">Pomiary geometryczne</span></p></li>
+<li><p><span class="xref myst">Podsumowanie i slownik pojec</span></p></li>
+</ol>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="geopandas-kontra-pyqgis-kiedy-co-uzyc">
+<h2>1. GeoPandas kontra PyQGIS — kiedy co uzyc<a class="headerlink" href="#geopandas-kontra-pyqgis-kiedy-co-uzyc" title="Permalink to this heading">#</a></h2>
+<p>Zanim zaczniemy, odpowiedzmy na pytanie ktore pojawi sie u kazdego studenta:
+<em>po co uczyc sie GeoPandas skoro mamy PyQGIS?</em></p>
+<section id="fundamentalna-roznica">
+<h3>1.1 Fundamentalna roznica<a class="headerlink" href="#fundamentalna-roznica" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Cecha</p></th>
+<th class="head"><p>PyQGIS</p></th>
+<th class="head"><p>GeoPandas</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Wymaga QGIS</p></td>
+<td><p>Tak — dziala wewnatrz aplikacji</p></td>
+<td><p>Nie — czysty Python</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interfejs</p></td>
+<td><p>Obiektowy (warstwy, obiekty)</p></td>
+<td><p>Tabelaryczny (DataFrame)</p></td>
+</tr>
+<tr class="row-even"><td><p>Srodowisko</p></td>
+<td><p>Konsola QGIS, edytor skryptow</p></td>
+<td><p>Jupyter, terminal, serwer</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wizualizacja</p></td>
+<td><p>Obszar mapy QGIS</p></td>
+<td><p>Matplotlib, wbudowana</p></td>
+</tr>
+<tr class="row-even"><td><p>Integracja z data science</p></td>
+<td><p>Slaba</p></td>
+<td><p>Doskonala (Pandas, NumPy, scikit-learn)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dostep do Processing Toolbox</p></td>
+<td><p>Tak</p></td>
+<td><p>Nie</p></td>
+</tr>
+<tr class="row-even"><td><p>Edycja projektu QGIS</p></td>
+<td><p>Tak</p></td>
+<td><p>Nie</p></td>
+</tr>
+<tr class="row-odd"><td><p>Automatyzacja na serwerze</p></td>
+<td><p>Trudna</p></td>
+<td><p>Naturalna</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="kiedy-uzyc-pyqgis">
+<h3>1.2 Kiedy uzyc PyQGIS<a class="headerlink" href="#kiedy-uzyc-pyqgis" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pracujesz wewnatrz projektu QGIS i chcesz go modyfikowac.</p></li>
+<li><p>Potrzebujesz algorytmow Processing Toolbox.</p></li>
+<li><p>Tworzysz wtyczke z interfejsem graficznym.</p></li>
+<li><p>Chcesz automatyzowac operacje na otwartym projekcie.</p></li>
+</ul>
+</section>
+<section id="kiedy-uzyc-geopandas">
+<h3>1.3 Kiedy uzyc GeoPandas<a class="headerlink" href="#kiedy-uzyc-geopandas" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Piszesz skrypt ktory ma dzialac bez uruchamiania QGIS.</p></li>
+<li><p>Integrujesz dane przestrzenne z analiza danych (Pandas, Matplotlib, ML).</p></li>
+<li><p>Budujesz pipeline danych na serwerze lub w Jupyter.</p></li>
+<li><p>Chcesz szybko zbadac i zwizualizowac dane bez otwierania QGIS.</p></li>
+<li><p>Pracujesz w srodowisku gdzie QGIS nie jest dostepny.</p></li>
+</ul>
+</section>
+<section id="odpowiedz">
+<h3>1.4 Odpowiedz<a class="headerlink" href="#odpowiedz" title="Permalink to this heading">#</a></h3>
+<p>Nie ma jednej lepszej opcji. Profesjonalny programista GIS
+zna oba narzedzia i wybiera odpowiednie do zadania.
+Czesto jedno uzupelnia drugie: GeoPandas do analizy i przygotowania danych,
+PyQGIS do tworzenia projektów z dobrą wizualizacją kartograficzną.</p>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="geodataframe-struktura-danych">
+<h2>2. GeoDataFrame — struktura danych<a class="headerlink" href="#geodataframe-struktura-danych" title="Permalink to this heading">#</a></h2>
+<section id="co-to-jest-geodataframe">
+<h3>2.1 Co to jest GeoDataFrame<a class="headerlink" href="#co-to-jest-geodataframe" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> to rozszerzenie <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> z biblioteki Pandas.
+Dodaje do niego:</p>
+<ul class="simple">
+<li><p>kolumne <code class="docutils literal notranslate"><span class="pre">geometry</span></code> przechowujaca ksztalty obiektow (Shapely),</p></li>
+<li><p>metody przestrzenne: <code class="docutils literal notranslate"><span class="pre">.to_crs()</span></code>, <code class="docutils literal notranslate"><span class="pre">.buffer()</span></code>, <code class="docutils literal notranslate"><span class="pre">.sjoin()</span></code> i inne,</p></li>
+<li><p>atrybut <code class="docutils literal notranslate"><span class="pre">.crs</span></code> opisujacy uklad wspolrzednych.</p></li>
+</ul>
+<p>Kazdy wiersz to jeden obiekt przestrzenny — odpowiednik <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> z PyQGIS.</p>
+</section>
+<section id="analogia-pyqgis-geopandas">
+<h3>2.2 Analogia PyQGIS — GeoPandas<a class="headerlink" href="#analogia-pyqgis-geopandas" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>PyQGIS</p></th>
+<th class="head"><p>GeoPandas</p></th>
+<th class="head"><p>Rola</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code></p></td>
+<td><p>Warstwa wektorowa</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code></p></td>
+<td><p>Wiersz GeoDataFrame</p></td>
+<td><p>Pojedynczy obiekt</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsGeometry</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">shapely.geometry.*</span></code></p></td>
+<td><p>Ksztalt obiektu</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QgsFields</span></code></p></td>
+<td><p>Kolumny DataFrame</p></td>
+<td><p>Schemat atrybutow</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">layer.crs()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gdf.crs</span></code></p></td>
+<td><p>Uklad wspolrzednych</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">layer.getFeatures()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gdf.iterrows()</span></code> / operacje wektorowe</p></td>
+<td><p>Dostep do danych</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="podstawowa-struktura">
+<h3>2.3 Podstawowa struktura<a class="headerlink" href="#podstawowa-struktura" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GeoDataFrame</span><span class="p">:</span>
+   <span class="n">name</span>      <span class="n">pop_est</span>  <span class="n">continent</span>  <span class="n">geometry</span>
+<span class="mi">0</span>  <span class="n">Poland</span>   <span class="mi">37958138</span>     <span class="n">Europe</span>  <span class="n">MULTIPOLYGON</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="mi">1</span>  <span class="n">Germany</span>  <span class="mi">83783942</span>     <span class="n">Europe</span>  <span class="n">MULTIPOLYGON</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="mi">2</span>  <span class="n">France</span>   <span class="mi">67391582</span>     <span class="n">Europe</span>  <span class="n">MULTIPOLYGON</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+   <span class="o">...</span>        <span class="o">...</span>          <span class="o">...</span>       <span class="o">...</span>
+
+         <span class="o">^</span><span class="n">atrybuty</span><span class="o">^</span>              <span class="o">^</span><span class="n">geometria</span><span class="o">^</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instalacja (odkomentuj jesli potrzebne)</span>
+<span class="c1"># import subprocess, sys</span>
+<span class="c1"># subprocess.check_call([sys.executable, &#39;-m&#39;, &#39;pip&#39;, &#39;install&#39;,</span>
+<span class="c1">#     &#39;geopandas&#39;, &#39;matplotlib&#39;, &#39;contextily&#39;, &#39;mapclassify&#39;, &#39;-q&#39;])</span>
+
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;GeoPandas: </span><span class="si">{</span><span class="n">gpd</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pandas   : </span><span class="si">{</span><span class="n">pd</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Wczytaj wbudowany zbior danych</span>
+<span class="n">world</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Typ obiektu  : </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">world</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba wierszy: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Kolumny      : </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS          : </span><span class="si">{</span><span class="n">world</span><span class="o">.</span><span class="n">crs</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Typ geometrii: </span><span class="si">{</span><span class="n">world</span><span class="o">.</span><span class="n">geom_type</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GeoPandas: 1.0.1
+Pandas   : 1.4.2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Typ obiektu  : &lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
+Liczba wierszy: 177
+Kolumny      : [&#39;featurecla&#39;, &#39;scalerank&#39;, &#39;LABELRANK&#39;, &#39;SOVEREIGNT&#39;, &#39;SOV_A3&#39;, &#39;ADM0_DIF&#39;, &#39;LEVEL&#39;, &#39;TYPE&#39;, &#39;TLC&#39;, &#39;ADMIN&#39;, &#39;ADM0_A3&#39;, &#39;GEOU_DIF&#39;, &#39;GEOUNIT&#39;, &#39;GU_A3&#39;, &#39;SU_DIF&#39;, &#39;SUBUNIT&#39;, &#39;SU_A3&#39;, &#39;BRK_DIFF&#39;, &#39;NAME&#39;, &#39;NAME_LONG&#39;, &#39;BRK_A3&#39;, &#39;BRK_NAME&#39;, &#39;BRK_GROUP&#39;, &#39;ABBREV&#39;, &#39;POSTAL&#39;, &#39;FORMAL_EN&#39;, &#39;FORMAL_FR&#39;, &#39;NAME_CIAWF&#39;, &#39;NOTE_ADM0&#39;, &#39;NOTE_BRK&#39;, &#39;NAME_SORT&#39;, &#39;NAME_ALT&#39;, &#39;MAPCOLOR7&#39;, &#39;MAPCOLOR8&#39;, &#39;MAPCOLOR9&#39;, &#39;MAPCOLOR13&#39;, &#39;POP_EST&#39;, &#39;POP_RANK&#39;, &#39;POP_YEAR&#39;, &#39;GDP_MD&#39;, &#39;GDP_YEAR&#39;, &#39;ECONOMY&#39;, &#39;INCOME_GRP&#39;, &#39;FIPS_10&#39;, &#39;ISO_A2&#39;, &#39;ISO_A2_EH&#39;, &#39;ISO_A3&#39;, &#39;ISO_A3_EH&#39;, &#39;ISO_N3&#39;, &#39;ISO_N3_EH&#39;, &#39;UN_A3&#39;, &#39;WB_A2&#39;, &#39;WB_A3&#39;, &#39;WOE_ID&#39;, &#39;WOE_ID_EH&#39;, &#39;WOE_NOTE&#39;, &#39;ADM0_ISO&#39;, &#39;ADM0_DIFF&#39;, &#39;ADM0_TLC&#39;, &#39;ADM0_A3_US&#39;, &#39;ADM0_A3_FR&#39;, &#39;ADM0_A3_RU&#39;, &#39;ADM0_A3_ES&#39;, &#39;ADM0_A3_CN&#39;, &#39;ADM0_A3_TW&#39;, &#39;ADM0_A3_IN&#39;, &#39;ADM0_A3_NP&#39;, &#39;ADM0_A3_PK&#39;, &#39;ADM0_A3_DE&#39;, &#39;ADM0_A3_GB&#39;, &#39;ADM0_A3_BR&#39;, &#39;ADM0_A3_IL&#39;, &#39;ADM0_A3_PS&#39;, &#39;ADM0_A3_SA&#39;, &#39;ADM0_A3_EG&#39;, &#39;ADM0_A3_MA&#39;, &#39;ADM0_A3_PT&#39;, &#39;ADM0_A3_AR&#39;, &#39;ADM0_A3_JP&#39;, &#39;ADM0_A3_KO&#39;, &#39;ADM0_A3_VN&#39;, &#39;ADM0_A3_TR&#39;, &#39;ADM0_A3_ID&#39;, &#39;ADM0_A3_PL&#39;, &#39;ADM0_A3_GR&#39;, &#39;ADM0_A3_IT&#39;, &#39;ADM0_A3_NL&#39;, &#39;ADM0_A3_SE&#39;, &#39;ADM0_A3_BD&#39;, &#39;ADM0_A3_UA&#39;, &#39;ADM0_A3_UN&#39;, &#39;ADM0_A3_WB&#39;, &#39;CONTINENT&#39;, &#39;REGION_UN&#39;, &#39;SUBREGION&#39;, &#39;REGION_WB&#39;, &#39;NAME_LEN&#39;, &#39;LONG_LEN&#39;, &#39;ABBREV_LEN&#39;, &#39;TINY&#39;, &#39;HOMEPART&#39;, &#39;MIN_ZOOM&#39;, &#39;MIN_LABEL&#39;, &#39;MAX_LABEL&#39;, &#39;LABEL_X&#39;, &#39;LABEL_Y&#39;, &#39;NE_ID&#39;, &#39;WIKIDATAID&#39;, &#39;NAME_AR&#39;, &#39;NAME_BN&#39;, &#39;NAME_DE&#39;, &#39;NAME_EN&#39;, &#39;NAME_ES&#39;, &#39;NAME_FA&#39;, &#39;NAME_FR&#39;, &#39;NAME_EL&#39;, &#39;NAME_HE&#39;, &#39;NAME_HI&#39;, &#39;NAME_HU&#39;, &#39;NAME_ID&#39;, &#39;NAME_IT&#39;, &#39;NAME_JA&#39;, &#39;NAME_KO&#39;, &#39;NAME_NL&#39;, &#39;NAME_PL&#39;, &#39;NAME_PT&#39;, &#39;NAME_RU&#39;, &#39;NAME_SV&#39;, &#39;NAME_TR&#39;, &#39;NAME_UK&#39;, &#39;NAME_UR&#39;, &#39;NAME_VI&#39;, &#39;NAME_ZH&#39;, &#39;NAME_ZHT&#39;, &#39;FCLASS_ISO&#39;, &#39;TLC_DIFF&#39;, &#39;FCLASS_TLC&#39;, &#39;FCLASS_US&#39;, &#39;FCLASS_FR&#39;, &#39;FCLASS_RU&#39;, &#39;FCLASS_ES&#39;, &#39;FCLASS_CN&#39;, &#39;FCLASS_TW&#39;, &#39;FCLASS_IN&#39;, &#39;FCLASS_NP&#39;, &#39;FCLASS_PK&#39;, &#39;FCLASS_DE&#39;, &#39;FCLASS_GB&#39;, &#39;FCLASS_BR&#39;, &#39;FCLASS_IL&#39;, &#39;FCLASS_PS&#39;, &#39;FCLASS_SA&#39;, &#39;FCLASS_EG&#39;, &#39;FCLASS_MA&#39;, &#39;FCLASS_PT&#39;, &#39;FCLASS_AR&#39;, &#39;FCLASS_JP&#39;, &#39;FCLASS_KO&#39;, &#39;FCLASS_VN&#39;, &#39;FCLASS_TR&#39;, &#39;FCLASS_ID&#39;, &#39;FCLASS_PL&#39;, &#39;FCLASS_GR&#39;, &#39;FCLASS_IT&#39;, &#39;FCLASS_NL&#39;, &#39;FCLASS_SE&#39;, &#39;FCLASS_BD&#39;, &#39;FCLASS_UA&#39;, &#39;geometry&#39;]
+CRS          : EPSG:4326
+Typ geometrii: [&#39;MultiPolygon&#39; &#39;Polygon&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Podglad danych — identycznie jak w Pandas</span>
+<span class="n">world</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>featurecla</th>
+      <th>scalerank</th>
+      <th>LABELRANK</th>
+      <th>SOVEREIGNT</th>
+      <th>SOV_A3</th>
+      <th>ADM0_DIF</th>
+      <th>LEVEL</th>
+      <th>TYPE</th>
+      <th>TLC</th>
+      <th>ADMIN</th>
+      <th>...</th>
+      <th>FCLASS_TR</th>
+      <th>FCLASS_ID</th>
+      <th>FCLASS_PL</th>
+      <th>FCLASS_GR</th>
+      <th>FCLASS_IT</th>
+      <th>FCLASS_NL</th>
+      <th>FCLASS_SE</th>
+      <th>FCLASS_BD</th>
+      <th>FCLASS_UA</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Admin-0 country</td>
+      <td>1</td>
+      <td>6</td>
+      <td>Fiji</td>
+      <td>FJI</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Sovereign country</td>
+      <td>1</td>
+      <td>Fiji</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>MULTIPOLYGON (((180 -16.06713, 180 -16.55522, ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Admin-0 country</td>
+      <td>1</td>
+      <td>3</td>
+      <td>United Republic of Tanzania</td>
+      <td>TZA</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Sovereign country</td>
+      <td>1</td>
+      <td>United Republic of Tanzania</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>POLYGON ((33.90371 -0.95, 34.07262 -1.05982, 3...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Admin-0 country</td>
+      <td>1</td>
+      <td>7</td>
+      <td>Western Sahara</td>
+      <td>SAH</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Indeterminate</td>
+      <td>1</td>
+      <td>Western Sahara</td>
+      <td>...</td>
+      <td>Unrecognized</td>
+      <td>Unrecognized</td>
+      <td>Unrecognized</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Unrecognized</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>POLYGON ((-8.66559 27.65643, -8.66512 27.58948...</td>
+    </tr>
+  </tbody>
+</table>
+<p>3 rows × 169 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Typy danych w kazdej kolumnie</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Kolumna geometry ma specjalny typ</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Typ kolumny geometry: </span><span class="si">{</span><span class="n">world</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Przyklad geometrii  : </span><span class="si">{</span><span class="n">world</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">geom_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;WKT (fragment)      : </span><span class="si">{</span><span class="n">world</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">wkt</span><span class="p">[:</span><span class="mi">60</span><span class="p">]</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>featurecla      object
+scalerank        int32
+LABELRANK        int32
+SOVEREIGNT      object
+SOV_A3          object
+                ...   
+FCLASS_NL       object
+FCLASS_SE       object
+FCLASS_BD       object
+FCLASS_UA       object
+geometry      geometry
+Length: 169, dtype: object
+
+Typ kolumny geometry: geometry
+Przyklad geometrii  : MultiPolygon
+WKT (fragment)      : MULTIPOLYGON (((180 -16.067132663642447, 180 -16.55521656663...
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="wczytywanie-i-zapis-danych">
+<h2>3. Wczytywanie i zapis danych<a class="headerlink" href="#wczytywanie-i-zapis-danych" title="Permalink to this heading">#</a></h2>
+<section id="wczytywanie-read-file">
+<h3>3.1 Wczytywanie — read_file()<a class="headerlink" href="#wczytywanie-read-file" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">gpd.read_file()</span></code> czyta praktycznie kazdy format wektorowy:
+Shapefile, GeoPackage, GeoJSON, KML, FlatGeobuf i wiele innych.
+Pod spodem uzywa biblioteki Fiona (GDAL).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># GeoPackage</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;dane.gpkg&#39;</span><span class="p">)</span>
+
+<span class="c1"># Konkretna warstwa z GeoPackage</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;dane.gpkg&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;granice_gmin&#39;</span><span class="p">)</span>
+
+<span class="c1"># GeoJSON (rowniez z URL!)</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;https://.../.../data.geojson&#39;</span><span class="p">)</span>
+
+<span class="c1"># Shapefile</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;warstwa.shp&#39;</span><span class="p">)</span>
+
+<span class="c1"># Tylko fragmenta danych — przyspiesza wczytywanie</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;dane.gpkg&#39;</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;dane.gpkg&#39;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">55</span><span class="p">))</span>  <span class="c1"># tylko obszar</span>
+</pre></div>
+</div>
+</section>
+<section id="zapis-to-file">
+<h3>3.2 Zapis — to_file()<a class="headerlink" href="#zapis-to-file" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># GeoPackage (zalecany)</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;wynik.gpkg&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GPKG&#39;</span><span class="p">)</span>
+
+<span class="c1"># GeoJSON</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;wynik.geojson&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span>
+
+<span class="c1"># Shapefile</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;wynik.shp&#39;</span><span class="p">)</span>  <span class="c1"># domyslny driver</span>
+
+<span class="c1"># Wiele warstw do jednego GeoPackage</span>
+<span class="n">gdf1</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;baza.gpkg&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;panstwa&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GPKG&#39;</span><span class="p">)</span>
+<span class="n">gdf2</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;baza.gpkg&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;stolice&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GPKG&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tworzenie-geodataframe-od-podstaw">
+<h3>3.3 Tworzenie GeoDataFrame od podstaw<a class="headerlink" href="#tworzenie-geodataframe-od-podstaw" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;nazwa&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Wroclaw&#39;</span><span class="p">,</span> <span class="s1">&#39;Warszawa&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;pop&#39;</span><span class="p">:</span>   <span class="p">[</span><span class="mi">641000</span><span class="p">,</span> <span class="mi">1794000</span><span class="p">]},</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mf">21.012</span><span class="p">,</span> <span class="mf">52.230</span><span class="p">)],</span>
+    <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;EPSG:4326&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">import</span> <span class="nn">tempfile</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="c1"># Wczytaj wbudowany zbior</span>
+<span class="n">world</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip&quot;</span><span class="p">)</span>
+<span class="n">cities</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;https://naciscdn.org/naturalearth/110m/cultural/ne_110m_populated_places.zip&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Panstwa: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="p">)</span><span class="si">}</span><span class="s1"> obiektow&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Miasta : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cities</span><span class="p">)</span><span class="si">}</span><span class="s1"> obiektow&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Miasta — kolumny: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">cities</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">cities</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Panstwa: 177 obiektow
+Miasta : 243 obiektow
+Miasta — kolumny: [&#39;SCALERANK&#39;, &#39;NATSCALE&#39;, &#39;LABELRANK&#39;, &#39;FEATURECLA&#39;, &#39;NAME&#39;, &#39;NAMEPAR&#39;, &#39;NAMEALT&#39;, &#39;NAMEASCII&#39;, &#39;ADM0CAP&#39;, &#39;CAPIN&#39;, &#39;WORLDCITY&#39;, &#39;MEGACITY&#39;, &#39;SOV0NAME&#39;, &#39;SOV_A3&#39;, &#39;ADM0NAME&#39;, &#39;ADM0_A3&#39;, &#39;ADM1NAME&#39;, &#39;ISO_A2&#39;, &#39;NOTE&#39;, &#39;LATITUDE&#39;, &#39;LONGITUDE&#39;, &#39;POP_MAX&#39;, &#39;POP_MIN&#39;, &#39;POP_OTHER&#39;, &#39;RANK_MAX&#39;, &#39;RANK_MIN&#39;, &#39;MEGANAME&#39;, &#39;LS_NAME&#39;, &#39;MAX_POP10&#39;, &#39;MAX_POP20&#39;, &#39;MAX_POP50&#39;, &#39;MAX_POP300&#39;, &#39;MAX_POP310&#39;, &#39;MAX_NATSCA&#39;, &#39;MIN_AREAKM&#39;, &#39;MAX_AREAKM&#39;, &#39;MIN_AREAMI&#39;, &#39;MAX_AREAMI&#39;, &#39;MIN_PERKM&#39;, &#39;MAX_PERKM&#39;, &#39;MIN_PERMI&#39;, &#39;MAX_PERMI&#39;, &#39;MIN_BBXMIN&#39;, &#39;MAX_BBXMIN&#39;, &#39;MIN_BBXMAX&#39;, &#39;MAX_BBXMAX&#39;, &#39;MIN_BBYMIN&#39;, &#39;MAX_BBYMIN&#39;, &#39;MIN_BBYMAX&#39;, &#39;MAX_BBYMAX&#39;, &#39;MEAN_BBXC&#39;, &#39;MEAN_BBYC&#39;, &#39;TIMEZONE&#39;, &#39;UN_FID&#39;, &#39;POP1950&#39;, &#39;POP1955&#39;, &#39;POP1960&#39;, &#39;POP1965&#39;, &#39;POP1970&#39;, &#39;POP1975&#39;, &#39;POP1980&#39;, &#39;POP1985&#39;, &#39;POP1990&#39;, &#39;POP1995&#39;, &#39;POP2000&#39;, &#39;POP2005&#39;, &#39;POP2010&#39;, &#39;POP2015&#39;, &#39;POP2020&#39;, &#39;POP2025&#39;, &#39;POP2050&#39;, &#39;MIN_ZOOM&#39;, &#39;WIKIDATAID&#39;, &#39;WOF_ID&#39;, &#39;CAPALT&#39;, &#39;NAME_EN&#39;, &#39;NAME_DE&#39;, &#39;NAME_ES&#39;, &#39;NAME_FR&#39;, &#39;NAME_PT&#39;, &#39;NAME_RU&#39;, &#39;NAME_ZH&#39;, &#39;LABEL&#39;, &#39;NAME_AR&#39;, &#39;NAME_BN&#39;, &#39;NAME_EL&#39;, &#39;NAME_HI&#39;, &#39;NAME_HU&#39;, &#39;NAME_ID&#39;, &#39;NAME_IT&#39;, &#39;NAME_JA&#39;, &#39;NAME_KO&#39;, &#39;NAME_NL&#39;, &#39;NAME_PL&#39;, &#39;NAME_SV&#39;, &#39;NAME_TR&#39;, &#39;NAME_VI&#39;, &#39;NE_ID&#39;, &#39;NAME_FA&#39;, &#39;NAME_HE&#39;, &#39;NAME_UK&#39;, &#39;NAME_UR&#39;, &#39;NAME_ZHT&#39;, &#39;GEONAMESID&#39;, &#39;FCLASS_ISO&#39;, &#39;FCLASS_US&#39;, &#39;FCLASS_FR&#39;, &#39;FCLASS_RU&#39;, &#39;FCLASS_ES&#39;, &#39;FCLASS_CN&#39;, &#39;FCLASS_TW&#39;, &#39;FCLASS_IN&#39;, &#39;FCLASS_NP&#39;, &#39;FCLASS_PK&#39;, &#39;FCLASS_DE&#39;, &#39;FCLASS_GB&#39;, &#39;FCLASS_BR&#39;, &#39;FCLASS_IL&#39;, &#39;FCLASS_PS&#39;, &#39;FCLASS_SA&#39;, &#39;FCLASS_EG&#39;, &#39;FCLASS_MA&#39;, &#39;FCLASS_PT&#39;, &#39;FCLASS_AR&#39;, &#39;FCLASS_JP&#39;, &#39;FCLASS_KO&#39;, &#39;FCLASS_VN&#39;, &#39;FCLASS_TR&#39;, &#39;FCLASS_ID&#39;, &#39;FCLASS_PL&#39;, &#39;FCLASS_GR&#39;, &#39;FCLASS_IT&#39;, &#39;FCLASS_NL&#39;, &#39;FCLASS_SE&#39;, &#39;FCLASS_BD&#39;, &#39;FCLASS_UA&#39;, &#39;FCLASS_TLC&#39;, &#39;geometry&#39;]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SCALERANK</th>
+      <th>NATSCALE</th>
+      <th>LABELRANK</th>
+      <th>FEATURECLA</th>
+      <th>NAME</th>
+      <th>NAMEPAR</th>
+      <th>NAMEALT</th>
+      <th>NAMEASCII</th>
+      <th>ADM0CAP</th>
+      <th>CAPIN</th>
+      <th>...</th>
+      <th>FCLASS_ID</th>
+      <th>FCLASS_PL</th>
+      <th>FCLASS_GR</th>
+      <th>FCLASS_IT</th>
+      <th>FCLASS_NL</th>
+      <th>FCLASS_SE</th>
+      <th>FCLASS_BD</th>
+      <th>FCLASS_UA</th>
+      <th>FCLASS_TLC</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8</td>
+      <td>10</td>
+      <td>3</td>
+      <td>Admin-0 capital</td>
+      <td>Vatican City</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Vatican City</td>
+      <td>1</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>POINT (12.45339 41.90328)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7</td>
+      <td>20</td>
+      <td>0</td>
+      <td>Admin-0 capital</td>
+      <td>San Marino</td>
+      <td>None</td>
+      <td>None</td>
+      <td>San Marino</td>
+      <td>1</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>POINT (12.44177 43.9361)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7</td>
+      <td>20</td>
+      <td>0</td>
+      <td>Admin-0 capital</td>
+      <td>Vaduz</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Vaduz</td>
+      <td>1</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>POINT (9.51667 47.13372)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6</td>
+      <td>30</td>
+      <td>8</td>
+      <td>Admin-0 capital alt</td>
+      <td>Lobamba</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Lobamba</td>
+      <td>0</td>
+      <td>Legislative and</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>POINT (31.2 -26.46667)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6</td>
+      <td>30</td>
+      <td>8</td>
+      <td>Admin-0 capital</td>
+      <td>Luxembourg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Luxembourg</td>
+      <td>1</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>POINT (6.13 49.61166)</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 138 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">import</span> <span class="nn">tempfile</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="c1"># Tworzenie GeoDataFrame od podstaw</span>
+<span class="n">dane</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Wroclaw&#39;</span><span class="p">,</span>   <span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">,</span>  <span class="mi">641000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Warszawa&#39;</span><span class="p">,</span>  <span class="mf">21.012</span><span class="p">,</span> <span class="mf">52.230</span><span class="p">,</span> <span class="mi">1794000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Krakow&#39;</span><span class="p">,</span>    <span class="mf">19.945</span><span class="p">,</span> <span class="mf">50.065</span><span class="p">,</span>  <span class="mi">779000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Gdansk&#39;</span><span class="p">,</span>    <span class="mf">18.646</span><span class="p">,</span> <span class="mf">54.352</span><span class="p">,</span>  <span class="mi">470000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Poznan&#39;</span><span class="p">,</span>    <span class="mf">16.929</span><span class="p">,</span> <span class="mf">52.407</span><span class="p">,</span>  <span class="mi">545000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Lodz&#39;</span><span class="p">,</span>      <span class="mf">19.455</span><span class="p">,</span> <span class="mf">51.759</span><span class="p">,</span>  <span class="mi">672000</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="p">[{</span><span class="s1">&#39;miasto&#39;</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="n">lo</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="n">la</span><span class="p">,</span> <span class="s1">&#39;pop&#39;</span><span class="p">:</span> <span class="n">p</span><span class="p">}</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">la</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dane</span><span class="p">],</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">la</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">la</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">dane</span><span class="p">],</span>
+    <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;EPSG:4326&#39;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Stworzona warstwa miast:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">CRS: </span><span class="si">{</span><span class="n">gdf</span><span class="o">.</span><span class="n">crs</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Zapis do GeoJSON w katalogu tymczasowym</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+<span class="n">sciezka</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s1">&#39;miasta_PL.geojson&#39;</span><span class="p">)</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">sciezka</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Zapisano: </span><span class="si">{</span><span class="n">sciezka</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Rozmiar : </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">sciezka</span><span class="p">)</span><span class="si">:</span><span class="s1">,</span><span class="si">}</span><span class="s1"> bajtow&#39;</span><span class="p">)</span>
+
+<span class="c1"># Wczytaj ponownie i sprawdz</span>
+<span class="n">gdf2</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">sciezka</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wczytano: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf2</span><span class="p">)</span><span class="si">}</span><span class="s1"> obiektow, CRS: </span><span class="si">{</span><span class="n">gdf2</span><span class="o">.</span><span class="n">crs</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Stworzona warstwa miast:
+     miasto     lon     lat      pop               geometry
+0   Wroclaw  17.038  51.108   641000  POINT (17.038 51.108)
+1  Warszawa  21.012  52.230  1794000   POINT (21.012 52.23)
+2    Krakow  19.945  50.065   779000  POINT (19.945 50.065)
+3    Gdansk  18.646  54.352   470000  POINT (18.646 54.352)
+4    Poznan  16.929  52.407   545000  POINT (16.929 52.407)
+5      Lodz  19.455  51.759   672000  POINT (19.455 51.759)
+
+CRS: EPSG:4326
+
+Zapisano: C:\Users\kamil\AppData\Local\Temp\tmp8ty4bhlf\miasta_PL.geojson
+Rozmiar : 1,199 bajtow
+Wczytano: 6 obiektow, CRS: EPSG:4326
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="uklady-wspolrzednych-w-geopandas">
+<h2>4. Uklady wspolrzednych w GeoPandas<a class="headerlink" href="#uklady-wspolrzednych-w-geopandas" title="Permalink to this heading">#</a></h2>
+<section id="sprawdzanie-i-ustawianie-crs">
+<h3>4.1 Sprawdzanie i ustawianie CRS<a class="headerlink" href="#sprawdzanie-i-ustawianie-crs" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sprawdz CRS</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>          <span class="c1"># pelny obiekt CRS</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">to_epsg</span><span class="p">())</span>  <span class="c1"># kod EPSG jako liczba</span>
+
+<span class="c1"># Ustaw CRS (gdy brakuje — NIE przelicza wspolrzednych)</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">set_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:4326&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reprojekcja (PRZELICZA wspolrzedne)</span>
+<span class="n">gdf_metr</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="set-crs-vs-to-crs-krytyczna-roznica">
+<h3>4.2 set_crs vs to_crs — krytyczna roznica<a class="headerlink" href="#set-crs-vs-to-crs-krytyczna-roznica" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Metoda</p></th>
+<th class="head"><p>Co robi</p></th>
+<th class="head"><p>Kiedy uzywac</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.set_crs('EPSG:4326')</span></code></p></td>
+<td><p>Przypisuje CRS bez przeliczania</p></td>
+<td><p>Gdy dane sa juz w tym ukladzie ale brak info o CRS</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.to_crs('EPSG:2180')</span></code></p></td>
+<td><p>Przelicza wspolrzedne do nowego ukladu</p></td>
+<td><p>Gdy chcesz zmienic uklad</p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p>Uzywanie <code class="docutils literal notranslate"><span class="pre">set_crs</span></code> zamiast <code class="docutils literal notranslate"><span class="pre">to_crs</span></code> to jeden z najczestszych bledow.
+Jesli dane sa w EPSG:4326 i chcesz je miec w EPSG:2180,
+musisz uzyc <code class="docutils literal notranslate"><span class="pre">to_crs</span></code>, nie <code class="docutils literal notranslate"><span class="pre">set_crs</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="reprojekcja-calej-warstwy">
+<h3>4.3 Reprojekcja calej warstwy<a class="headerlink" href="#reprojekcja-calej-warstwy" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reprojekcja z WGS84 do PL-1992</span>
+<span class="n">gdf_pl</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">)</span>
+
+<span class="c1"># Sprawdz wspolrzedne po reprojekcji</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf_pl</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>  <span class="c1"># xmin, ymin, xmax, ymax w metrach</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># Stworz prosty GeoDataFrame</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;miasto&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Wroclaw&#39;</span><span class="p">,</span> <span class="s1">&#39;Warszawa&#39;</span><span class="p">,</span> <span class="s1">&#39;Krakow&#39;</span><span class="p">]},</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mf">21.012</span><span class="p">,</span> <span class="mf">52.230</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mf">19.945</span><span class="p">,</span> <span class="mf">50.065</span><span class="p">)],</span>
+    <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;EPSG:4326&#39;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Oryginal (EPSG:4326 — stopnie):&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">miasto</span><span class="si">:</span><span class="s1">&lt;12</span><span class="si">}</span><span class="s1"> x=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">  y=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reprojekcja do PL-1992</span>
+<span class="n">gdf_pl</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Po to_crs(EPSG:2180) — metry:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf_pl</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">miasto</span><span class="si">:</span><span class="s1">&lt;12</span><span class="si">}</span><span class="s1"> x=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s1">,.0f</span><span class="si">}</span><span class="s1">  y=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s1">,.0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reprojekcja do Web Mercator</span>
+<span class="n">gdf_wm</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:3857&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Po to_crs(EPSG:3857) — Web Mercator:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf_wm</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">miasto</span><span class="si">:</span><span class="s1">&lt;12</span><span class="si">}</span><span class="s1"> x=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s1">,.0f</span><span class="si">}</span><span class="s1">  y=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s1">,.0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Oryginal (EPSG:4326 — stopnie):
+  Wroclaw      x=17.0380  y=51.1080
+  Warszawa     x=21.0120  y=52.2300
+  Krakow       x=19.9450  y=50.0650
+
+Po to_crs(EPSG:2180) — metry:
+  Wroclaw      x=362,694  y=361,966
+  Warszawa     x=637,368  y=486,790
+  Krakow       x=567,613  y=244,621
+
+Po to_crs(EPSG:3857) — Web Mercator:
+  Wroclaw      x=1,896,661  y=6,640,420
+  Warszawa     x=2,339,045  y=6,841,820
+  Krakow       x=2,220,267  y=6,457,540
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Demonstracja bledu: set_crs zamiast to_crs</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;miasto&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Wroclaw&#39;</span><span class="p">]},</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">)],</span>
+    <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;EPSG:4326&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># DOBRZE: to_crs przelicza wspolrzedne</span>
+<span class="n">dobry</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;to_crs  : x=</span><span class="si">{</span><span class="n">dobry</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s1">,.1f</span><span class="si">}</span><span class="s1">  (metry — poprawne)&#39;</span><span class="p">)</span>
+
+<span class="c1"># ZLE: set_crs tylko zmienia etykiete, nie przelicza</span>
+<span class="n">zly</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">set_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">,</span> <span class="n">allow_override</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;set_crs : x=</span><span class="si">{</span><span class="n">zly</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">  (stopnie — BLEDNE!)&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;set_crs mowi: &quot;te wspolrzedne sa w EPSG:2180&quot;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;to_crs mowi : &quot;przelicz wspolrzedne do EPSG:2180&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>to_crs  : x=362,694.0  (metry — poprawne)
+set_crs : x=17.0380  (stopnie — BLEDNE!)
+
+set_crs mowi: &quot;te wspolrzedne sa w EPSG:2180&quot;
+to_crs mowi : &quot;przelicz wspolrzedne do EPSG:2180&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="filtrowanie-i-eksploracja-atrybutow">
+<h2>5. Filtrowanie i eksploracja atrybutow<a class="headerlink" href="#filtrowanie-i-eksploracja-atrybutow" title="Permalink to this heading">#</a></h2>
+<p>GeoPandas dziedziczy wszystkie operacje Pandas.
+Filtrowanie, grupowanie, sortowanie — wszystko dziala identycznie jak na DataFrame,
+z tym ze wynik zachowuje informacje o geometrii i CRS.</p>
+<section id="filtrowanie-atrybutowe">
+<h3>5.1 Filtrowanie atrybutowe<a class="headerlink" href="#filtrowanie-atrybutowe" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pojedynczy warunek</span>
+<span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span>
+
+<span class="c1"># Wielokrotne warunki</span>
+<span class="n">duze_eu</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;pop_est&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10_000_000</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Filtr przez isin()</span>
+<span class="n">wybrane</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Poland&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;France&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</section>
+<section id="operacje-na-kolumnach">
+<h3>5.2 Operacje na kolumnach<a class="headerlink" href="#operacje-na-kolumnach" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Nowa kolumna</span>
+<span class="n">world</span><span class="p">[</span><span class="s1">&#39;pop_mln&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="s1">&#39;pop_est&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1_000_000</span>
+
+<span class="c1"># Sortowanie</span>
+<span class="n">world</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;pop_est&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Grupowanie</span>
+<span class="n">world</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;continent&#39;</span><span class="p">)[</span><span class="s1">&#39;pop_est&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+<span class="n">world</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip&quot;</span><span class="p">)</span>
+
+<span class="c1"># Filtrowanie — wynik to rowniez GeoDataFrame</span>
+<span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Kraje europejskie: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">europa</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Typ wyniku: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">europa</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS zachowane: </span><span class="si">{</span><span class="n">europa</span><span class="o">.</span><span class="n">crs</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kraje europejskie: 39
+Typ wyniku: &lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
+CRS zachowane: EPSG:4326
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+
+<span class="c1"># Statystyki per kontynent</span>
+<span class="n">statystyki</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">liczba_krajow</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">),</span>
+    <span class="n">populacja_suma</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">),</span>
+    <span class="n">populacja_srednia</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">statystyki</span> <span class="o">=</span> <span class="n">statystyki</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;populacja_suma&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">statystyki</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                         liczba_krajow  populacja_suma  populacja_srednia
+CONTINENT                                                                
+Asia                                47    4.550277e+09         96814408.0
+Africa                              51    1.306370e+09         25615102.0
+Europe                              39    7.454125e+08         19113140.0
+North America                       18    5.837560e+08         32430891.0
+South America                       13    4.270667e+08         32851282.0
+Oceania                              7    4.120487e+07          5886411.0
+Antarctica                           1    4.490000e+03             4490.0
+Seven seas (open ocean)              1    1.400000e+02              140.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+<span class="c1"># Dodaj nowe kolumny obliczeniowe</span>
+<span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">world</span><span class="p">[</span><span class="s1">&#39;pop_mln&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1_000_000</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">world</span><span class="p">[</span><span class="s1">&#39;pkb_na_osobe&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;GDP_MD&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1_000_000</span> <span class="o">/</span> <span class="n">world</span><span class="p">[</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># TOP 10 wg PKB na osobe (min 1 mln mieszkancow)</span>
+<span class="n">top</span> <span class="o">=</span> <span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1_000_000</span><span class="p">]</span>
+       <span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;pkb_na_osobe&#39;</span><span class="p">)</span>
+       <span class="p">[[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;CONTINENT&#39;</span><span class="p">,</span> <span class="s1">&#39;pop_mln&#39;</span><span class="p">,</span> <span class="s1">&#39;pkb_na_osobe&#39;</span><span class="p">]])</span>
+
+<span class="n">top</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kraj&#39;</span><span class="p">,</span> <span class="s1">&#39;Kontynent&#39;</span><span class="p">,</span> <span class="s1">&#39;Pop (mln)&#39;</span><span class="p">,</span> <span class="s1">&#39;PKB/osoba (USD)&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TOP 10 wg PKB na osobe (kraje &gt; 1 mln mieszkancow):&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">top</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOP 10 wg PKB na osobe (kraje &gt; 1 mln mieszkancow):
+         Kraj     Kontynent  Pop (mln)  PKB/osoba (USD)
+  Timor-Leste          Asia       1.29           1560.0
+      Estonia        Europe       1.33           1060.0
+       Gambia        Africa       2.35            778.0
+Guinea-Bissau        Africa       1.92            697.0
+  Puerto Rico North America       3.19            598.0
+     Botswana        Africa       2.30            504.0
+     Slovakia        Europe       5.45            367.0
+ Turkmenistan          Asia       5.94            354.0
+       Kuwait          Asia       4.21            353.0
+     Mongolia          Asia       3.23            345.0
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="wizualizacja-od-prostej-mapy-do-choropletycznej">
+<h2>6. Wizualizacja — od prostej mapy do choropletycznej<a class="headerlink" href="#wizualizacja-od-prostej-mapy-do-choropletycznej" title="Permalink to this heading">#</a></h2>
+<section id="podstawowa-mapa">
+<h3>6.1 Podstawowa mapa<a class="headerlink" href="#podstawowa-mapa" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>  <span class="c1"># najprostsza mozliwa mapa</span>
+</pre></div>
+</div>
+</section>
+<section id="parametry-plot">
+<h3>6.2 Parametry plot()<a class="headerlink" href="#parametry-plot" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parametr</p></th>
+<th class="head"><p>Opis</p></th>
+<th class="head"><p>Przyklad</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color</span></code></p></td>
+<td><p>Staly kolor wypelnienia</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'lightblue'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">edgecolor</span></code></p></td>
+<td><p>Kolor krawedzi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'grey'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">linewidth</span></code></p></td>
+<td><p>Grubosc linii</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
+<td><p>Przezroczystosc (0-1)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.7</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">column</span></code></p></td>
+<td><p>Kolumna do choroplety</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'pop_est'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cmap</span></code></p></td>
+<td><p>Paleta kolorow</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'YlOrRd'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">legend</span></code></p></td>
+<td><p>Wyswietl legende</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scheme</span></code></p></td>
+<td><p>Metoda klasyfikacji</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'quantiles'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">figsize</span></code></p></td>
+<td><p>Rozmiar wykresu</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(15,</span> <span class="pre">8)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="contextily-podklady-mapowe">
+<h3>6.3 Contextily — podklady mapowe<a class="headerlink" href="#contextily-podklady-mapowe" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextily</span> <span class="k">as</span> <span class="nn">ctx</span>
+
+<span class="c1"># Warstwa musi byc w EPSG:3857 (Web Mercator)</span>
+<span class="n">gdf_wm</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:3857&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">gdf_wm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ctx</span><span class="o">.</span><span class="n">add_basemap</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">OpenStreetMap</span><span class="o">.</span><span class="n">Mapnik</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="metody-klasyfikacji-mapclassify">
+<h3>6.4 Metody klasyfikacji (mapclassify)<a class="headerlink" href="#metody-klasyfikacji-mapclassify" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Schemat</p></th>
+<th class="head"><p>Opis</p></th>
+<th class="head"><p>Kiedy uzywac</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'quantiles'</span></code></p></td>
+<td><p>Rowna liczba obiektow w klasie</p></td>
+<td><p>Rozkla znormalizowany</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'equal_interval'</span></code></p></td>
+<td><p>Rowne przedzialy wartosci</p></td>
+<td><p>Rozkla jednostajny</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'natural_breaks'</span></code></p></td>
+<td><p>Przerwy w danych (Jenks)</p></td>
+<td><p>Skupiska w danych</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'std_mean'</span></code></p></td>
+<td><p>Odchylenia od sredniej</p></td>
+<td><p>Dane symetryczne</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'fisher_jenks'</span></code></p></td>
+<td><p>Wariant Jenks</p></td>
+<td><p>Duze zbiory danych</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">world</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip&quot;</span><span class="p">)</span>
+<span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Tlo — wszystkie panstwa</span>
+<span class="n">world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#f5f5f5&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;#cccccc&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Europa — wyrozniamy kolor</span>
+<span class="n">europa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Kraje Europy&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Dlugosc geograficzna&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Szerokosc geograficzna&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">73</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Panstwa europejskie na mapie: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">europa</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1250240119d2d802cea2acab4e308b9989be2a48a8a10609b6de1172bc3e40fd.png" src="_images/1250240119d2d802cea2acab4e308b9989be2a48a8a10609b6de1172bc3e40fd.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Panstwa europejskie na mapie: 39
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mticker</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Mapa 1: Choropleta populacji — kwantyle</span>
+<span class="n">world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">column</span><span class="o">=</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrRd&#39;</span><span class="p">,</span>
+    <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;quantiles&#39;</span><span class="p">,</span>
+    <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+    <span class="n">legend_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;loc&#39;</span><span class="p">:</span> <span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Kwantyle&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Populacja — metoda kwantyli&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="c1"># Mapa 2: Choropleta populacji — natural breaks</span>
+<span class="n">world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">column</span><span class="o">=</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrRd&#39;</span><span class="p">,</span>
+    <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;natural_breaks&#39;</span><span class="p">,</span>
+    <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+    <span class="n">legend_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;loc&#39;</span><span class="p">:</span> <span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Natural breaks&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Populacja — Natural Breaks (Jenks)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Wplyw metody klasyfikacji na wyglad mapy&#39;</span><span class="p">,</span>
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Te same dane, rozne metody — rozne mapy!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/889bff20ce301c9f1801fe1143bf12f381f7cd9faf2d20ed7788dd2caa314a3f.png" src="_images/889bff20ce301c9f1801fe1143bf12f381f7cd9faf2d20ed7788dd2caa314a3f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Te same dane, rozne metody — rozne mapy!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">contextily</span> <span class="k">as</span> <span class="nn">ctx</span>
+
+    <span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Reprojekcja do EPSG:3857 — wymagane przez contextily</span>
+    <span class="n">europa_wm</span> <span class="o">=</span> <span class="n">europa</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:3857&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+    <span class="n">europa_wm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+        <span class="n">column</span><span class="o">=</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;quantiles&#39;</span><span class="p">,</span>
+        <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">legend_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;loc&#39;</span><span class="p">:</span> <span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Dodaj podklad mapowy OpenStreetMap</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">add_basemap</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">CartoDB</span><span class="o">.</span><span class="n">Positron</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Europa — populacja z podkladem mapowym&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zainstaluj contextily: pip install contextily&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pokazanie mapy bez podkladu:&#39;</span><span class="p">)</span>
+
+    <span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="n">europa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Europa — populacja (bez podkladu)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6c75ed5f80388cf60c196bd2d30025ef92f16c3432f6b2153f77dd8b41f20858.png" src="_images/6c75ed5f80388cf60c196bd2d30025ef92f16c3432f6b2153f77dd8b41f20858.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+
+<span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span>
+<span class="n">stolice_eu</span> <span class="o">=</span> <span class="n">cities</span><span class="p">[</span><span class="n">cities</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">within</span><span class="p">(</span>
+    <span class="n">europa</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">union_all</span><span class="p">()</span>
+<span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+
+<span class="c1"># Warstwa 1: tlo swiata</span>
+<span class="n">world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#f0f0f0&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;#dddddd&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Warstwa 2: Europa kolorow wg GDP</span>
+<span class="n">europa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;GDP_MD&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greens&#39;</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span>
+    <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;quantiles&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">legend_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;loc&#39;</span><span class="p">:</span> <span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;PKB (mln USD)&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Warstwa 3: stolice</span>
+<span class="n">stolice_eu</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Etykiety miast</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">stolice_eu</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">],</span>
+        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+        <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#333333&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">73</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Europa — PKB i stolice&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Stolice europejskie na mapie: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stolice_eu</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1743cbad9bf83a47c7e173fc31773632036c81f6cf22a3316b209a11839741d7.png" src="_images/1743cbad9bf83a47c7e173fc31773632036c81f6cf22a3316b209a11839741d7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Stolice europejskie na mapie: 46
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s7'></a></p>
+</section>
+</section>
+<section id="operacje-przestrzenne-overlay-i-spatial-join">
+<h2>7. Operacje przestrzenne — overlay i spatial join<a class="headerlink" href="#operacje-przestrzenne-overlay-i-spatial-join" title="Permalink to this heading">#</a></h2>
+<section id="spatial-join-sjoin">
+<h3>7.1 Spatial Join — sjoin()<a class="headerlink" href="#spatial-join-sjoin" title="Permalink to this heading">#</a></h3>
+<p>Spatial join laczy atrybuty dwoch warstw na podstawie relacji przestrzennej.
+To odpowiednik SQL JOIN, ale warunkiem laczenia jest polozenie geograficzne.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wynik</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span>
+    <span class="n">lewa_gdf</span><span class="p">,</span>          <span class="c1"># lewa warstwa</span>
+    <span class="n">prawa_gdf</span><span class="p">,</span>         <span class="c1"># prawa warstwa</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>        <span class="c1"># typ join: &#39;left&#39;, &#39;right&#39;, &#39;inner&#39;</span>
+    <span class="n">predicate</span><span class="o">=</span><span class="s1">&#39;within&#39;</span> <span class="c1"># relacja: &#39;within&#39;, &#39;intersects&#39;, &#39;contains&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Typy relacji w sjoin:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>predicate</p></th>
+<th class="head"><p>Pytanie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'within'</span></code></p></td>
+<td><p>Czy punkt lezy wewnatrz poligonu?</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'intersects'</span></code></p></td>
+<td><p>Czy geometrie maja wspolny obszar?</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'contains'</span></code></p></td>
+<td><p>Czy poligon zawiera punkt/geometrie?</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="overlay-naklada-dane-geometrycznie">
+<h3>7.2 Overlay — naklada dane geometrycznie<a class="headerlink" href="#overlay-naklada-dane-geometrycznie" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wynik</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">overlay</span><span class="p">(</span>
+    <span class="n">gdf1</span><span class="p">,</span>
+    <span class="n">gdf2</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;intersection&#39;</span>  <span class="c1"># &#39;union&#39;, &#39;difference&#39;, &#39;symmetric_difference&#39;, &#39;identity&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Roznica overlay vs sjoin:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>sjoin</p></th>
+<th class="head"><p>overlay</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Co robi</p></td>
+<td><p>Laczy ATRYBUTY na podstawie relacji</p></td>
+<td><p>Laczy GEOMETRIE i atrybuty</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wynik</p></td>
+<td><p>Tabela atrybutow</p></td>
+<td><p>Nowe geometrie (przeciecia)</p></td>
+</tr>
+<tr class="row-even"><td><p>Kiedy</p></td>
+<td><p>Punkty w poligonach, kraje w kontynentach</p></td>
+<td><p>Przeciecia stref, bufory vs obszary</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+
+<span class="c1"># Spatial join: przypisz kazdemu miestu kontynent i kraj</span>
+<span class="c1"># predicate=&#39;within&#39;: miasto musi lezec wewnatrz panstwa</span>
+<span class="n">miasta_z_krajem</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span>
+    <span class="n">cities</span><span class="p">,</span>
+    <span class="n">world</span><span class="p">[[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;CONTINENT&#39;</span><span class="p">,</span> <span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]],</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+    <span class="n">predicate</span><span class="o">=</span><span class="s1">&#39;within&#39;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Miast przed sjoin : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cities</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Miast po sjoin    : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">miasta_z_krajem</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Kolumny po sjoin  : </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">miasta_z_krajem</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Statystyki: ile miast per kontynent</span>
+<span class="n">per_kontynent</span> <span class="o">=</span> <span class="p">(</span><span class="n">miasta_z_krajem</span>
+                 <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">)[</span><span class="s1">&#39;NAME_left&#39;</span><span class="p">]</span>
+                 <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+                 <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                 <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;liczba_miast&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Liczba miast wg kontynentu:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">per_kontynent</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Miast przed sjoin : 243
+Miast po sjoin    : 243
+Kolumny po sjoin  : [&#39;SCALERANK&#39;, &#39;NATSCALE&#39;, &#39;LABELRANK&#39;, &#39;FEATURECLA&#39;, &#39;NAME_left&#39;, &#39;NAMEPAR&#39;, &#39;NAMEALT&#39;, &#39;NAMEASCII&#39;, &#39;ADM0CAP&#39;, &#39;CAPIN&#39;, &#39;WORLDCITY&#39;, &#39;MEGACITY&#39;, &#39;SOV0NAME&#39;, &#39;SOV_A3&#39;, &#39;ADM0NAME&#39;, &#39;ADM0_A3&#39;, &#39;ADM1NAME&#39;, &#39;ISO_A2&#39;, &#39;NOTE&#39;, &#39;LATITUDE&#39;, &#39;LONGITUDE&#39;, &#39;POP_MAX&#39;, &#39;POP_MIN&#39;, &#39;POP_OTHER&#39;, &#39;RANK_MAX&#39;, &#39;RANK_MIN&#39;, &#39;MEGANAME&#39;, &#39;LS_NAME&#39;, &#39;MAX_POP10&#39;, &#39;MAX_POP20&#39;, &#39;MAX_POP50&#39;, &#39;MAX_POP300&#39;, &#39;MAX_POP310&#39;, &#39;MAX_NATSCA&#39;, &#39;MIN_AREAKM&#39;, &#39;MAX_AREAKM&#39;, &#39;MIN_AREAMI&#39;, &#39;MAX_AREAMI&#39;, &#39;MIN_PERKM&#39;, &#39;MAX_PERKM&#39;, &#39;MIN_PERMI&#39;, &#39;MAX_PERMI&#39;, &#39;MIN_BBXMIN&#39;, &#39;MAX_BBXMIN&#39;, &#39;MIN_BBXMAX&#39;, &#39;MAX_BBXMAX&#39;, &#39;MIN_BBYMIN&#39;, &#39;MAX_BBYMIN&#39;, &#39;MIN_BBYMAX&#39;, &#39;MAX_BBYMAX&#39;, &#39;MEAN_BBXC&#39;, &#39;MEAN_BBYC&#39;, &#39;TIMEZONE&#39;, &#39;UN_FID&#39;, &#39;POP1950&#39;, &#39;POP1955&#39;, &#39;POP1960&#39;, &#39;POP1965&#39;, &#39;POP1970&#39;, &#39;POP1975&#39;, &#39;POP1980&#39;, &#39;POP1985&#39;, &#39;POP1990&#39;, &#39;POP1995&#39;, &#39;POP2000&#39;, &#39;POP2005&#39;, &#39;POP2010&#39;, &#39;POP2015&#39;, &#39;POP2020&#39;, &#39;POP2025&#39;, &#39;POP2050&#39;, &#39;MIN_ZOOM&#39;, &#39;WIKIDATAID&#39;, &#39;WOF_ID&#39;, &#39;CAPALT&#39;, &#39;NAME_EN&#39;, &#39;NAME_DE&#39;, &#39;NAME_ES&#39;, &#39;NAME_FR&#39;, &#39;NAME_PT&#39;, &#39;NAME_RU&#39;, &#39;NAME_ZH&#39;, &#39;LABEL&#39;, &#39;NAME_AR&#39;, &#39;NAME_BN&#39;, &#39;NAME_EL&#39;, &#39;NAME_HI&#39;, &#39;NAME_HU&#39;, &#39;NAME_ID&#39;, &#39;NAME_IT&#39;, &#39;NAME_JA&#39;, &#39;NAME_KO&#39;, &#39;NAME_NL&#39;, &#39;NAME_PL&#39;, &#39;NAME_SV&#39;, &#39;NAME_TR&#39;, &#39;NAME_VI&#39;, &#39;NE_ID&#39;, &#39;NAME_FA&#39;, &#39;NAME_HE&#39;, &#39;NAME_UK&#39;, &#39;NAME_UR&#39;, &#39;NAME_ZHT&#39;, &#39;GEONAMESID&#39;, &#39;FCLASS_ISO&#39;, &#39;FCLASS_US&#39;, &#39;FCLASS_FR&#39;, &#39;FCLASS_RU&#39;, &#39;FCLASS_ES&#39;, &#39;FCLASS_CN&#39;, &#39;FCLASS_TW&#39;, &#39;FCLASS_IN&#39;, &#39;FCLASS_NP&#39;, &#39;FCLASS_PK&#39;, &#39;FCLASS_DE&#39;, &#39;FCLASS_GB&#39;, &#39;FCLASS_BR&#39;, &#39;FCLASS_IL&#39;, &#39;FCLASS_PS&#39;, &#39;FCLASS_SA&#39;, &#39;FCLASS_EG&#39;, &#39;FCLASS_MA&#39;, &#39;FCLASS_PT&#39;, &#39;FCLASS_AR&#39;, &#39;FCLASS_JP&#39;, &#39;FCLASS_KO&#39;, &#39;FCLASS_VN&#39;, &#39;FCLASS_TR&#39;, &#39;FCLASS_ID&#39;, &#39;FCLASS_PL&#39;, &#39;FCLASS_GR&#39;, &#39;FCLASS_IT&#39;, &#39;FCLASS_NL&#39;, &#39;FCLASS_SE&#39;, &#39;FCLASS_BD&#39;, &#39;FCLASS_UA&#39;, &#39;FCLASS_TLC&#39;, &#39;geometry&#39;, &#39;index_right&#39;, &#39;NAME_right&#39;, &#39;CONTINENT&#39;, &#39;POP_EST&#39;]
+
+Liczba miast wg kontynentu:
+CONTINENT
+Asia             61
+Africa           57
+Europe           46
+North America    26
+South America    15
+Oceania           8
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+
+<span class="c1"># Znajdz miasta ktore nie pasuja do zadnego panstwa</span>
+<span class="c1"># (moga lezec na granicy lub brakuje im panstwa w danych)</span>
+<span class="n">miasta_z_krajem</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span>
+    <span class="n">cities</span><span class="p">,</span>
+    <span class="n">world</span><span class="p">[[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;CONTINENT&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]],</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">predicate</span><span class="o">=</span><span class="s1">&#39;within&#39;</span>
+<span class="p">)</span>
+
+<span class="n">bez_panstwa</span> <span class="o">=</span> <span class="n">miasta_z_krajem</span><span class="p">[</span><span class="n">miasta_z_krajem</span><span class="p">[</span><span class="s1">&#39;NAME_right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Miasta bez przypisanego panstwa: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">bez_panstwa</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bez_panstwa</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">bez_panstwa</span><span class="p">[[</span><span class="s1">&#39;NAME_left&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+
+<span class="c1"># Dlaczego? Czesto granice 110m sa zbyt uproszczone</span>
+<span class="c1"># i miasto wypada poza obrys kraju</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Przyczyna: uproszczenie geometrii 110m powoduje&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ze niektorych miast nie obejmuje obszar swojego panstwa.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Miasta bez przypisanego panstwa: 30
+          NAME_left                      geometry
+5           Palikir     POINT (158.14997 6.91664)
+6            Majuro          POINT (171.38 7.103)
+7          Funafuti    POINT (179.21665 -8.51665)
+8          Melekeok      POINT (134.62655 7.4874)
+11           Tarawa     POINT (173.01757 1.33819)
+12           Moroni    POINT (43.24024 -11.70416)
+29           Roseau    POINT (-61.38701 15.30102)
+30         Djibouti       POINT (43.148 11.59501)
+35       Bridgetown      POINT (-59.61653 13.102)
+38        Kingstown    POINT (-61.22024 13.15576)
+39         Castries    POINT (-60.99288 14.00787)
+40       Basseterre    POINT (-62.71701 17.30203)
+41       Port Louis    POINT (57.49999 -20.16664)
+42   Saint George&#39;s    POINT (-61.74164 12.05263)
+43           Manama     POINT (50.58305 26.23614)
+44     Saint John&#39;s    POINT (-61.85003 17.11804)
+45       Montevideo   POINT (-56.18682 -34.90538)
+53        Port Vila   POINT (168.31664 -17.73335)
+64         Freetown     POINT (-13.23616 8.47196)
+93           Malabo       POINT (8.78328 3.75002)
+132      Nuku&#39;alofa  POINT (-175.22056 -21.13851)
+134        Victoria     POINT (55.44999 -4.61663)
+135        São Tomé       POINT (6.72965 0.33747)
+136            Apia   POINT (-171.7686 -13.83571)
+137        Valletta     POINT (14.51471 35.89973)
+138            Malé       POINT (73.5089 4.17204)
+140           Praia     POINT (-23.51669 14.9167)
+141          Nassau    POINT (-77.35004 25.08339)
+164         Tripoli      POINT (13.18001 32.8925)
+220        Istanbul      POINT (28.97428 41.0176)
+
+Przyczyna: uproszczenie geometrii 110m powoduje
+ze niektorych miast nie obejmuje obszar swojego panstwa.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">box</span>
+
+
+<span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Stworz prostokat reprezentujacy Europe Srodkowa</span>
+<span class="n">srodkowa</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Europa Srodkowa&#39;</span><span class="p">]},</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">box</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">56</span><span class="p">)],</span>
+    <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;EPSG:4326&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Overlay intersection: czesc Europy lezaca w prostokcie</span>
+<span class="n">wynik</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">overlay</span><span class="p">(</span><span class="n">europa</span><span class="p">,</span> <span class="n">srodkowa</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;intersection&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Panstwa (lub ich czesci) w Europie Srodkowej: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wynik</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wynik</span><span class="p">[[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;region&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+
+<span class="c1"># Wizualizacja</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">europa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#eeeeee&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">srodkowa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">wynik</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Overlay intersection: kraje w obszarze Europy Srodkowej&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Panstwa (lub ich czesci) w Europie Srodkowej: 19
+           NAME           region
+0        Russia  Europa Srodkowa
+1        Sweden  Europa Srodkowa
+2       Belarus  Europa Srodkowa
+3       Ukraine  Europa Srodkowa
+4        Poland  Europa Srodkowa
+5       Austria  Europa Srodkowa
+6       Hungary  Europa Srodkowa
+7       Romania  Europa Srodkowa
+8     Lithuania  Europa Srodkowa
+9        Latvia  Europa Srodkowa
+10      Germany  Europa Srodkowa
+11      Croatia  Europa Srodkowa
+12  Switzerland  Europa Srodkowa
+13        Italy  Europa Srodkowa
+14      Denmark  Europa Srodkowa
+15     Slovenia  Europa Srodkowa
+16     Slovakia  Europa Srodkowa
+17      Czechia  Europa Srodkowa
+18       Serbia  Europa Srodkowa
+</pre></div>
+</div>
+<img alt="_images/8ca935f3039d1fe6671adafc2410c7d5a25064d1ee0b0f11914a41aa8e09bf10.png" src="_images/8ca935f3039d1fe6671adafc2410c7d5a25064d1ee0b0f11914a41aa8e09bf10.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s8'></a></p>
+</section>
+</section>
+<section id="dissolve-scalanie-obiektow">
+<h2>8. Dissolve — scalanie obiektow<a class="headerlink" href="#dissolve-scalanie-obiektow" title="Permalink to this heading">#</a></h2>
+<section id="czym-jest-dissolve">
+<h3>8.1 Czym jest dissolve<a class="headerlink" href="#czym-jest-dissolve" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">dissolve()</span></code> laczy geometrie obiektow nalezacych do tej samej grupy
+i agreguje ich atrybuty. To odpowiednik SQL <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> dla danych przestrzennych.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scalenie panstw w kontynenty</span>
+<span class="n">kontynenty</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">dissolve</span><span class="p">(</span>
+    <span class="n">by</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span>           <span class="c1"># pole grupowania</span>
+    <span class="n">aggfunc</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;pop_est&#39;</span><span class="p">:</span>    <span class="s1">&#39;sum&#39;</span><span class="p">,</span>   <span class="c1"># suma populacji</span>
+        <span class="s1">&#39;gdp_md_est&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>   <span class="c1"># suma PKB</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span>       <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="c1"># liczba krajow</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="typowe-funkcje-agregacji">
+<h3>8.2 Typowe funkcje agregacji<a class="headerlink" href="#typowe-funkcje-agregacji" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>aggfunc</p></th>
+<th class="head"><p>Opis</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'sum'</span></code></p></td>
+<td><p>Suma wartosci</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'mean'</span></code></p></td>
+<td><p>Srednia</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'count'</span></code></p></td>
+<td><p>Liczba obiektow</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'min'</span></code> / <code class="docutils literal notranslate"><span class="pre">'max'</span></code></p></td>
+<td><p>Minimum / maksimum</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'first'</span></code> / <code class="docutils literal notranslate"><span class="pre">'last'</span></code></p></td>
+<td><p>Pierwsza / ostatnia wartosc</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+
+<span class="c1"># Dissolve: panstwa -&gt; kontynenty</span>
+<span class="n">kontynenty</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">dissolve</span><span class="p">(</span>
+    <span class="n">by</span><span class="o">=</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">,</span>
+    <span class="n">aggfunc</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;POP_EST&#39;</span><span class="p">:</span>    <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;GDP_MD&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span>       <span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;liczba_krajow&#39;</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Przed dissolve: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="p">)</span><span class="si">}</span><span class="s1"> panstw&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Po dissolve   : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">kontynenty</span><span class="p">)</span><span class="si">}</span><span class="s1"> kontynentow&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kontynenty</span><span class="p">[[</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span> <span class="s1">&#39;liczba_krajow&#39;</span><span class="p">]]</span>
+      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+
+<span class="c1"># Wizualizacja</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Panstwa (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">kontynenty</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;POP_EST&#39;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrRd&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">legend_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Kontynenty po dissolve (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">kontynenty</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;dissolve() — scalanie panstw w kontynenty&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Przed dissolve: 177 panstw
+Po dissolve   : 8 kontynentow
+
+                              POP_EST  liczba_krajow
+CONTINENT                                           
+Asia                     4.550277e+09             47
+Africa                   1.306370e+09             51
+Europe                   7.454125e+08             39
+North America            5.837560e+08             18
+South America            4.270667e+08             13
+Oceania                  4.120487e+07              7
+Antarctica               4.490000e+03              1
+Seven seas (open ocean)  1.400000e+02              1
+</pre></div>
+</div>
+<img alt="_images/1357e47c6b896e02a1a65cc67aec6e035e94d1a93cd4fc5c85d3410cc3e4f954.png" src="_images/1357e47c6b896e02a1a65cc67aec6e035e94d1a93cd4fc5c85d3410cc3e4f954.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">world</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip&quot;</span><span class="p">)</span>
+<span class="n">europa</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;CONTINENT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Europe&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Reprodukcja do ETRS89-LAEA (metry, rowne pola)</span>
+<span class="n">europa_m</span> <span class="o">=</span> <span class="n">europa</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:3035&#39;</span><span class="p">)</span>
+
+<span class="c1"># Bufor 150 km wokol kazdego kraju</span>
+<span class="n">europa_buf</span> <span class="o">=</span> <span class="n">europa_m</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">europa_buf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">europa_m</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mi">1500</span><span class="p">)</span>
+
+<span class="c1"># Dissolve — scal bufory w jeden obszar (bez grupowania)</span>
+<span class="n">obszar_europy</span> <span class="o">=</span> <span class="n">europa_buf</span><span class="o">.</span><span class="n">dissolve</span><span class="p">()</span>
+
+<span class="c1"># Cofnij do WGS84</span>
+<span class="n">obszar_europy</span> <span class="o">=</span> <span class="n">obszar_europy</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:4326&#39;</span><span class="p">)</span>
+<span class="n">europa_buf_geo</span> <span class="o">=</span> <span class="n">europa_buf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:4326&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#f5f5f5&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;#dddddd&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">europa_buf_geo</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">europa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Bufory 150 km per kraj&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">world</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#f5f5f5&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;#dddddd&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">obszar_europy</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span>
+                   <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">europa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Po dissolve — jeden scalony obszar&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;buffer() + dissolve() — strefa europejska&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cf3a4a6df60d67cc7a369300b0ce344999f3578d474aa2bdc5457d0c2c376855.png" src="_images/cf3a4a6df60d67cc7a369300b0ce344999f3578d474aa2bdc5457d0c2c376855.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s9'></a></p>
+</section>
+</section>
+<section id="pomiary-geometryczne">
+<h2>9. Pomiary geometryczne<a class="headerlink" href="#pomiary-geometryczne" title="Permalink to this heading">#</a></h2>
+<section id="wbudowane-wlasciwosci-geometry">
+<h3>9.1 Wbudowane wlasciwosci geometry<a class="headerlink" href="#wbudowane-wlasciwosci-geometry" title="Permalink to this heading">#</a></h3>
+<p>Operacje geometryczne w GeoPandas dzialaja na calej kolumnie naraz
+(wektoryzacja przez NumPy), co jest znacznie szybsze niz petla w PyQGIS.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pole powierzchni — w jednostkach CRS!</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">area</span>
+
+<span class="c1"># Dlugosc</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length</span>
+
+<span class="c1"># Centroid</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;centroid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">centroid</span>
+
+<span class="c1"># Bounding box jako DataFrame</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;bounds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">bounds</span>  <span class="c1"># xmin, ymin, xmax, ymax</span>
+</pre></div>
+</div>
+</section>
+<section id="pomiary-metryczne">
+<h3>9.2 Pomiary metryczne<a class="headerlink" href="#pomiary-metryczne" title="Permalink to this heading">#</a></h3>
+<p>Tak samo jak w PyQGIS — dla pomiarow fizycznych potrzebujemy ukladu metrycznego:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reprojekcja do ETRS89-LAEA (rowne pola powierzchni dla Europy)</span>
+<span class="n">gdf_m</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:3035&#39;</span><span class="p">)</span>
+
+<span class="c1"># Teraz area() zwraca m^2</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;area_km2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_m</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">area</span> <span class="o">/</span> <span class="mi">1_000_000</span>
+
+<span class="c1"># Dlugosc granic</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;dlugosc_granic_km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_m</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s10'></a></p>
+</section>
+</section>
+<section id="podsumowanie-i-slownik-pojec">
+<h2>10. Podsumowanie i slownik pojec<a class="headerlink" href="#podsumowanie-i-slownik-pojec" title="Permalink to this heading">#</a></h2>
+<section id="co-omowilismy-na-wykladzie-4">
+<h3>10.1 Co omowilismy na wykladzie 4<a class="headerlink" href="#co-omowilismy-na-wykladzie-4" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>porownanie GeoPandas i PyQGIS — rozne narzedzia do roznych zadan,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> — struktura danych, analogia do <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_file()</span></code> i <code class="docutils literal notranslate"><span class="pre">to_file()</span></code> — wczytywanie i zapis danych przestrzennych,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set_crs()</span></code> vs <code class="docutils literal notranslate"><span class="pre">to_crs()</span></code> — krytyczna roznica (przypisanie vs reprojekcja),</p></li>
+<li><p>filtrowanie i operacje na atrybutach — identycznie jak w Pandas,</p></li>
+<li><p>wizualizacja przez <code class="docutils literal notranslate"><span class="pre">plot()</span></code> — od prostej mapy do choropletycznej z mapclassify,</p></li>
+<li><p>podklady mapowe przez <code class="docutils literal notranslate"><span class="pre">contextily</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sjoin()</span></code> — spatial join: laczenie atrybutow przez relacje przestrzenne,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overlay()</span></code> — operacje na geometriach: przeciecia, sumy, roznice,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dissolve()</span></code> — scalanie obiektow wg grupy z agregacja atrybutow,</p></li>
+<li><p>pomiary geometryczne — pole, dlugosc, centroid, wskaznik zwartosci.</p></li>
+</ul>
+</section>
+<section id="slownik-najwazniejszych-metod-i-klas">
+<h3>10.2 Slownik najważniejszych metod i klas<a class="headerlink" href="#slownik-najwazniejszych-metod-i-klas" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pojecie</p></th>
+<th class="head"><p>Definicja</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>GeoDataFrame</strong></p></td>
+<td><p>Rozszerzenie DataFrame z kolumna geometry i metodami przestrzennymi</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>geometry</strong></p></td>
+<td><p>Specjalna kolumna przechowujaca ksztalty obiektow (Shapely)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>read_file()</strong></p></td>
+<td><p>Funkcja GeoPandas do wczytywania plikow wektorowych</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>to_file()</strong></p></td>
+<td><p>Metoda zapisu GeoDataFrame do pliku</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>set_crs()</strong></p></td>
+<td><p>Przypisuje CRS bez zmiany wspolrzednych</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>to_crs()</strong></p></td>
+<td><p>Reprojekcja — przelicza wspolrzedne do nowego CRS</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>sjoin()</strong></p></td>
+<td><p>Spatial join — laczenie atrybutow przez relacje przestrzenne</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>overlay()</strong></p></td>
+<td><p>Operacje geometryczne na dwoch warstwach</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>dissolve()</strong></p></td>
+<td><p>Scalanie obiektow wg grupy z agregacja atrybutow</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>predicate</strong></p></td>
+<td><p>Relacja przestrzenna uzywana w sjoin (within, intersects…)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>scheme</strong></p></td>
+<td><p>Metoda klasyfikacji w mapach choropletycznych</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>contextily</strong></p></td>
+<td><p>Biblioteka do dodawania podkladow mapowych (OSM, CartoDB…)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>mapclassify</strong></p></td>
+<td><p>Biblioteka metod klasyfikacji dla map choropletycznych</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="literatura-i-zasoby">
+<h2>Literatura i zasoby<a class="headerlink" href="#literatura-i-zasoby" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>GeoPandas dokumentacja: <a class="reference external" href="https://geopandas.org/en/stable/docs.html">https://geopandas.org/en/stable/docs.html</a></p></li>
+<li><p>GeoPandas User Guide: <a class="reference external" href="https://geopandas.org/en/stable/docs/user_guide.html">https://geopandas.org/en/stable/docs/user_guide.html</a></p></li>
+<li><p>Contextily: <a class="reference external" href="https://contextily.readthedocs.io/">https://contextily.readthedocs.io/</a></p></li>
+<li><p>Mapclassify: <a class="reference external" href="https://pysal.org/mapclassify/">https://pysal.org/mapclassify/</a></p></li>
+<li><p>Geographic Data Science with Python (darmowy): <a class="reference external" href="https://geographicdata.science/book/">https://geographicdata.science/book/</a></p></li>
+</ul>
+<hr class="docutils" />
+<p><em>Wyklad 5 — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">C4: QgsGeometry, QgsFeature i praca z warstwami</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentow I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-ten-wyklad">Czym jest ten wyklad</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacja">Instalacja</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geopandas-kontra-pyqgis-kiedy-co-uzyc">1. GeoPandas kontra PyQGIS — kiedy co uzyc</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamentalna-roznica">1.1 Fundamentalna roznica</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-uzyc-pyqgis">1.2 Kiedy uzyc PyQGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-uzyc-geopandas">1.3 Kiedy uzyc GeoPandas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odpowiedz">1.4 Odpowiedz</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geodataframe-struktura-danych">2. GeoDataFrame — struktura danych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-to-jest-geodataframe">2.1 Co to jest GeoDataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogia-pyqgis-geopandas">2.2 Analogia PyQGIS — GeoPandas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowa-struktura">2.3 Podstawowa struktura</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-i-zapis-danych">3. Wczytywanie i zapis danych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-read-file">3.1 Wczytywanie — read_file()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-to-file">3.2 Zapis — to_file()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-geodataframe-od-podstaw">3.3 Tworzenie GeoDataFrame od podstaw</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uklady-wspolrzednych-w-geopandas">4. Uklady wspolrzednych w GeoPandas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sprawdzanie-i-ustawianie-crs">4.1 Sprawdzanie i ustawianie CRS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-crs-vs-to-crs-krytyczna-roznica">4.2 set_crs vs to_crs — krytyczna roznica</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reprojekcja-calej-warstwy">4.3 Reprojekcja calej warstwy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-i-eksploracja-atrybutow">5. Filtrowanie i eksploracja atrybutow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-atrybutowe">5.1 Filtrowanie atrybutowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-na-kolumnach">5.2 Operacje na kolumnach</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wizualizacja-od-prostej-mapy-do-choropletycznej">6. Wizualizacja — od prostej mapy do choropletycznej</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowa-mapa">6.1 Podstawowa mapa</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametry-plot">6.2 Parametry plot()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contextily-podklady-mapowe">6.3 Contextily — podklady mapowe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metody-klasyfikacji-mapclassify">6.4 Metody klasyfikacji (mapclassify)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-przestrzenne-overlay-i-spatial-join">7. Operacje przestrzenne — overlay i spatial join</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-join-sjoin">7.1 Spatial Join — sjoin()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overlay-naklada-dane-geometrycznie">7.2 Overlay — naklada dane geometrycznie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dissolve-scalanie-obiektow">8. Dissolve — scalanie obiektow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-dissolve">8.1 Czym jest dissolve</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typowe-funkcje-agregacji">8.2 Typowe funkcje agregacji</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pomiary-geometryczne">9. Pomiary geometryczne</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wbudowane-wlasciwosci-geometry">9.1 Wbudowane wlasciwosci geometry</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pomiary-metryczne">9.2 Pomiary metryczne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-slownik-pojec">10. Podsumowanie i slownik pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-omowilismy-na-wykladzie-4">10.1 Co omowilismy na wykladzie 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-najwazniejszych-metod-i-klas">10.2 Slownik najważniejszych metod i klas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literatura-i-zasoby">Literatura i zasoby</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

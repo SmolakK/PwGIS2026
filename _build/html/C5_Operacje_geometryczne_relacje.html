@@ -1,0 +1,1219 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C5: Operacje geometryczne i relacje przestrzenne &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'C5_Operacje_geometryczne_relacje';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8.%20Wyklad_4_GeoPandas.html">Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FC5_Operacje_geometryczne_relacje.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/C5_Operacje_geometryczne_relacje.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>C5: Operacje geometryczne i relacje przestrzenne</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#buforowanie-w-poprawnych-jednostkach">1. Buforowanie w poprawnych jednostkach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-porownanie-bufora-w-stopniach-vs-metrach">Zadanie 1.1 — Porownanie bufora w stopniach vs metrach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-bufor-panstwa-w-km">Zadanie 1.2 — Bufor panstwa w km</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-samodzielne-pierscien-buforowy">Zadanie 1.3 — Samodzielne: pierscien buforowy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-na-zbiorach-geometrii">2. Operacje na zbiorach geometrii</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-przeciecie-dwoch-buforow">Zadanie 2.1 — Przeciecie dwoch buforow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2-roznica-i-roznica-symetryczna">Zadanie 2.2 — Roznica i roznica symetryczna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-3-samodzielne-wspolna-strefa-trzech-miast">Zadanie 2.3 — Samodzielne: wspolna strefa trzech miast</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacje-przestrzenne">3. Relacje przestrzenne</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-contains-i-within">Zadanie 3.1 — contains i within</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-znajdz-panstwo-zawierajace-punkt">Zadanie 3.2 — Znajdz panstwo zawierajace punkt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-samodzielne-ile-panstw-przecina-rownik">Zadanie 3.3 — Samodzielne: ile panstw przecina rownik</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wydajne-zapytania-przestrzenne">4. Wydajne zapytania przestrzenne</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-wzorzec-bbox-dokladne-sprawdzenie">Zadanie 4.1 — Wzorzec bbox + dokladne sprawdzenie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-samodzielne-zapytanie-z-limitem">Zadanie 4.2 — Samodzielne: zapytanie z limitem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#centroid-i-pointonsurface">5. Centroid i pointOnSurface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-centroid-poza-obiektem">Zadanie 5.1 — Centroid poza obiektem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-samodzielne-panstwa-z-centroidem-na-morzu">Zadanie 5.2 — Samodzielne: panstwa z centroidem na morzu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace-potok-analityczny">6. Zadanie laczace — potok analityczny</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-analiza-dostepnosci-stolic">Zadanie 6.1 — Analiza dostepnosci stolic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c5">Podsumowanie C5</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c6">Na C6</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="c5-operacje-geometryczne-i-relacje-przestrzenne">
+<h1>C5: Operacje geometryczne i relacje przestrzenne<a class="headerlink" href="#c5-operacje-geometryczne-i-relacje-przestrzenne" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-cwiczenia">
+<h2>Programowanie w GIS — Cwiczenia<a class="headerlink" href="#programowanie-w-gis-cwiczenia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Cwiczenie:</strong> C5<br />
+<strong>Powiazany wyklad:</strong> W3<br />
+<strong>Czas:</strong> ~90 minut</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="cele-cwiczenia">
+<h2>Cele cwiczenia<a class="headerlink" href="#cele-cwiczenia" title="Permalink to this heading">#</a></h2>
+<p>Po ukonczeniu tego cwiczenia bedziesz potrafil/a:</p>
+<ul class="simple">
+<li><p>bufforowac geometrie w poprawnych jednostkach (metry przez reprojekcje),</p></li>
+<li><p>wykonywac operacje na zbiorach geometrii: przeciecie, suma, roznica,</p></li>
+<li><p>sprawdzac relacje przestrzenne miedzy obiektami,</p></li>
+<li><p>stosowac wzorzec bbox + dokladne sprawdzenie dla wydajnych zapytan,</p></li>
+<li><p>laczyc operacje geometryczne w potok analityczny,</p></li>
+<li><p>zapisywac wyniki operacji jako nowe warstwy.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="konwencje">
+<h2>Konwencje<a class="headerlink" href="#konwencje" title="Permalink to this heading">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Oznaczenie</p></th>
+<th class="head"><p>Znaczenie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Zadanie</strong></p></td>
+<td><p>Polecenie do samodzielnego wykonania</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Wskazowka</strong></p></td>
+<td><p>Czytaj tylko jesli utkniesz</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Pytanie</strong></p></td>
+<td><p>Odpowiedz wpisz w komurce ponizej</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[QGIS]</span></code></p></td>
+<td><p>Kod do uruchomienia w Konsoli Pythona QGIS</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</section>
+<section id="przygotowanie">
+<h2>Przygotowanie<a class="headerlink" href="#przygotowanie" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Uruchom QGIS z wczytana warstwa panstw Natural Earth (<code class="docutils literal notranslate"><span class="pre">ne_110m_admin_0_countries</span></code>).</p></li>
+<li><p>Wczytaj rowniez warstwe <code class="docutils literal notranslate"><span class="pre">moje_miasta.gpkg</span></code> zapisana w cwiczeniu C4
+(lub stworz nowa warstwe punktowa z miastami wedlug C4).</p></li>
+<li><p>Otworz Konsole Pythona i edytor skryptow.</p></li>
+</ol>
+</section>
+<section id="spis-tresci">
+<h2>Spis tresci<a class="headerlink" href="#spis-tresci" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><span class="xref myst">Buforowanie w poprawnych jednostkach</span></p></li>
+<li><p><span class="xref myst">Operacje na zbiorach geometrii</span></p></li>
+<li><p><span class="xref myst">Relacje przestrzenne</span></p></li>
+<li><p><span class="xref myst">Wydajne zapytania przestrzenne</span></p></li>
+<li><p><span class="xref myst">Centroid i pointOnSurface</span></p></li>
+<li><p><span class="xref myst">Zadanie laczace — potok analityczny</span></p></li>
+</ol>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="buforowanie-w-poprawnych-jednostkach">
+<h2>1. Buforowanie w poprawnych jednostkach<a class="headerlink" href="#buforowanie-w-poprawnych-jednostkach" title="Permalink to this heading">#</a></h2>
+<p>Bufor obliczany bezposrednio na geometrii w EPSG:4326 daje wynik
+w stopniach geograficznych — wartosc <code class="docutils literal notranslate"><span class="pre">buffer(100)</span></code> oznacza
+~11 000 km, a nie 100 metrow.
+Poprawny wzorzec wymaga reprojekcji do ukladu metrycznego.</p>
+<section id="zadanie-1-1-porownanie-bufora-w-stopniach-vs-metrach">
+<h3>Zadanie 1.1 — Porownanie bufora w stopniach vs metrach<a class="headerlink" href="#zadanie-1-1-porownanie-bufora-w-stopniach-vs-metrach" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod i porownaj wyniki:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+    <span class="n">QgsCoordinateReferenceSystem</span><span class="p">,</span> <span class="n">QgsCoordinateTransform</span><span class="p">,</span> <span class="n">QgsProject</span>
+<span class="p">)</span>
+
+<span class="c1"># Punkt: centrum Wroclawia w WGS84</span>
+<span class="n">g_geo</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">))</span>
+
+<span class="c1"># Bufor ZLY — w stopniach</span>
+<span class="n">bufor_zly</span> <span class="o">=</span> <span class="n">g_geo</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bufor 0.5 stopnia:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  area()   = </span><span class="si">{</span><span class="n">bufor_zly</span><span class="o">.</span><span class="n">area</span><span class="p">()</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1">  (stopnie kw.)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Bufor DOBRY — reprojekcja do metrow</span>
+<span class="n">crs_geo</span>  <span class="o">=</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">&#39;EPSG:4326&#39;</span><span class="p">)</span>
+<span class="n">crs_metr</span> <span class="o">=</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">&#39;EPSG:3857&#39;</span><span class="p">)</span>
+<span class="n">do_metr</span>  <span class="o">=</span> <span class="n">QgsCoordinateTransform</span><span class="p">(</span><span class="n">crs_geo</span><span class="p">,</span> <span class="n">crs_metr</span><span class="p">,</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">())</span>
+<span class="n">do_geo</span>   <span class="o">=</span> <span class="n">QgsCoordinateTransform</span><span class="p">(</span><span class="n">crs_metr</span><span class="p">,</span> <span class="n">crs_geo</span><span class="p">,</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">())</span>
+
+<span class="n">g_metr</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="p">(</span><span class="n">g_geo</span><span class="p">)</span>
+<span class="n">g_metr</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">do_metr</span><span class="p">)</span>
+
+<span class="n">bufor_metr</span> <span class="o">=</span> <span class="n">g_metr</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mi">50_000</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>  <span class="c1"># 50 km</span>
+<span class="n">bufor_geo</span>  <span class="o">=</span> <span class="n">QgsGeometry</span><span class="p">(</span><span class="n">bufor_metr</span><span class="p">)</span>
+<span class="n">bufor_geo</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">do_geo</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bufor 50 km (poprawny):&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  area()   = </span><span class="si">{</span><span class="n">bufor_geo</span><span class="o">.</span><span class="n">area</span><span class="p">()</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1">  (stopnie kw.)&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  szerokosc: </span><span class="si">{</span><span class="n">bufor_geo</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> stopni&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  wysokosc : </span><span class="si">{</span><span class="n">bufor_geo</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> stopni&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 1.1</strong> — Oszacuj ile kilometrow odpowiada buforowi 0.5 stopnia
+na szerokosci geograficznej Wroclawia (~51°N).
+Wskazowka: 1 stopien dlugosci geo na 51°N to okolo 63 km.
+Czy bufor w stopniach jest wiec okragly? Wyjasni dlaczego tak lub nie.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-1-2-bufor-panstwa-w-km">
+<h3>Zadanie 1.2 — Bufor panstwa w km<a class="headerlink" href="#zadanie-1-2-bufor-panstwa-w-km" title="Permalink to this heading">#</a></h3>
+<p>Napisz kod ktory dla wybranego panstwa z warstwy Natural Earth
+tworzy bufor o promieniu <strong>200 km</strong> i dodaje go jako warstwe na mapie.</p>
+<p>Wymagania:</p>
+<ul class="simple">
+<li><p>reprojekcja przez EPSG:3857 zanim wywolasz <code class="docutils literal notranslate"><span class="pre">.buffer()</span></code>,</p></li>
+<li><p>wynik z powrotem w EPSG:4326,</p></li>
+<li><p>warstwa na mapie z nazwa <code class="docutils literal notranslate"><span class="pre">'Bufor_200km_[nazwa_kraju]'</span></code>.</p></li>
+</ul>
+<p>Wskazowka: pobierz geometrie panstwa:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;ne_110m_admin_0_countries&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span> <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Poland&#39;</span><span class="p">)</span>
+<span class="n">geom</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-1-3-samodzielne-pierscien-buforowy">
+<h3>Zadanie 1.3 — Samodzielne: pierscien buforowy<a class="headerlink" href="#zadanie-1-3-samodzielne-pierscien-buforowy" title="Permalink to this heading">#</a></h3>
+<p>Stworz <strong>pierscien</strong> (obszar miedzy dwoma buforami) wokol stolicy wybranego
+panstwa, reprezentujacy stref miedzy 100 a 300 km od centrum.</p>
+<p>Etapy:</p>
+<ol class="arabic simple">
+<li><p>Pobierz geometrie stolicy z warstwy <code class="docutils literal notranslate"><span class="pre">moje_miasta</span></code> (lub uzyj punktu z wspolrzednych).</p></li>
+<li><p>Stworz bufor wewnetrzny 100 km i bufor zewnetrzny 300 km.</p></li>
+<li><p>Pierscien = bufor_zewnetrzny <code class="docutils literal notranslate"><span class="pre">.difference()</span></code> bufor_wewnetrzny.</p></li>
+<li><p>Dodaj pierscien jako warstwe na mape.</p></li>
+<li><p>W konsoli wyswietl pole powierzchni pierscienia w km2.</p></li>
+</ol>
+<p>Wskazowka do przeliczenia pola:
+pole w stopniach kwadratowych nie ma sensu fizycznego.
+Oblicz pole na geometrii reproj. do EPSG:3857 i podziel przez 1 000 000.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 1.3</strong> — Jaka jest roznica miedzy EPSG:3857 a EPSG:2180
+jako ukladem docelowym do buforowania?
+Ktory daje dokladniejsze wyniki dla danych dotyczacych Polski i dlaczego?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="operacje-na-zbiorach-geometrii">
+<h2>2. Operacje na zbiorach geometrii<a class="headerlink" href="#operacje-na-zbiorach-geometrii" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-2-1-przeciecie-dwoch-buforow">
+<h3>Zadanie 2.1 — Przeciecie dwoch buforow<a class="headerlink" href="#zadanie-2-1-przeciecie-dwoch-buforow" title="Permalink to this heading">#</a></h3>
+<p>Stworz bufory 500 km wokol Wroclawia i wokol Berlina (13.405, 52.520),
+oblicz ich przeciecie i dodaj wszystkie trzy geometrie jako warstwy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="n">QgsFeature</span><span class="p">,</span>
+    <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">QgsProject</span><span class="p">,</span>
+    <span class="n">QgsCoordinateReferenceSystem</span><span class="p">,</span> <span class="n">QgsCoordinateTransform</span>
+<span class="p">)</span>
+
+<span class="n">PROMIEN_KM</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">PUNKTY</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Wroclaw&#39;</span><span class="p">,</span> <span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Berlin&#39;</span><span class="p">,</span>  <span class="mf">13.405</span><span class="p">,</span> <span class="mf">52.520</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">crs_geo</span>  <span class="o">=</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">&#39;EPSG:4326&#39;</span><span class="p">)</span>
+<span class="n">crs_metr</span> <span class="o">=</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">&#39;EPSG:3857&#39;</span><span class="p">)</span>
+<span class="n">do_metr</span>  <span class="o">=</span> <span class="n">QgsCoordinateTransform</span><span class="p">(</span><span class="n">crs_geo</span><span class="p">,</span> <span class="n">crs_metr</span><span class="p">,</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">())</span>
+<span class="n">do_geo</span>   <span class="o">=</span> <span class="n">QgsCoordinateTransform</span><span class="p">(</span><span class="n">crs_metr</span><span class="p">,</span> <span class="n">crs_geo</span><span class="p">,</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">bufor_km</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">km</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">))</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">do_metr</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="n">km</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+    <span class="n">b_geo</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">b_geo</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">do_geo</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">b_geo</span>
+
+<span class="c1"># Twoj kod: stworz bufory, oblicz przeciecie i dodaj warstwy</span>
+</pre></div>
+</div>
+<p>Po stworzeniu przeciecia wyswietl jego pole powierzchni
+obliczone przez <code class="docutils literal notranslate"><span class="pre">QgsDistanceArea</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 2.1</strong> — Czym rozni sie <code class="docutils literal notranslate"><span class="pre">intersection()</span></code> od <code class="docutils literal notranslate"><span class="pre">union()</span></code>
+pod wzgledem pola powierzchni wyniku?
+Zapisz rownosc: <code class="docutils literal notranslate"><span class="pre">area(A)</span> <span class="pre">+</span> <span class="pre">area(B)</span> <span class="pre">=</span> <span class="pre">area(union)</span> <span class="pre">+</span> <span class="pre">area(?)</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-2-2-roznica-i-roznica-symetryczna">
+<h3>Zadanie 2.2 — Roznica i roznica symetryczna<a class="headerlink" href="#zadanie-2-2-roznica-i-roznica-symetryczna" title="Permalink to this heading">#</a></h3>
+<p>Korzystajac z buforow z zadania 2.1 oblicz i zwizualizuj:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">roznica_WB</span></code> = bufor Wroclawia minus przeciecie
+(obszar tylko Wroclawia, bez czesci wspolnej)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roznica_BW</span></code> = bufor Berlina minus przeciecie
+(obszar tylko Berlina, bez czesci wspolnej)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sym_roznica</span></code> = roznica symetryczna obu buforow
+(wszystko poza czescia wspolna)</p></li>
+</ol>
+<p>Sprawdz numerycznie:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ta rownosc powinna byc spelnionia:</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">sym_roznica</span><span class="o">.</span><span class="n">area</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">roznica_WB</span><span class="o">.</span><span class="n">area</span><span class="p">()</span> <span class="o">+</span> <span class="n">roznica_BW</span><span class="o">.</span><span class="n">area</span><span class="p">()))</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-2-3-samodzielne-wspolna-strefa-trzech-miast">
+<h3>Zadanie 2.3 — Samodzielne: wspolna strefa trzech miast<a class="headerlink" href="#zadanie-2-3-samodzielne-wspolna-strefa-trzech-miast" title="Permalink to this heading">#</a></h3>
+<p>Znajdz obszar ktory lezy jednoczesnie w zasiegu 800 km
+od Wroclawia, Londynu (-0.128, 51.507) i Stambulu (28.979, 41.013).</p>
+<p>Etapy:</p>
+<ol class="arabic simple">
+<li><p>Stworz trzy bufory 800 km.</p></li>
+<li><p>Oblicz przeciecie wszystkich trzech: <code class="docutils literal notranslate"><span class="pre">A.intersection(B).intersection(C)</span></code>.</p></li>
+<li><p>Sprawdz czy wynik nie jest pusty (<code class="docutils literal notranslate"><span class="pre">isEmpty()</span></code>).</p></li>
+<li><p>Jesli nie jest pusty — dodaj go jako warstwe i wyswietl pole pow. w km2.</p></li>
+<li><p>Jesli jest pusty — zmniejsz promien do wartosci przy ktorej przeciecie
+przestaje byc puste (metoda prob i bledow).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 2.3</strong> — Przy jakim promieniu bufor przestaje byc pusty?
+Ile wynosi pole powierzchni przeciecia w km2?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="relacje-przestrzenne">
+<h2>3. Relacje przestrzenne<a class="headerlink" href="#relacje-przestrzenne" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-3-1-contains-i-within">
+<h3>Zadanie 3.1 — contains i within<a class="headerlink" href="#zadanie-3-1-contains-i-within" title="Permalink to this heading">#</a></h3>
+<p>Sprawdz relacje <code class="docutils literal notranslate"><span class="pre">contains</span></code> i <code class="docutils literal notranslate"><span class="pre">within</span></code> dla kilku przypadkow.
+Uruchom ponizszy kod i wyjasni kazdy wynik:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsGeometry</span>
+
+<span class="c1"># Duzy prostokat</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;POLYGON((0 0, 10 0, 10 10, 0 10, 0 0))&#39;</span><span class="p">)</span>
+
+<span class="c1"># Maly prostokat calkowicie wewnatrz A</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;POLYGON((2 2, 5 2, 5 5, 2 5, 2 2))&#39;</span><span class="p">)</span>
+
+<span class="c1"># Prostokat wychodzacy poza A</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;POLYGON((8 8, 12 8, 12 12, 8 12, 8 8))&#39;</span><span class="p">)</span>
+
+<span class="c1"># Punkt na granicy A</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;POINT(5 0)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Punkt wewnatrz A</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;POINT(5 5)&#39;</span><span class="p">)</span>
+
+<span class="n">testy</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;A.contains(B)&#39;</span><span class="p">,</span>  <span class="n">A</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">B</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;B.within(A)&#39;</span><span class="p">,</span>    <span class="n">B</span><span class="o">.</span><span class="n">within</span><span class="p">(</span><span class="n">A</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;A.contains(C)&#39;</span><span class="p">,</span>  <span class="n">A</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">C</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;A.intersects(C)&#39;</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">C</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;A.contains(D)&#39;</span><span class="p">,</span>  <span class="n">A</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">D</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;A.contains(E)&#39;</span><span class="p">,</span>  <span class="n">A</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">E</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;D.within(A)&#39;</span><span class="p">,</span>    <span class="n">D</span><span class="o">.</span><span class="n">within</span><span class="p">(</span><span class="n">A</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;A.touches(C)&#39;</span><span class="p">,</span>   <span class="n">A</span><span class="o">.</span><span class="n">touches</span><span class="p">(</span><span class="n">C</span><span class="p">)),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">opis</span><span class="p">,</span> <span class="n">wynik</span> <span class="ow">in</span> <span class="n">testy</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">opis</span><span class="si">:</span><span class="s1">&lt;25</span><span class="si">}</span><span class="s1"> -&gt; </span><span class="si">{</span><span class="n">wynik</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 3.1</strong> — <code class="docutils literal notranslate"><span class="pre">A.contains(D)</span></code> gdzie D lezy na granicy A.
+Jaki daje wynik i dlaczego jest to wazne praktycznie?
+Jak zachowuje sie <code class="docutils literal notranslate"><span class="pre">D.within(A)</span></code> w tym samym przypadku?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-3-2-znajdz-panstwo-zawierajace-punkt">
+<h3>Zadanie 3.2 — Znajdz panstwo zawierajace punkt<a class="headerlink" href="#zadanie-3-2-znajdz-panstwo-zawierajace-punkt" title="Permalink to this heading">#</a></h3>
+<p>Napisz funkcje ktora dla podanej pary wspolrzednych
+zwraca nazwe panstwa, na terytorium ktorego lezy ten punkt.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">znajdz_panstwo</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">):</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;ne_110m_admin_0_countries&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">punkt</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">punkt</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s1">&#39;Poza ladem&#39;</span>
+
+<span class="c1"># Przetestuj dla kilku punktow</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">znajdz_panstwo</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">))</span>   <span class="c1"># Wroclaw</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">znajdz_panstwo</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span>    <span class="mf">51.5</span><span class="p">))</span>      <span class="c1"># Londyn</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">znajdz_panstwo</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span>    <span class="mf">0.0</span><span class="p">))</span>       <span class="c1"># Atlantyk</span>
+</pre></div>
+</div>
+<p>Nastepnie rozszerz funkcje tak, zeby uzywala
+<code class="docutils literal notranslate"><span class="pre">QgsFeatureRequest().setFilterRect(bbox)</span></code> jako wstepnego filtru
+przed sprawdzeniem <code class="docutils literal notranslate"><span class="pre">contains</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja funkcja (wersja podstawowa + zoptymalizowana):</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 3.2</strong> — Przetestuj obie wersje funkcji (z <code class="docutils literal notranslate"><span class="pre">setFilterRect</span></code> i bez)
+na punkcie lezacym na srodku oceanu. Co zwraca kazda wersja i dlaczego?
+Ktora jest szybsza dla warstwy z 200 obiektami?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-3-3-samodzielne-ile-panstw-przecina-rownik">
+<h3>Zadanie 3.3 — Samodzielne: ile panstw przecina rownik<a class="headerlink" href="#zadanie-3-3-samodzielne-ile-panstw-przecina-rownik" title="Permalink to this heading">#</a></h3>
+<p>Stworz geometrie rownika jako linii:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rownik</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;LINESTRING(-180 0, 180 0)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Nastepnie znajdz wszystkie panstwa ktore sa przecinane przez rownik.
+Wyswietl ich nazwy i kontynenty, posortowane alfabetycznie.</p>
+<p>Bonusowe pytanie: ile panstw ma wieksze terytorium na polkuli
+poludniowej niz polnocnej? (wymaga bardziej zaawansowanej analizy)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 3.3</strong> — Ile panstw przecina rownik? Czy wynik Cie zaskoczyly?
+Ktore kontynenty sa reprezentowane?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="wydajne-zapytania-przestrzenne">
+<h2>4. Wydajne zapytania przestrzenne<a class="headerlink" href="#wydajne-zapytania-przestrzenne" title="Permalink to this heading">#</a></h2>
+<p>Sprawdzanie relacji dla kazdej pary obiektow duzej warstwy
+ma zlozonosc O(n). Dla wielu zapytan na tej samej warstwie
+warto wstepnie odfiltrowac kandydatow przez bounding box —
+QGIS uzywa do tego indeksu przestrzennego R-tree.</p>
+<section id="zadanie-4-1-wzorzec-bbox-dokladne-sprawdzenie">
+<h3>Zadanie 4.1 — Wzorzec bbox + dokladne sprawdzenie<a class="headerlink" href="#zadanie-4-1-wzorzec-bbox-dokladne-sprawdzenie" title="Permalink to this heading">#</a></h3>
+<p>Znajdz wszystkie panstwa ktore przecinaja sie z buforem
+500 km wokol Wroclawia, uzywajac dwuetapowego wzorca:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeatureRequest</span>
+
+<span class="c1"># Etap 1: bbox filter (szybki, moze dawac false positives)</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setFilterRect</span><span class="p">(</span><span class="n">bufor_geo</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">())</span>
+<span class="n">kandydaci</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">req</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Kandydaci po bbox: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">kandydaci</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Etap 2: dokladne sprawdzenie geometryczne</span>
+<span class="n">wynik</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">kandydaci</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">bufor_geo</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Po dokladnym sprawdzeniu: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wynik</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Porownaj liczbe kandydatow po pierwszym etapie z liczba
+po etapie drugim. Ile obiektow zostalo odfiltrowanych w etapie 2?
+Sa to tzw. <strong>false positives</strong> indeksu przestrzennego.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod (z bufor_geo z poprzednich zadan lub nowym):</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 4.1</strong> — Dlaczego indeks przestrzenny moze zwracac false positives?
+Narysuj lub opisz slowami geometrie ktora przeszlaby przez filtr bbox
+ale nie przeszlaby przez dokladne sprawdzenie <code class="docutils literal notranslate"><span class="pre">intersects</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-4-2-samodzielne-zapytanie-z-limitem">
+<h3>Zadanie 4.2 — Samodzielne: zapytanie z limitem<a class="headerlink" href="#zadanie-4-2-samodzielne-zapytanie-z-limitem" title="Permalink to this heading">#</a></h3>
+<p>Napisz funkcje <code class="docutils literal notranslate"><span class="pre">panstwa_blisko(lon,</span> <span class="pre">lat,</span> <span class="pre">km,</span> <span class="pre">max_wynikow=10)</span></code>
+ktora zwraca posortowana liste co najwyzej <code class="docutils literal notranslate"><span class="pre">max_wynikow</span></code> panstw
+najblizszych podanemu punktowi, wraz z odlegloscia.</p>
+<p>Wymagania:</p>
+<ul class="simple">
+<li><p>uzyj wzorca bbox + <code class="docutils literal notranslate"><span class="pre">intersects</span></code> do wstepnego filtrowania,</p></li>
+<li><p>odleglosc mierz przez <code class="docutils literal notranslate"><span class="pre">QgsDistanceArea</span></code> (fizyczna, w km),</p></li>
+<li><p>wynik: lista krotek <code class="docutils literal notranslate"><span class="pre">(nazwa_panstwa,</span> <span class="pre">odleglosc_km)</span></code>,</p></li>
+<li><p>posortowana rosnaco wedlug odleglosci,</p></li>
+<li><p>obcieta do <code class="docutils literal notranslate"><span class="pre">max_wynikow</span></code> elementow.</p></li>
+</ul>
+<p>Przetestuj dla Wroclawia z <code class="docutils literal notranslate"><span class="pre">km=2000</span></code> i <code class="docutils literal notranslate"><span class="pre">max_wynikow=5</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja funkcja:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="centroid-i-pointonsurface">
+<h2>5. Centroid i pointOnSurface<a class="headerlink" href="#centroid-i-pointonsurface" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-5-1-centroid-poza-obiektem">
+<h3>Zadanie 5.1 — Centroid poza obiektem<a class="headerlink" href="#zadanie-5-1-centroid-poza-obiektem" title="Permalink to this heading">#</a></h3>
+<p>Stworz geometrie dla ktorej centroid pada poza jej obrysem
+i zweryfikuj to przez <code class="docutils literal notranslate"><span class="pre">contains()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Litera &#39;C&#39; jako uproszczony polygon wklesly</span>
+<span class="n">litera_c</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span>
+    <span class="s1">&#39;POLYGON((0 0, 6 0, 6 2, 2 2, 2 8, 6 8, 6 10, 0 10, 0 0))&#39;</span>
+<span class="p">)</span>
+
+<span class="n">centroid</span> <span class="o">=</span> <span class="n">litera_c</span><span class="o">.</span><span class="n">centroid</span><span class="p">()</span>
+<span class="n">point_on</span> <span class="o">=</span> <span class="n">litera_c</span><span class="o">.</span><span class="n">pointOnSurface</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Centroid        : </span><span class="si">{</span><span class="n">centroid</span><span class="o">.</span><span class="n">asWkt</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pointOnSurface  : </span><span class="si">{</span><span class="n">point_on</span><span class="o">.</span><span class="n">asWkt</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zawiera centroid: </span><span class="si">{</span><span class="n">litera_c</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">centroid</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zawiera pointOn : </span><span class="si">{</span><span class="n">litera_c</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point_on</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Nastepnie stwórz warstwe z trzema obiektami:
+geometria litery C, jej centroid (czerwony) i pointOnSurface (zielony).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 5.1</strong> — Dla jakiego rodzaju ksztaltow
+centroid z pewnoscia bedzie wewnatrz obiektu?
+Podaj przynajmniej dwa typy geometrii i wyjasni dlaczego.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-5-2-samodzielne-panstwa-z-centroidem-na-morzu">
+<h3>Zadanie 5.2 — Samodzielne: panstwa z centroidem na morzu<a class="headerlink" href="#zadanie-5-2-samodzielne-panstwa-z-centroidem-na-morzu" title="Permalink to this heading">#</a></h3>
+<p>Korzystajac z warstwy panstw Natural Earth,
+znajdz wszystkie panstwa europejskie, dla ktorych centroid
+NIE lezy wewnatrz ich terytorium.</p>
+<p>Etapy:</p>
+<ol class="arabic simple">
+<li><p>Przefiltruj warstwe do panstw europejskich (<code class="docutils literal notranslate"><span class="pre">CONTINENT</span> <span class="pre">=</span> <span class="pre">'Europe'</span></code>).</p></li>
+<li><p>Dla kazdego panstwa sprawdz <code class="docutils literal notranslate"><span class="pre">geom.contains(geom.centroid())</span></code>.</p></li>
+<li><p>Wypisz nazwy panstw z centroidem poza krajem.</p></li>
+<li><p>Dla kazdego takiego panstwa wyswietl:</p>
+<ul class="simple">
+<li><p>wspolrzedne blednego centroidu,</p></li>
+<li><p>wspolrzedne poprawionego <code class="docutils literal notranslate"><span class="pre">pointOnSurface()</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Stworz dwie warstwy punktowe: bledne centroidy i poprawione punkty.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="zadanie-laczace-potok-analityczny">
+<h2>6. Zadanie laczace — potok analityczny<a class="headerlink" href="#zadanie-laczace-potok-analityczny" title="Permalink to this heading">#</a></h2>
+<p>Ponizsze zadanie wymaga polaczenia wszystkich umiejetnosci z C4 i C5.
+Napisz je jako jeden kompletny skrypt w edytorze skryptow QGIS.</p>
+<section id="zadanie-6-1-analiza-dostepnosci-stolic">
+<h3>Zadanie 6.1 — Analiza dostepnosci stolic<a class="headerlink" href="#zadanie-6-1-analiza-dostepnosci-stolic" title="Permalink to this heading">#</a></h3>
+<p>Masz warstwe panstw Natural Earth i warstwe <code class="docutils literal notranslate"><span class="pre">moje_miasta</span></code> z C4.</p>
+<p>Napisz skrypt ktory dla <strong>kazdego miasta</strong> z warstwy <code class="docutils literal notranslate"><span class="pre">moje_miasta</span></code>:</p>
+<p><strong>Krok 1 — Bufor dostepnosci:</strong><br />
+Stworz bufor 500 km wokol miasta (poprawnie w metrach).</p>
+<p><strong>Krok 2 — Panstwa w zasiegu:</strong><br />
+Znajdz wszystkie panstwa przecinajace sie z buforem
+(wzorzec bbox + <code class="docutils literal notranslate"><span class="pre">intersects</span></code>).</p>
+<p><strong>Krok 3 — Raport:</strong><br />
+Wyswietl w konsoli:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Wroclaw</span> <span class="p">(</span><span class="mi">641</span> <span class="mi">000</span> <span class="n">mieszkancow</span><span class="p">):</span>
+  <span class="n">Panstw</span> <span class="n">w</span> <span class="n">zasiegu</span> <span class="mi">500</span> <span class="n">km</span><span class="p">:</span> <span class="mi">12</span>
+  <span class="n">Lacznie</span> <span class="n">ludnosc</span><span class="p">:</span> <span class="mi">234</span> <span class="mi">567</span> <span class="mi">890</span>
+  <span class="n">Lista</span><span class="p">:</span> <span class="n">Polska</span><span class="p">,</span> <span class="n">Niemcy</span><span class="p">,</span> <span class="n">Czechy</span><span class="p">,</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p><strong>Krok 4 — Warstwy wynikowe:</strong><br />
+Dla kazdego miasta stworz oddzielna warstwe z buforowq
+i dodaj ja do projektu.</p>
+<p><strong>Krok 5 — Podsumowanie:</strong><br />
+Po przejsciu przez wszystkie miasta wyswietl:</p>
+<ul class="simple">
+<li><p>ktore miasto ma najwiecej panstw w zasiegu,</p></li>
+<li><p>ktore miasto ma dostep do najwiekszej lacznie populacji.</p></li>
+</ul>
+<p><strong>Krok 6 — Zapis:</strong><br />
+Zapisz warstwe buforow wszystkich miast jako jeden plik
+<code class="docutils literal notranslate"><span class="pre">zasieg_miast.gpkg</span></code> (kolejne bufory jako kolejne obiekty tej samej warstwy).</p>
+<p>Wymagania:</p>
+<ul class="simple">
+<li><p>caly potok jako jeden skrypt z funkcjami,</p></li>
+<li><p>obsluga przypadku gdy miasto nie ma zadnych panstw w zasiegu,</p></li>
+<li><p>wyniki czytelnie sformatowane w konsoli.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kompletny skrypt:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 6.1</strong> — Ktore miasto z Twojej warstwy ma dostep
+do najwiekszej lacznie populacji w promieniu 500 km?
+Czy wynik Cie zaskoczyl? Jak moglbys/moglabys zmodyfikowac
+skrypt zeby znalezc ‘optimalne’ polozenie nowego miasta
+maksymalizujace dostep do populacji?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="podsumowanie-c5">
+<h2>Podsumowanie C5<a class="headerlink" href="#podsumowanie-c5" title="Permalink to this heading">#</a></h2>
+<p>W tym cwiczeniu pracowales/pracowałas z:</p>
+<ul class="simple">
+<li><p>buforowaniem w poprawnych jednostkach przez reprojekcje do EPSG:3857,</p></li>
+<li><p>operacjami na zbiorach: <code class="docutils literal notranslate"><span class="pre">intersection</span></code>, <code class="docutils literal notranslate"><span class="pre">union</span></code>, <code class="docutils literal notranslate"><span class="pre">difference</span></code>, <code class="docutils literal notranslate"><span class="pre">symDifference</span></code>,</p></li>
+<li><p>relacjami przestrzennymi: <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">within</span></code>, <code class="docutils literal notranslate"><span class="pre">intersects</span></code>, <code class="docutils literal notranslate"><span class="pre">touches</span></code>,</p></li>
+<li><p>wzorcem wydajnego zapytania: bbox filter + dokladne sprawdzenie,</p></li>
+<li><p>centroidem i <code class="docutils literal notranslate"><span class="pre">pointOnSurface</span></code> — roznice i przypadki uzycia,</p></li>
+<li><p>laczeniem operacji w potok analityczny.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="na-c6">
+<h3>Na C6<a class="headerlink" href="#na-c6" title="Permalink to this heading">#</a></h3>
+<p>Nastepne cwiczenie (C6) jest poswiecone GeoPandas —
+analizie danych wektorowych poza QGIS w srodowisku Jupyter.</p>
+<hr class="docutils" />
+<p><em>Cwiczenie C5 — Programowanie w GIS (QGIS) — studia licencjackie.</em></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#buforowanie-w-poprawnych-jednostkach">1. Buforowanie w poprawnych jednostkach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-porownanie-bufora-w-stopniach-vs-metrach">Zadanie 1.1 — Porownanie bufora w stopniach vs metrach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-bufor-panstwa-w-km">Zadanie 1.2 — Bufor panstwa w km</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-samodzielne-pierscien-buforowy">Zadanie 1.3 — Samodzielne: pierscien buforowy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-na-zbiorach-geometrii">2. Operacje na zbiorach geometrii</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-przeciecie-dwoch-buforow">Zadanie 2.1 — Przeciecie dwoch buforow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2-roznica-i-roznica-symetryczna">Zadanie 2.2 — Roznica i roznica symetryczna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-3-samodzielne-wspolna-strefa-trzech-miast">Zadanie 2.3 — Samodzielne: wspolna strefa trzech miast</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacje-przestrzenne">3. Relacje przestrzenne</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-contains-i-within">Zadanie 3.1 — contains i within</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-znajdz-panstwo-zawierajace-punkt">Zadanie 3.2 — Znajdz panstwo zawierajace punkt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-samodzielne-ile-panstw-przecina-rownik">Zadanie 3.3 — Samodzielne: ile panstw przecina rownik</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wydajne-zapytania-przestrzenne">4. Wydajne zapytania przestrzenne</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-wzorzec-bbox-dokladne-sprawdzenie">Zadanie 4.1 — Wzorzec bbox + dokladne sprawdzenie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-samodzielne-zapytanie-z-limitem">Zadanie 4.2 — Samodzielne: zapytanie z limitem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#centroid-i-pointonsurface">5. Centroid i pointOnSurface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-centroid-poza-obiektem">Zadanie 5.1 — Centroid poza obiektem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-samodzielne-panstwa-z-centroidem-na-morzu">Zadanie 5.2 — Samodzielne: panstwa z centroidem na morzu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace-potok-analityczny">6. Zadanie laczace — potok analityczny</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-analiza-dostepnosci-stolic">Zadanie 6.1 — Analiza dostepnosci stolic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c5">Podsumowanie C5</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c6">Na C6</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

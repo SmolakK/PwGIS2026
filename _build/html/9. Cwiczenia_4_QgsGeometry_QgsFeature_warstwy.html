@@ -1,0 +1,1464 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C4: QgsGeometry, QgsFeature i praca z warstwami &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '9. Cwiczenia_4_QgsGeometry_QgsFeature_warstwy';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS" href="8.%20Wyklad_4_GeoPandas.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8.%20Wyklad_4_GeoPandas.html">Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F9. Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/9. Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>C4: QgsGeometry, QgsFeature i praca z warstwami</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-geometrii">1. Tworzenie geometrii</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-punkt">Zadanie 1.1 — Punkt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-linia">Zadanie 1.2 — Linia</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-polygon-z-wkt">Zadanie 1.3 — Polygon z WKT</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#odczyt-wlasciwosci-geometrii">2. Odczyt wlasciwosci geometrii</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-wierzcholki-i-wspolrzedne">Zadanie 2.1 — Wierzcholki i wspolrzedne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2-centroid-i-bounding-box">Zadanie 2.2 — Centroid i bounding box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-3-samodzielne">Zadanie 2.3 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-obiektow-qgsfeature">3. Tworzenie obiektow QgsFeature</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-tworzenie-qgsfeature">Zadanie 3.1 — Tworzenie QgsFeature</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-rozne-sposoby-ustawiania-atrybutow">Zadanie 3.2 — Rozne sposoby ustawiania atrybutow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-samodzielne-lista-miast-jako-obiekty">Zadanie 3.3 — Samodzielne: lista miast jako obiekty</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-warstwy-tymczasowej">4. Tworzenie warstwy tymczasowej</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-pierwsza-warstwa-tymczasowa">Zadanie 4.1 — Pierwsza warstwa tymczasowa</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-uri-warstwy">Zadanie 4.2 — URI warstwy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-3-dodawanie-pol-po-utworzeniu">Zadanie 4.3 — Dodawanie pol po utworzeniu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-obiektow-do-warstwy">5. Dodawanie obiektow do warstwy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-dodanie-pojedynczego-obiektu">Zadanie 5.1 — Dodanie pojedynczego obiektu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-dodanie-wielu-obiektow-naraz">Zadanie 5.2 — Dodanie wielu obiektow naraz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-3-samodzielne-warstwa-z-geometria-liniowa">Zadanie 5.3 — Samodzielne: warstwa z geometria liniowa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-warstwy-do-pliku">6. Zapis warstwy do pliku</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-zapis-do-geopackage">Zadanie 6.1 — Zapis do GeoPackage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-2-rozne-formaty-zapisu">Zadanie 6.2 — Rozne formaty zapisu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-3-zapis-z-reprojekcja">Zadanie 6.3 — Zapis z reprojekcja</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">7. Zadanie laczace</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-mapa-wulkanow">Zadanie 7.1 — Mapa wulkanow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c4">Podsumowanie C4</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c5">Na C5</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="c4-qgsgeometry-qgsfeature-i-praca-z-warstwami">
+<h1>C4: QgsGeometry, QgsFeature i praca z warstwami<a class="headerlink" href="#c4-qgsgeometry-qgsfeature-i-praca-z-warstwami" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-cwiczenia">
+<h2>Programowanie w GIS — Cwiczenia<a class="headerlink" href="#programowanie-w-gis-cwiczenia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Cwiczenie:</strong> C4<br />
+<strong>Powiazany wyklad:</strong> W3<br />
+<strong>Czas:</strong> ~90 minut</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="cele-cwiczenia">
+<h2>Cele cwiczenia<a class="headerlink" href="#cele-cwiczenia" title="Permalink to this heading">#</a></h2>
+<p>Po ukonczeniu tego cwiczenia bedziesz potrafil/a:</p>
+<ul class="simple">
+<li><p>tworzyc geometrie roznych typow z wspolrzednych i z WKT,</p></li>
+<li><p>odczytywac wlasciwosci geometrii: typ, wierzcholki, wymiary,</p></li>
+<li><p>tworzyc obiekty QgsFeature i przypisywac im geometrie oraz atrybuty,</p></li>
+<li><p>tworzyc tymczasowe warstwy wektorowe w pamieci,</p></li>
+<li><p>dodawac obiekty do warstwy w trybie edycji,</p></li>
+<li><p>zapisywac warstwe do pliku GeoPackage.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="konwencje">
+<h2>Konwencje<a class="headerlink" href="#konwencje" title="Permalink to this heading">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Oznaczenie</p></th>
+<th class="head"><p>Znaczenie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Zadanie</strong></p></td>
+<td><p>Polecenie do samodzielnego wykonania</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Wskazowka</strong></p></td>
+<td><p>Czytaj tylko jesli utkniesz</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Pytanie</strong></p></td>
+<td><p>Odpowiedz wpisz w komurce ponizej</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[QGIS]</span></code></p></td>
+<td><p>Kod do uruchomienia w Konsoli Pythona QGIS</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</section>
+<section id="przygotowanie">
+<h2>Przygotowanie<a class="headerlink" href="#przygotowanie" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Uruchom QGIS z wczytana warstwa panstw Natural Earth.</p></li>
+<li><p>Otworz Konsole Pythona i edytor skryptow (<code class="docutils literal notranslate"><span class="pre">Ctrl+Alt+P</span></code>).</p></li>
+<li><p>Utworz folder roboczy — tam bedziesz zapisywac pliki.</p></li>
+</ol>
+</section>
+<section id="spis-tresci">
+<h2>Spis tresci<a class="headerlink" href="#spis-tresci" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><span class="xref myst">Tworzenie geometrii</span></p></li>
+<li><p><span class="xref myst">Odczyt wlasciwosci geometrii</span></p></li>
+<li><p><span class="xref myst">Tworzenie obiektow QgsFeature</span></p></li>
+<li><p><span class="xref myst">Tworzenie warstwy tymczasowej</span></p></li>
+<li><p><span class="xref myst">Dodawanie obiektow do warstwy</span></p></li>
+<li><p><span class="xref myst">Zapis warstwy do pliku</span></p></li>
+<li><p><span class="xref myst">Zadanie laczace</span></p></li>
+</ol>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="tworzenie-geometrii">
+<h2>1. Tworzenie geometrii<a class="headerlink" href="#tworzenie-geometrii" title="Permalink to this heading">#</a></h2>
+<p>Geometrie w PyQGIS mozna tworzyc na trzy sposoby:
+z listy wspolrzednych, z formatu WKT lub z formatu WKB.
+W tym cwiczeniu skupiamy sie na pierwszych dwoch.</p>
+<p>Każdą geometrię dodaj do tymczasowej warstwy w QGIS tak żeby była widoczna na mapie. Poniżej fragment kodu przykładowego do dodania punktu do warstwy tymczasowej. Modyfikuj go odpowiednio.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="n">QgsProject</span>
+
+<span class="n">wl</span> <span class="o">=</span> <span class="n">QgsVectorLayer</span><span class="p">(</span><span class="s1">&#39;Point?crs=EPSG:4326&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;memory&#39;</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">)))</span>
+<span class="n">wl</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">addFeature</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>
+<span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="n">QgsProject</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">wl</span> <span class="o">=</span> <span class="n">QgsVectorLayer</span><span class="p">(</span><span class="s1">&#39;Point?crs=EPSG:4326&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;memory&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">f</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">()</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;qgis&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="zadanie-1-1-punkt">
+<h3>Zadanie 1.1 — Punkt<a class="headerlink" href="#zadanie-1-1-punkt" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod i sprawdź wynik:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="n">QgsWkbTypes</span>
+
+<span class="c1"># Tworzenie punktu — centrum Wroclawia</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;WKT          : </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">asWkt</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Typ ogolny   : </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">type</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Typ WKB      : </span><span class="si">{</span><span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">displayString</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">wkbType</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;isNull       : </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">isNull</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;isGeosValid  : </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">isGeosValid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 1.1</strong> — Co zwraca <code class="docutils literal notranslate"><span class="pre">g.type()</span></code> dla punktu?
+Co oznaczaja wartosci 0, 1, 2 dla tej metody?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-1-2-linia">
+<h3>Zadanie 1.2 — Linia<a class="headerlink" href="#zadanie-1-2-linia" title="Permalink to this heading">#</a></h3>
+<p>Stworz geometrie liniowa reprezentujaca uproszczona trase
+z Wroclawia do Gdanska przez Poznan i Bydgoszcz.
+Uzyj co najmniej 4 punktow posrednich.</p>
+<p>Wskazowka:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPolylineXY</span><span class="p">([</span>
+    <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">),</span>
+    <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span><span class="p">),</span>
+    <span class="c1"># ...</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>Przyblizzone wspolrzedne:
+Wroclaw (17.04, 51.11), Poznan (16.93, 52.41),
+Bydgoszcz (18.01, 53.12), Gdansk (18.65, 54.35).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja linia:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 1.2</strong> — Uruchom na swojej linii:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">constGet</span><span class="p">()</span><span class="o">.</span><span class="n">nCoordinates</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Co oznacza wynik <code class="docutils literal notranslate"><span class="pre">length()</span></code> dla warstwy w EPSG:4326?
+Czy ta wartosc jest uzyteczna jako miara odleglosci fizycznej?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-1-3-polygon-z-wkt">
+<h3>Zadanie 1.3 — Polygon z WKT<a class="headerlink" href="#zadanie-1-3-polygon-z-wkt" title="Permalink to this heading">#</a></h3>
+<p>Stworz prostokat obejmujacy obszar Polski uzywajac formatu WKT.
+Przyblizony zasieg Polski: lon 14.1—24.2, lat 49.0—54.9.</p>
+<p>Wskazowka:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;POLYGON((x1 y1, x2 y1, x2 y2, x1 y2, x1 y1))&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Po stworzeniu geometrii sprawdz:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">area</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">isGeosValid</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj prostokat:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 1.3</strong> — Sprawdz czy ponizsza geometria jest poprawna:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="s1">&#39;POLYGON((0 0, 2 2, 2 0, 0 2, 0 0))&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">isGeosValid</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">validateGeometry</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 1.4</strong> — Do stworzonej geometrii w tym zadaniu dodaj otwór w losowym miejscu.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="odczyt-wlasciwosci-geometrii">
+<h2>2. Odczyt wlasciwosci geometrii<a class="headerlink" href="#odczyt-wlasciwosci-geometrii" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-2-1-wierzcholki-i-wspolrzedne">
+<h3>Zadanie 2.1 — Wierzcholki i wspolrzedne<a class="headerlink" href="#zadanie-2-1-wierzcholki-i-wspolrzedne" title="Permalink to this heading">#</a></h3>
+<p>Stwórz polygon z 6 wierzcholkow (dowolny szesciokat)
+i wypisz wspolrzedne kazdego wierzcholka osobno.</p>
+<p>Wskazowka dla dostepu do wierzcholkow poligonu:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pierscienie</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">asPolygon</span><span class="p">()</span>       <span class="c1"># lista pierscieni</span>
+<span class="n">obwod</span> <span class="o">=</span> <span class="n">pierscienie</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>            <span class="c1"># pierwszy pierscien = kontur zewnetrzny</span>
+<span class="k">for</span> <span class="n">punkt</span> <span class="ow">in</span> <span class="n">obwod</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">punkt</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">punkt</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj szesciokat i petla po wierzcholkach:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 2.1</strong> — Ile wierzcholkow ma Twoj szesciokat wedlug <code class="docutils literal notranslate"><span class="pre">asPolygon()</span></code>?
+Czy ta liczba rozni sie od liczby podanej przy tworzeniu?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-2-2-centroid-i-bounding-box">
+<h3>Zadanie 2.2 — Centroid i bounding box<a class="headerlink" href="#zadanie-2-2-centroid-i-bounding-box" title="Permalink to this heading">#</a></h3>
+<p>Weź aktywna warstwe (warstwa panstw) i dla pierwszych 5 obiektow wypisz:</p>
+<ul class="simple">
+<li><p>nazwe panstwa,</p></li>
+<li><p>wspolrzedne centroidu,</p></li>
+<li><p>wymiary bounding box (szerokosc i wysokosc w stopniach).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeatureRequest</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setLimit</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">centroid</span><span class="p">()</span><span class="o">.</span><span class="n">asPoint</span><span class="p">()</span>
+    <span class="n">bb</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-2-3-samodzielne">
+<h3>Zadanie 2.3 — Samodzielne<a class="headerlink" href="#zadanie-2-3-samodzielne" title="Permalink to this heading">#</a></h3>
+<p>Napisz kod ktory przeszukuje warstwe panstw
+i znajduje panstwa o <strong>najbardziej kwadratowym</strong> ksztalcie,
+czyli takie, dla ktorego stosunek szerokosci do wysokosci
+bounding boxa jest najblizszy 1.0.</p>
+<p>Wzor: <code class="docutils literal notranslate"><span class="pre">stosunek</span> <span class="pre">=</span> <span class="pre">szerokosc</span> <span class="pre">/</span> <span class="pre">wysokosc</span></code>
+Im blizszy 1.0, tym ksztalt bardziej kwadratowy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 2.3</strong> — Podaj 5 najbardziej kwadratowych państw.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="tworzenie-obiektow-qgsfeature">
+<h2>3. Tworzenie obiektow QgsFeature<a class="headerlink" href="#tworzenie-obiektow-qgsfeature" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> to pojedynczy obiekt warstwy wektorowej —
+polaczenie geometrii z zestawem atrybutow.
+Tworzymy go zawsze w kontekscie konkretnej warstwy,
+bo musi znac schemat pol atrybutow.</p>
+<section id="zadanie-3-1-tworzenie-qgsfeature">
+<h3>Zadanie 3.1 — Tworzenie QgsFeature<a class="headerlink" href="#zadanie-3-1-tworzenie-qgsfeature" title="Permalink to this heading">#</a></h3>
+<p>Uruchom i przeanalizuj ponizszy kod:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+    <span class="n">QgsFields</span><span class="p">,</span> <span class="n">QgsField</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QVariant</span>
+
+<span class="c1"># Definicja pol atrybutow</span>
+<span class="n">pola</span> <span class="o">=</span> <span class="n">QgsFields</span><span class="p">()</span>
+<span class="n">pola</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsField</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span>    <span class="n">QVariant</span><span class="o">.</span><span class="n">String</span><span class="p">))</span>
+<span class="n">pola</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsField</span><span class="p">(</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span>     <span class="n">QVariant</span><span class="o">.</span><span class="n">Int</span><span class="p">))</span>
+<span class="n">pola</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsField</span><span class="p">(</span><span class="s1">&#39;area_km2&#39;</span><span class="p">,</span> <span class="n">QVariant</span><span class="o">.</span><span class="n">Double</span><span class="p">))</span>
+
+<span class="c1"># Tworzenie obiektu</span>
+<span class="n">obiekt</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">(</span><span class="n">pola</span><span class="p">)</span>
+<span class="n">obiekt</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">)))</span>
+
+<span class="c1"># Przypisanie atrybutow</span>
+<span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>     <span class="o">=</span> <span class="s1">&#39;Wroclaw&#39;</span>
+<span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="mi">641000</span>
+<span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;area_km2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">292.8</span>
+
+<span class="c1"># Odczyt</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Geometria  : </span><span class="si">{</span><span class="n">obiekt</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">asWkt</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Atrybuty   : </span><span class="si">{</span><span class="n">obiekt</span><span class="o">.</span><span class="n">attributes</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pole name  : </span><span class="si">{</span><span class="n">obiekt</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pole pop   : </span><span class="si">{</span><span class="n">obiekt</span><span class="p">[</span><span class="s2">&quot;pop&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id obiektu : </span><span class="si">{</span><span class="n">obiekt</span><span class="o">.</span><span class="n">id</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 3.1</strong> — Jaka wartosc ma <code class="docutils literal notranslate"><span class="pre">obiekt.id()</span></code> przed dodaniem obiektu do warstwy?
+Co to oznacza i kiedy id zostaje przypisane?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-3-2-rozne-sposoby-ustawiania-atrybutow">
+<h3>Zadanie 3.2 — Rozne sposoby ustawiania atrybutow<a class="headerlink" href="#zadanie-3-2-rozne-sposoby-ustawiania-atrybutow" title="Permalink to this heading">#</a></h3>
+<p>Stworz obiekt z tymi samymi polami co w zadaniu 3.1,
+ale uzyj metody <code class="docutils literal notranslate"><span class="pre">setAttributes()</span></code> zamiast przypisywania po nazwie.</p>
+<p>Wskazowka:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obiekt</span><span class="o">.</span><span class="n">setAttributes</span><span class="p">([</span><span class="s1">&#39;Warszawa&#39;</span><span class="p">,</span> <span class="mi">1794000</span><span class="p">,</span> <span class="mf">517.2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Nastepnie sprobuj ustawic wartosc przez indeks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obiekt</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Krakow&#39;</span><span class="p">)</span>   <span class="c1"># indeks pola</span>
+</pre></div>
+</div>
+<p>Sprawdz wyniki obu metod przez <code class="docutils literal notranslate"><span class="pre">obiekt.attributes()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 3.2</strong> — Ktora metoda ustawiania atrybutow jest bezpieczniejsza
+i dlaczego? Co sie stanie jesli przez <code class="docutils literal notranslate"><span class="pre">setAttributes()</span></code> podasz liste
+o zlej dlugosci?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-3-3-samodzielne-lista-miast-jako-obiekty">
+<h3>Zadanie 3.3 — Samodzielne: lista miast jako obiekty<a class="headerlink" href="#zadanie-3-3-samodzielne-lista-miast-jako-obiekty" title="Permalink to this heading">#</a></h3>
+<p>Masz ponizsze dane:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">miasta</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Wroclaw&#39;</span><span class="p">,</span>   <span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">,</span>  <span class="mi">641000</span><span class="p">,</span>  <span class="mf">292.8</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Warszawa&#39;</span><span class="p">,</span>  <span class="mf">21.012</span><span class="p">,</span> <span class="mf">52.230</span><span class="p">,</span> <span class="mi">1794000</span><span class="p">,</span>  <span class="mf">517.2</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Krakow&#39;</span><span class="p">,</span>    <span class="mf">19.945</span><span class="p">,</span> <span class="mf">50.065</span><span class="p">,</span>  <span class="mi">779000</span><span class="p">,</span>  <span class="mf">326.8</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Gdansk&#39;</span><span class="p">,</span>    <span class="mf">18.646</span><span class="p">,</span> <span class="mf">54.352</span><span class="p">,</span>  <span class="mi">470000</span><span class="p">,</span>  <span class="mf">261.9</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Poznan&#39;</span><span class="p">,</span>    <span class="mf">16.929</span><span class="p">,</span> <span class="mf">52.407</span><span class="p">,</span>  <span class="mi">545000</span><span class="p">,</span>  <span class="mf">261.8</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Lodz&#39;</span><span class="p">,</span>      <span class="mf">19.455</span><span class="p">,</span> <span class="mf">51.759</span><span class="p">,</span>  <span class="mi">672000</span><span class="p">,</span>  <span class="mf">293.3</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Szczecin&#39;</span><span class="p">,</span>  <span class="mf">14.553</span><span class="p">,</span> <span class="mf">53.429</span><span class="p">,</span>  <span class="mi">400000</span><span class="p">,</span>  <span class="mf">300.6</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Lublin&#39;</span><span class="p">,</span>    <span class="mf">22.567</span><span class="p">,</span> <span class="mf">51.247</span><span class="p">,</span>  <span class="mi">339000</span><span class="p">,</span>  <span class="mf">147.5</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Napisz kod ktory tworzy liste obiektow <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> dla tych danych.
+Schemat pol: <code class="docutils literal notranslate"><span class="pre">name</span></code> (String), <code class="docutils literal notranslate"><span class="pre">lon</span></code> (Double), <code class="docutils literal notranslate"><span class="pre">lat</span></code> (Double),
+<code class="docutils literal notranslate"><span class="pre">pop</span></code> (Int), <code class="docutils literal notranslate"><span class="pre">area_km2</span></code> (Double).</p>
+<p>Na koniec wypisz liczbe stworzonych obiektow
+i atrybuty ostatniego z nich.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="tworzenie-warstwy-tymczasowej">
+<h2>4. Tworzenie warstwy tymczasowej<a class="headerlink" href="#tworzenie-warstwy-tymczasowej" title="Permalink to this heading">#</a></h2>
+<p>Warstwa tymczasowa (dostawca <code class="docutils literal notranslate"><span class="pre">'memory'</span></code>) istnieje tylko
+w pamieci — znika po zamknieciu QGIS.
+Uzywamy jej do przechowywania wynikow posrednich
+lub do demonstracji przed zapisem do pliku.</p>
+<section id="zadanie-4-1-pierwsza-warstwa-tymczasowa">
+<h3>Zadanie 4.1 — Pierwsza warstwa tymczasowa<a class="headerlink" href="#zadanie-4-1-pierwsza-warstwa-tymczasowa" title="Permalink to this heading">#</a></h3>
+<p>Uruchom ponizszy kod i sprawdz czy warstwa pojawila sie w Panelu warstw:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">QgsProject</span>
+
+<span class="n">wl</span> <span class="o">=</span> <span class="n">QgsVectorLayer</span><span class="p">(</span>
+    <span class="s1">&#39;Point?crs=EPSG:4326&amp;field=name:string&amp;field=pop:integer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;moje_miasta&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;memory&#39;</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">wl</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Warstwa utworzona poprawnie.&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Nazwa          : </span><span class="si">{</span><span class="n">wl</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS            : </span><span class="si">{</span><span class="n">wl</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba pol     : </span><span class="si">{</span><span class="n">wl</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba obiektow: </span><span class="si">{</span><span class="n">wl</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Dostawca       : </span><span class="si">{</span><span class="n">wl</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Blad tworzenia warstwy.&#39;</span><span class="p">)</span>
+
+<span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 4.1</strong> — Co oznacza parametr <code class="docutils literal notranslate"><span class="pre">'memory'</span></code> w konstruktorze <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>?
+Czym rozni sie warstwa z dostawca <code class="docutils literal notranslate"><span class="pre">'memory'</span></code> od warstwy z dostawca <code class="docutils literal notranslate"><span class="pre">'ogr'</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-4-2-uri-warstwy">
+<h3>Zadanie 4.2 — URI warstwy<a class="headerlink" href="#zadanie-4-2-uri-warstwy" title="Permalink to this heading">#</a></h3>
+<p>Zbadaj rozne sposoby definiowania struktury warstwy przez URI.
+Stworz warstwe poligonowa z czterema polami roznych typow:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wl</span> <span class="o">=</span> <span class="n">QgsVectorLayer</span><span class="p">(</span>
+    <span class="s1">&#39;Polygon?crs=EPSG:2180&#39;</span>
+    <span class="s1">&#39;&amp;field=nazwa:string(50)&#39;</span>
+    <span class="s1">&#39;&amp;field=kod:string(10)&#39;</span>
+    <span class="s1">&#39;&amp;field=powierzchnia:double&#39;</span>
+    <span class="s1">&#39;&amp;field=rok_zalozenia:integer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gminy_testowe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;memory&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Po stworzeniu wypisz wszystkie pola z ich typami:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="n">wl</span><span class="o">.</span><span class="n">fields</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">:</span><span class="s1">&lt;20</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">pole</span><span class="o">.</span><span class="n">typeName</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-4-3-dodawanie-pol-po-utworzeniu">
+<h3>Zadanie 4.3 — Dodawanie pol po utworzeniu<a class="headerlink" href="#zadanie-4-3-dodawanie-pol-po-utworzeniu" title="Permalink to this heading">#</a></h3>
+<p>Stworz warstwe punktowa bez zadnych pol w URI,
+a nastepnie dodaj pola programowo przez <code class="docutils literal notranslate"><span class="pre">addAttribute()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">QgsField</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QVariant</span>
+
+<span class="n">wl</span> <span class="o">=</span> <span class="n">QgsVectorLayer</span><span class="p">(</span><span class="s1">&#39;Point?crs=EPSG:4326&#39;</span><span class="p">,</span> <span class="s1">&#39;test_pol&#39;</span><span class="p">,</span> <span class="s1">&#39;memory&#39;</span><span class="p">)</span>
+
+<span class="n">wl</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+<span class="n">wl</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="n">QgsField</span><span class="p">(</span><span class="s1">&#39;id_punktu&#39;</span><span class="p">,</span>  <span class="n">QVariant</span><span class="o">.</span><span class="n">Int</span><span class="p">))</span>
+<span class="n">wl</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="n">QgsField</span><span class="p">(</span><span class="s1">&#39;opis&#39;</span><span class="p">,</span>       <span class="n">QVariant</span><span class="o">.</span><span class="n">String</span><span class="p">))</span>
+<span class="n">wl</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="n">QgsField</span><span class="p">(</span><span class="s1">&#39;wysokosc&#39;</span><span class="p">,</span>   <span class="n">QVariant</span><span class="o">.</span><span class="n">Double</span><span class="p">))</span>
+<span class="n">wl</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">wl</span><span class="o">.</span><span class="n">fields</span><span class="p">()])</span>
+</pre></div>
+</div>
+<p>Sprawdz przez <code class="docutils literal notranslate"><span class="pre">wl.fields()</span></code> czy pola zostaly dodane poprawnie.
+Nastepnie sprobuj dodac pole poza blokiem edycji i zaobserwuj wynik.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 4.3</strong> — Co sie stanie jesli sprobujemy dodac pole
+bez wczesniejszego wywolania <code class="docutils literal notranslate"><span class="pre">startEditing()</span></code>?
+Czy QGIS zglosi blad czy po prostu nic nie zrobi?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="dodawanie-obiektow-do-warstwy">
+<h2>5. Dodawanie obiektow do warstwy<a class="headerlink" href="#dodawanie-obiektow-do-warstwy" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-5-1-dodanie-pojedynczego-obiektu">
+<h3>Zadanie 5.1 — Dodanie pojedynczego obiektu<a class="headerlink" href="#zadanie-5-1-dodanie-pojedynczego-obiektu" title="Permalink to this heading">#</a></h3>
+<p>Tak wyglądać może dodanie miasta z zadania 1.1 rozszerzony o dodwanie atrybutów</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span>
+
+<span class="c1"># Pobierz warstwe (jesli juz jest w projekcie)</span>
+<span class="n">wl</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;moje_miasta&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">wl</span><span class="o">.</span><span class="n">startEditing</span><span class="p">()</span>
+
+<span class="n">obiekt</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">(</span><span class="n">wl</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
+<span class="n">obiekt</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">)))</span>
+<span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Wroclaw&#39;</span>
+<span class="n">obiekt</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">641000</span>
+
+<span class="n">czy_dodano</span> <span class="o">=</span> <span class="n">wl</span><span class="o">.</span><span class="n">addFeature</span><span class="p">(</span><span class="n">obiekt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Dodano: </span><span class="si">{</span><span class="n">czy_dodano</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">wl</span><span class="o">.</span><span class="n">commitChanges</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba obiektow: </span><span class="si">{</span><span class="n">wl</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Odswierz widok</span>
+<span class="n">wl</span><span class="o">.</span><span class="n">triggerRepaint</span><span class="p">()</span>
+<span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Sprawdz czy punkt pojawil sie na mapie.
+Otworz tabele atrybutow warstwy (<code class="docutils literal notranslate"><span class="pre">F6</span></code>) i zweryfikuj wartosc pola <code class="docutils literal notranslate"><span class="pre">pop</span></code>.</p>
+<p><strong>Pytanie 5.1</strong> — Co zwraca <code class="docutils literal notranslate"><span class="pre">addFeature()</span></code>? Jakiego typu jest ten wynik?
+Co nalezy zrobic jesli <code class="docutils literal notranslate"><span class="pre">addFeature()</span></code> zwroci <code class="docutils literal notranslate"><span class="pre">False</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-5-2-dodanie-wielu-obiektow-naraz">
+<h3>Zadanie 5.2 — Dodanie wielu obiektow naraz<a class="headerlink" href="#zadanie-5-2-dodanie-wielu-obiektow-naraz" title="Permalink to this heading">#</a></h3>
+<p>Wiesz juz ze mozna dodawac obiekty jeden po jednym.
+Sprawdz szybsza metode — <code class="docutils literal notranslate"><span class="pre">addFeatures()</span></code> przyjmuje cala liste naraz.</p>
+<p>Uzupelnij warstwe <code class="docutils literal notranslate"><span class="pre">moje_miasta</span></code> o wszystkie pozostale miasta
+z ponizszej listy, uzywajac <code class="docutils literal notranslate"><span class="pre">addFeatures()</span></code> zamiast petli z <code class="docutils literal notranslate"><span class="pre">addFeature()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dane</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Warszawa&#39;</span><span class="p">,</span>  <span class="mf">21.012</span><span class="p">,</span> <span class="mf">52.230</span><span class="p">,</span> <span class="mi">1794000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Krakow&#39;</span><span class="p">,</span>    <span class="mf">19.945</span><span class="p">,</span> <span class="mf">50.065</span><span class="p">,</span>  <span class="mi">779000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Gdansk&#39;</span><span class="p">,</span>    <span class="mf">18.646</span><span class="p">,</span> <span class="mf">54.352</span><span class="p">,</span>  <span class="mi">470000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Poznan&#39;</span><span class="p">,</span>    <span class="mf">16.929</span><span class="p">,</span> <span class="mf">52.407</span><span class="p">,</span>  <span class="mi">545000</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Lodz&#39;</span><span class="p">,</span>      <span class="mf">19.455</span><span class="p">,</span> <span class="mf">51.759</span><span class="p">,</span>  <span class="mi">672000</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Wskazowka: przygotuj liste obiektow <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code>, a nastepnie
+wywolaj <code class="docutils literal notranslate"><span class="pre">wl.dataProvider().addFeatures(lista_obiektow)</span></code>.
+Ta metoda omija tryb edycji i jest szybsza dla duzej liczby obiektow.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 5.2</strong> — Jaka jest roznica miedzy:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wl.addFeature(f)</span></code> (przez interfejs edycji)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wl.dataProvider().addFeatures([f])</span></code> (przez dostawce danych)</p></li>
+</ul>
+<p>Kiedy warto uzywac kazdej z tych metod?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-5-3-samodzielne-warstwa-z-geometria-liniowa">
+<h3>Zadanie 5.3 — Samodzielne: warstwa z geometria liniowa<a class="headerlink" href="#zadanie-5-3-samodzielne-warstwa-z-geometria-liniowa" title="Permalink to this heading">#</a></h3>
+<p>Stworz nowa warstwe tymczasowa o typie <code class="docutils literal notranslate"><span class="pre">LineString</span></code> w EPSG:4326
+z polami: <code class="docutils literal notranslate"><span class="pre">trasa</span></code> (String), <code class="docutils literal notranslate"><span class="pre">dlugosc_km</span></code> (Double), <code class="docutils literal notranslate"><span class="pre">opis</span></code> (String).</p>
+<p>Dodaj do niej trzy obiekty reprezentujace uproszczone trasy:</p>
+<ol class="arabic simple">
+<li><p>Wroclaw — Warszawa (przez Lodz)</p></li>
+<li><p>Wroclaw — Krakow (przez Opole)</p></li>
+<li><p>Wroclaw — Gdansk (przez Poznan i Bydgoszcz)</p></li>
+</ol>
+<p>Dla kazdej trasy wypelnij pole <code class="docutils literal notranslate"><span class="pre">trasa</span></code> opisem,
+a pole <code class="docutils literal notranslate"><span class="pre">dlugosc_km</span></code> oblicz jako <code class="docutils literal notranslate"><span class="pre">g.length()</span> <span class="pre">*</span> <span class="pre">111</span></code>
+(przyblizenie: 1 stopien ~ 111 km).</p>
+<p>Dodaj gotowa warstwe do projektu i sprawdz czy trasy widac na mapie.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="zapis-warstwy-do-pliku">
+<h2>6. Zapis warstwy do pliku<a class="headerlink" href="#zapis-warstwy-do-pliku" title="Permalink to this heading">#</a></h2>
+<p>Warstwa tymczasowa (<code class="docutils literal notranslate"><span class="pre">memory</span></code>) znika po zamknieciu QGIS.
+Zeby zachowac wyniki, nalezy zapisac je do pliku.
+Uzywamy do tego klasy <code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code>.</p>
+<section id="zadanie-6-1-zapis-do-geopackage">
+<h3>Zadanie 6.1 — Zapis do GeoPackage<a class="headerlink" href="#zadanie-6-1-zapis-do-geopackage" title="Permalink to this heading">#</a></h3>
+<p>Zapisz warstwe <code class="docutils literal notranslate"><span class="pre">moje_miasta</span></code> do pliku GeoPackage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorFileWriter</span><span class="p">,</span> <span class="n">QgsProject</span>
+
+<span class="n">wl</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;moje_miasta&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">SCIEZKA</span> <span class="o">=</span> <span class="s1">&#39;C:/GIS_kurs/C4/moje_miasta.gpkg&#39;</span>  <span class="c1"># zmien na swoja sciezke</span>
+
+<span class="n">opcje</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">SaveVectorOptions</span><span class="p">()</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">driverName</span>   <span class="o">=</span> <span class="s1">&#39;GPKG&#39;</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">fileEncoding</span> <span class="o">=</span> <span class="s1">&#39;UTF-8&#39;</span>
+
+<span class="n">blad</span><span class="p">,</span> <span class="n">komunikat</span><span class="p">,</span> <span class="n">sciezka_wyj</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">writeAsVectorFormatV3</span><span class="p">(</span>
+    <span class="n">wl</span><span class="p">,</span>
+    <span class="n">SCIEZKA</span><span class="p">,</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">transformContext</span><span class="p">(),</span>
+    <span class="n">opcje</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">blad</span> <span class="o">==</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">NoError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Zapisano: </span><span class="si">{</span><span class="n">sciezka_wyj</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Blad </span><span class="si">{</span><span class="n">blad</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">komunikat</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Po zapisie dodaj plik do projektu przez Panel przegladarki
+i porownaj czy dane sie zgadzaja.</p>
+<p><strong>Pytanie 6.1</strong> — <code class="docutils literal notranslate"><span class="pre">writeAsVectorFormatV3</span></code> zwraca krotke czterech wartosci.
+Co oznaczaja poszczegolne elementy tej krotki?
+Kiedy <code class="docutils literal notranslate"><span class="pre">blad</span></code> ma wartosc inna niz <code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter.NoError</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-6-2-rozne-formaty-zapisu">
+<h3>Zadanie 6.2 — Rozne formaty zapisu<a class="headerlink" href="#zadanie-6-2-rozne-formaty-zapisu" title="Permalink to this heading">#</a></h3>
+<p>Zapisz te sama warstwe do trzech roznych formatow
+i porownaj rozmiary plikow w eksploratorze.</p>
+<p>Uzyj ponizszych ustawien <code class="docutils literal notranslate"><span class="pre">driverName</span></code>:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Format</p></th>
+<th class="head"><p>driverName</p></th>
+<th class="head"><p>Rozszerzenie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GeoPackage</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'GPKG'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.gpkg</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>GeoJSON</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'GeoJSON'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.geojson</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Shapefile</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'ESRI</span> <span class="pre">Shapefile'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.shp</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Wskazowka: zmien tylko <code class="docutils literal notranslate"><span class="pre">driverName</span></code> i sciezke w kazdej iteracji.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kod zapisujacy do trzech formatow:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 6.2</strong> — Ktory format zajmuje najmniej miejsca dla malej warstwy punktowej?
+Ile plikow powstaje dla formatu Shapefile i dlaczego?
+Kiedy warto uzyc GeoJSON zamiast GeoPackage?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-6-3-zapis-z-reprojekcja">
+<h3>Zadanie 6.3 — Zapis z reprojekcja<a class="headerlink" href="#zadanie-6-3-zapis-z-reprojekcja" title="Permalink to this heading">#</a></h3>
+<p>Zapisz warstwe <code class="docutils literal notranslate"><span class="pre">moje_miasta</span></code> do pliku GeoPackage
+z jednoczesna reprojekcja do ukladu <strong>EPSG:2180</strong> (PL-1992):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QgsVectorFileWriter</span><span class="p">,</span> <span class="n">QgsProject</span><span class="p">,</span>
+    <span class="n">QgsCoordinateReferenceSystem</span><span class="p">,</span> <span class="n">QgsCoordinateTransform</span>
+<span class="p">)</span>
+
+<span class="n">wl</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;moje_miasta&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">opcje</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">SaveVectorOptions</span><span class="p">()</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">driverName</span>   <span class="o">=</span> <span class="s1">&#39;GPKG&#39;</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">fileEncoding</span> <span class="o">=</span> <span class="s1">&#39;UTF-8&#39;</span>
+<span class="n">opcje</span><span class="o">.</span><span class="n">ct</span> <span class="o">=</span> <span class="n">QgsCoordinateTransform</span><span class="p">(</span>
+    <span class="n">wl</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+    <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">),</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">blad</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">sciezka_wyj</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">writeAsVectorFormatV3</span><span class="p">(</span>
+    <span class="n">wl</span><span class="p">,</span> <span class="s1">&#39;C:/GIS_kurs/C4/moje_miasta_PL1992.gpkg&#39;</span><span class="p">,</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">transformContext</span><span class="p">(),</span> <span class="n">opcje</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">blad</span> <span class="o">==</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">NoError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zapisano w EPSG:2180.&#39;</span><span class="p">)</span>
+    <span class="c1"># Wczytaj i sprawdz CRS</span>
+    <span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorLayer</span>
+    <span class="n">sprawdz</span> <span class="o">=</span> <span class="n">QgsVectorLayer</span><span class="p">(</span><span class="n">sciezka_wyj</span><span class="p">,</span> <span class="s1">&#39;sprawdzenie&#39;</span><span class="p">,</span> <span class="s1">&#39;ogr&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS zapisanego pliku: </span><span class="si">{</span><span class="n">sprawdz</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 6.3</strong> — Po wczytaniu pliku zapisanego w EPSG:2180,
+sprawdz wspolrzedne Wroclawia:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">sprawdz</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Wroclaw&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">asPoint</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Jakie wspolrzedne widzisz? Czy sa to stopnie czy metry?
+Jak wygladaja w porownaniu do oryginalnych (17.038, 51.108)?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s7'></a></p>
+</section>
+</section>
+<section id="zadanie-laczace">
+<h2>7. Zadanie laczace<a class="headerlink" href="#zadanie-laczace" title="Permalink to this heading">#</a></h2>
+<p>Ponizsze zadanie laczy wszystkie umiejetnosci z cwiczenia C4.
+Napisz je w edytorze skryptow QGIS jako jeden kompletny skrypt.</p>
+<section id="zadanie-7-1-mapa-wulkanow">
+<h3>Zadanie 7.1 — Mapa wulkanow<a class="headerlink" href="#zadanie-7-1-mapa-wulkanow" title="Permalink to this heading">#</a></h3>
+<p>Masz ponizsze dane o aktywnych wulkanach:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wulkany</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Etna&#39;</span><span class="p">,</span>          <span class="mf">15.000</span><span class="p">,</span>  <span class="mf">37.734</span><span class="p">,</span> <span class="mi">3357</span><span class="p">,</span> <span class="s1">&#39;Wlochy&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Stromboli&#39;</span><span class="p">,</span>     <span class="mf">15.213</span><span class="p">,</span>  <span class="mf">38.789</span><span class="p">,</span> <span class="mi">924</span><span class="p">,</span>  <span class="s1">&#39;Wlochy&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Santorini&#39;</span><span class="p">,</span>     <span class="mf">25.396</span><span class="p">,</span>  <span class="mf">36.404</span><span class="p">,</span> <span class="mi">367</span><span class="p">,</span>  <span class="s1">&#39;Grecja&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Hekla&#39;</span><span class="p">,</span>        <span class="o">-</span><span class="mf">19.666</span><span class="p">,</span>  <span class="mf">63.983</span><span class="p">,</span> <span class="mi">1491</span><span class="p">,</span> <span class="s1">&#39;Islandia&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Eyjafjallajokull&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">19.613</span><span class="p">,</span> <span class="mf">63.633</span><span class="p">,</span> <span class="mi">1651</span><span class="p">,</span> <span class="s1">&#39;Islandia&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Teide&#39;</span><span class="p">,</span>         <span class="o">-</span><span class="mf">16.641</span><span class="p">,</span>  <span class="mf">28.272</span><span class="p">,</span> <span class="mi">3718</span><span class="p">,</span> <span class="s1">&#39;Hiszpania&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Vesuvius&#39;</span><span class="p">,</span>      <span class="mf">14.426</span><span class="p">,</span>  <span class="mf">40.821</span><span class="p">,</span> <span class="mi">1281</span><span class="p">,</span> <span class="s1">&#39;Wlochy&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Popocatepetl&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">98.628</span><span class="p">,</span>  <span class="mf">19.023</span><span class="p">,</span> <span class="mi">5426</span><span class="p">,</span> <span class="s1">&#39;Meksyk&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="c1"># kolumny: nazwa, lon, lat, wysokosc_m, kraj</span>
+</pre></div>
+</div>
+<p>Napisz skrypt ktory:</p>
+<ol class="arabic simple">
+<li><p>Tworzy warstwe tymczasowa punktowa w EPSG:4326 z polami:
+<code class="docutils literal notranslate"><span class="pre">nazwa</span></code> (String), <code class="docutils literal notranslate"><span class="pre">lon</span></code> (Double), <code class="docutils literal notranslate"><span class="pre">lat</span></code> (Double),
+<code class="docutils literal notranslate"><span class="pre">wysokosc_m</span></code> (Int), <code class="docutils literal notranslate"><span class="pre">kraj</span></code> (String).</p></li>
+<li><p>Tworzy obiekt <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> dla kazdego wulkanu i dodaje
+wszystkie naraz przez <code class="docutils literal notranslate"><span class="pre">dataProvider().addFeatures()</span></code>.</p></li>
+<li><p>Wyswietla raport w konsoli:</p>
+<ul class="simple">
+<li><p>liczbe dodanych obiektow,</p></li>
+<li><p>nazwe najwyzszego wulkanu,</p></li>
+<li><p>srednia wysokosc wszystkich wulkanow.</p></li>
+</ul>
+</li>
+<li><p>Dodaje warstwe do projektu QGIS.</p></li>
+<li><p>Zapisuje warstwe do pliku <code class="docutils literal notranslate"><span class="pre">wulkany.gpkg</span></code> w EPSG:4326
+ORAZ do pliku <code class="docutils literal notranslate"><span class="pre">wulkany_geojson.geojson</span></code> w formacie GeoJSON.</p></li>
+<li><p>Wyswietla rozmiary obu plikow w bajtach.</p></li>
+</ol>
+<p>Wymagania:</p>
+<ul class="simple">
+<li><p>caly potok w jednym skrypcie,</p></li>
+<li><p>odpowiednia obsluga bledu zapisu (sprawdz kod bledu),</p></li>
+<li><p>po uruchomieniu punkt dla kazdego wulkanu ma byc widoczny na mapie.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoj kompletny skrypt:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Pytanie 7.1</strong> — Gdybys chcial/a dodac do warstwy wulkanow
+pole <code class="docutils literal notranslate"><span class="pre">kontynent</span></code> juz po jej zapisaniu do pliku GeoPackage,
+opisz krok po kroku jak to zrobic programowo w PyQGIS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="podsumowanie-c4">
+<h2>Podsumowanie C4<a class="headerlink" href="#podsumowanie-c4" title="Permalink to this heading">#</a></h2>
+<p>W tym cwiczeniu pracowales/pracowałas z:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsGeometry</span></code> — tworzenie z wspolrzednych i WKT, odczyt wlasciwosci,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> — tworzenie obiektow, przypisywanie geometrii i atrybutow,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code> z dostawca <code class="docutils literal notranslate"><span class="pre">'memory'</span></code> — warstwy tymczasowe,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">addFeature()</span></code> i <code class="docutils literal notranslate"><span class="pre">addFeatures()</span></code> — dodawanie obiektow do warstwy,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code> — zapis do GeoPackage, GeoJSON, Shapefile,</p></li>
+<li><p>reprojekcja przy zapisie przez <code class="docutils literal notranslate"><span class="pre">opcje.ct</span></code>.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="na-c5">
+<h3>Na C5<a class="headerlink" href="#na-c5" title="Permalink to this heading">#</a></h3>
+<p>Nastepne cwiczenie poswiecone jest operacjom na geometriach:
+buforowanie, przeciecia, relacje przestrzenne i reprojekcja
+jako narzedzia analizy przestrzennej.</p>
+<hr class="docutils" />
+<p><em>Cwiczenie C4 — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="8.%20Wyklad_4_GeoPandas.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Wyklad 4: GeoPandas — analiza danych przestrzennych poza QGIS</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencje">Konwencje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spis-tresci">Spis tresci</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-geometrii">1. Tworzenie geometrii</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-punkt">Zadanie 1.1 — Punkt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-linia">Zadanie 1.2 — Linia</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-3-polygon-z-wkt">Zadanie 1.3 — Polygon z WKT</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#odczyt-wlasciwosci-geometrii">2. Odczyt wlasciwosci geometrii</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-wierzcholki-i-wspolrzedne">Zadanie 2.1 — Wierzcholki i wspolrzedne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2-centroid-i-bounding-box">Zadanie 2.2 — Centroid i bounding box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-3-samodzielne">Zadanie 2.3 — Samodzielne</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-obiektow-qgsfeature">3. Tworzenie obiektow QgsFeature</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-tworzenie-qgsfeature">Zadanie 3.1 — Tworzenie QgsFeature</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-rozne-sposoby-ustawiania-atrybutow">Zadanie 3.2 — Rozne sposoby ustawiania atrybutow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-samodzielne-lista-miast-jako-obiekty">Zadanie 3.3 — Samodzielne: lista miast jako obiekty</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-warstwy-tymczasowej">4. Tworzenie warstwy tymczasowej</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-pierwsza-warstwa-tymczasowa">Zadanie 4.1 — Pierwsza warstwa tymczasowa</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-uri-warstwy">Zadanie 4.2 — URI warstwy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-3-dodawanie-pol-po-utworzeniu">Zadanie 4.3 — Dodawanie pol po utworzeniu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodawanie-obiektow-do-warstwy">5. Dodawanie obiektow do warstwy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-dodanie-pojedynczego-obiektu">Zadanie 5.1 — Dodanie pojedynczego obiektu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-dodanie-wielu-obiektow-naraz">Zadanie 5.2 — Dodanie wielu obiektow naraz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-3-samodzielne-warstwa-z-geometria-liniowa">Zadanie 5.3 — Samodzielne: warstwa z geometria liniowa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-warstwy-do-pliku">6. Zapis warstwy do pliku</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-zapis-do-geopackage">Zadanie 6.1 — Zapis do GeoPackage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-2-rozne-formaty-zapisu">Zadanie 6.2 — Rozne formaty zapisu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-3-zapis-z-reprojekcja">Zadanie 6.3 — Zapis z reprojekcja</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-laczace">7. Zadanie laczace</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-mapa-wulkanow">Zadanie 7.1 — Mapa wulkanow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c4">Podsumowanie C4</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#na-c5">Na C5</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
