@@ -1,0 +1,1817 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Wyklad 6: Architektura wtyczek QGIS &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '10. Wyklad_6_Budowa_wtyczki';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="C4: QgsGeometry, QgsFeature i praca z warstwami" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Wyklad 6: Architektura wtyczek QGIS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F10. Wyklad_6_Budowa_wtyczki.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/10. Wyklad_6_Budowa_wtyczki.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Wyklad 6: Architektura wtyczek QGIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentow I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o-tym-wykladzie">O tym wykladzie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-python-organizuje-kod-moduly-i-pakiety">1. Jak Python organizuje kod — moduly i pakiety</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-ktory-rozwiazujemy">1.1 Problem, ktory rozwiazujemy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modul-jeden-plik-jedna-odpowiedzialnosc">1.2 Modul — jeden plik, jedna odpowiedzialnosc</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pakiet-folder-modulow">1.3 Pakiet — folder modulow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pakiety-zagniezdzone">1.4 Pakiety zagniezdzone</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteki-zewnetrzne-to-tez-pakiety">1.5 Biblioteki zewnetrzne to tez pakiety</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rola-pliku-init-py">2. Rola pliku <strong>init</strong>.py</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-role-jednego-pliku">2.1 Trzy role jednego pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#init-py-w-wtyczce-qgis">2.2 <strong>init</strong>.py w wtyczce QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-wzgledny-i-bezwzgledny">3. Import wzgledny i bezwzgledny</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dwa-sposoby-importowania">3.1 Dwa sposoby importowania</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-wtyczki-zawsze-uzywaja-importow-wzglednych">3.2 Dlaczego wtyczki zawsze uzywaja importow wzglednych</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wyjasnienie-kropek">3.3 Wyjasnienie kropek</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-wtyczka-qgis-intuicja">4. Czym jest wtyczka QGIS — intuicja</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogia-wtyczka-jak-aplikacja-w-smartfonie">4.1 Analogia: wtyczka jak aplikacja w smartfonie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-sposoby-rozszerzania-qgis-porownanie">4.2 Trzy sposoby rozszerzania QGIS — porownanie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-wtyczka-moze-dodac-do-qgis">4.3 Co wtyczka moze dodac do QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czego-wtyczka-nie-moze">4.4 Czego wtyczka NIE moze</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architektura-aplikacji-qt">5. Architektura aplikacji Qt</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-qt">5.1 Czym jest Qt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#widgety-cegielki-interfejsu">5.2 Widgety — cegiełki interfejsu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchia-widgetow">5.3 Hierarchia widgetow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layouty-automatyczne-rozmieszczanie">5.4 Layouty — automatyczne rozmieszczanie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cykl-zycia-wtyczki">6. Cykl zycia wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-co-sie-dzieje">6.1 Kiedy co sie dzieje</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konstruktor-init-tylko-jedna-rola">6.2 Konstruktor <strong>init</strong> — tylko jedna rola</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initgui-budowanie-interfejsu">6.3 initGui — budowanie interfejsu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unload-sprzatanie">6.4 unload — sprzatanie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-logika-biznesowa">6.5 run — logika biznesowa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimalne-wymagania-wtyczki">7. Minimalne wymagania wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-qgis-sprawdza-przy-ladowaniu">7.1 Co QGIS sprawdza przy ladowaniu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimalna-struktura">7.2 Minimalna struktura</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wymagane-pola-metadata-txt">7.3 Wymagane pola metadata.txt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-wymagane-metody-klasy-glownej">7.4 Trzy wymagane metody klasy glownej</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lokalizacja-folderu-wtyczek">7.5 Lokalizacja folderu wtyczek</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plugin-builder-co-generuje-i-dlaczego">8. Plugin Builder — co generuje i dlaczego</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#po-co-plugin-builder">8.1 Po co Plugin Builder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-generuje-plugin-builder">8.2 Co generuje Plugin Builder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rola-kazdego-pliku">8.3 Rola kazdego pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#szablon-tool-button-with-dialog">8.4 Szablon: Tool button with dialog</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kroki-w-kreatorze-plugin-builder">8.5 Kroki w kreatorze Plugin Builder</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-designer-jak-myslec-o-interfejsie">9. Qt Designer — jak myslec o interfejsie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-qt-designer">9.1 Czym jest Qt Designer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-widgety-ktore-bedziesz-uzywac">9.2 Podstawowe widgety ktore bedziesz uzywac</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qgsmaplayercombobox-specjalnosc-qgis">9.3 QgsMapLayerComboBox — specjalnosc QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencja-nazewnicza-widgetow">9.4 Konwencja nazewnicza widgetow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layouty-w-qt-designer">9.5 Layouty w Qt Designer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sygnaly-i-sloty-komunikacja-w-gui">10. Sygnaly i sloty — komunikacja w GUI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-z-gui">10.1 Problem z GUI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sygnal-i-slot-intuicja">10.2 Sygnal i slot — intuicja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wiele-sygnalow-i-slotow">10.3 Wiele sygnalow i slotow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#najczesciej-uzywane-sygnaly-w-wtyczkach">10.4 Najczesciej uzywane sygnaly w wtyczkach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lambda-sygnal-z-parametrem">10.5 Lambda — sygnal z parametrem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rozlaczanie-sygnalow">10.6 Rozlaczanie sygnalow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#messagebar-wlasciwy-sposob-komunikacji">10.7 messageBar — wlasciwy sposob komunikacji</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-mapa-pojec">11. Podsumowanie — mapa pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchia-tego-co-budujemy">11.1 Hierarchia tego co budujemy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#narzedzia-ktorych-uzywamy">11.2 Narzedzia ktorych uzywamy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-pojec">11.3 Slownik pojec</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="wyklad-6-architektura-wtyczek-qgis">
+<h1>Wyklad 6: Architektura wtyczek QGIS<a class="headerlink" href="#wyklad-6-architektura-wtyczek-qgis" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-kurs-dla-studentow-i-stopnia">
+<h2>Programowanie w GIS — Kurs dla studentow I stopnia<a class="headerlink" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Wyklad:</strong> 6 z 7<br />
+<strong>Tematy:</strong> Pakiety Pythona | Architektura wtyczki | Qt i GUI | Plugin Builder | Qt Designer<br />
+<strong>Wymagania wstepne:</strong> Wyklady 2,3,4— PyQGIS, QgsProject, QgsVectorLayer</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="o-tym-wykladzie">
+<h2>O tym wykladzie<a class="headerlink" href="#o-tym-wykladzie" title="Permalink to this heading">#</a></h2>
+<p>Ten wyklad jest czysto teoretyczny — zadnego live codingu, zadnego QGIS.
+Celem jest zbudowanie solidnej <strong>intuicji</strong> o tym jak dziala wtyczka,
+zanim zobaczymy ja w akcji na nastepnym wykladzie.</p>
+<p>Dobra analogia jest warta wiecej niz dziesiec przykladow kodu.</p>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="jak-python-organizuje-kod-moduly-i-pakiety">
+<h2>1. Jak Python organizuje kod — moduly i pakiety<a class="headerlink" href="#jak-python-organizuje-kod-moduly-i-pakiety" title="Permalink to this heading">#</a></h2>
+<section id="problem-ktory-rozwiazujemy">
+<h3>1.1 Problem, ktory rozwiazujemy<a class="headerlink" href="#problem-ktory-rozwiazujemy" title="Permalink to this heading">#</a></h3>
+<p>Wyobraz sobie ze piszesz program majacy 10 000 linii kodu.
+Trzymanie tego w jednym pliku byloby katastrofalne — nie mozna by
+nic znalezc, zespol nie moze pracowac rownolegle,
+a zmiana jednej rzeczy psuje dziesiec innych.</p>
+<p>Python rozwiazuje ten problem przez <strong>moduly</strong> i <strong>pakiety</strong>.</p>
+</section>
+<section id="modul-jeden-plik-jedna-odpowiedzialnosc">
+<h3>1.2 Modul — jeden plik, jedna odpowiedzialnosc<a class="headerlink" href="#modul-jeden-plik-jedna-odpowiedzialnosc" title="Permalink to this heading">#</a></h3>
+<p><strong>Modul</strong> to pojedynczy plik <code class="docutils literal notranslate"><span class="pre">.py</span></code>. Kazdy plik Pythona ktory kiedykolwiek
+napisales jest modulem. Nazwa pliku (bez rozszerzenia) to nazwa modulu.</p>
+<p>Dobra praktyka: jeden modul = jedna dziedzina odpowiedzialnosci.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">obliczenia</span><span class="o">.</span><span class="n">py</span>       <span class="o">&lt;-</span> <span class="n">wszystko</span> <span class="n">co</span> <span class="n">liczy</span>
+<span class="n">wizualizacja</span><span class="o">.</span><span class="n">py</span>     <span class="o">&lt;-</span> <span class="n">wszystko</span> <span class="n">co</span> <span class="n">rysuje</span>
+<span class="n">wczytywanie</span><span class="o">.</span><span class="n">py</span>      <span class="o">&lt;-</span> <span class="n">wszystko</span> <span class="n">co</span> <span class="n">czyta</span> <span class="n">pliki</span>
+<span class="n">zapis</span><span class="o">.</span><span class="n">py</span>            <span class="o">&lt;-</span> <span class="n">wszystko</span> <span class="n">co</span> <span class="n">zapisuje</span> <span class="n">pliki</span>
+</pre></div>
+</div>
+<p>Analogia: modul to jak <strong>rozdzial w ksiazce</strong>.
+Kazdy rozdzial ma swoj temat, mozna go czytac osobno,
+ale razem tworza calosc.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">obliczenia</span>
+<span class="kn">from</span> <span class="nn">obliczenia</span> <span class="kn">import</span> <span class="n">funkcja_a</span>
+<span class="kn">from</span> <span class="nn">obliczenia</span> <span class="kn">import</span> <span class="n">funkcja_a</span><span class="p">,</span> <span class="n">funkcja_b</span>
+</pre></div>
+</div>
+</section>
+<section id="pakiet-folder-modulow">
+<h3>1.3 Pakiet — folder modulow<a class="headerlink" href="#pakiet-folder-modulow" title="Permalink to this heading">#</a></h3>
+<p>Kiedy modulow robi sie duzo, grupujemy je w <strong>pakiety</strong>.
+Pakiet to folder zawierajacy moduly i jeden obowiazkowy plik: <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moj_program</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>         <span class="o">&lt;-</span> <span class="n">bez</span> <span class="n">tego</span> <span class="n">to</span> <span class="n">zwykly</span> <span class="n">folder</span><span class="p">,</span> <span class="n">nie</span> <span class="n">pakiet</span>
+    <span class="n">obliczenia</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">wizualizacja</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">wczytywanie</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">zapis</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Analogia: pakiet to jak <strong>ksiazka</strong>.
+Folder = okladka, moduly = rozdzialy, <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> = spis tresci.</p>
+<p>Importujesz przez:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">moj_projekt</span>
+<span class="kn">from</span> <span class="nn">moj_projekt</span> <span class="kn">import</span> <span class="n">obliczenia</span>
+<span class="kn">from</span> <span class="nn">moj_projekt.obliczenia</span> <span class="kn">import</span> <span class="n">funkcja_a</span>
+</pre></div>
+</div>
+</section>
+<section id="pakiety-zagniezdzone">
+<h3>1.4 Pakiety zagniezdzone<a class="headerlink" href="#pakiety-zagniezdzone" title="Permalink to this heading">#</a></h3>
+<p>Pakiety moga zawierac inne pakiety — kazdy podfolder
+z <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> staje sie podpakietem.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moj_program</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">core</span><span class="o">/</span>                   <span class="o">&lt;-</span> <span class="n">podpakiet</span><span class="p">:</span> <span class="n">logika</span> <span class="n">biznesowa</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">obliczenia</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">walidacja</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">ui</span><span class="o">/</span>                     <span class="o">&lt;-</span> <span class="n">podpakiet</span><span class="p">:</span> <span class="n">interfejs</span> <span class="n">uzytkownika</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">dialogi</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">panele</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">io</span><span class="o">/</span>                     <span class="o">&lt;-</span> <span class="n">podpakiet</span><span class="p">:</span> <span class="n">wejscie</span><span class="o">/</span><span class="n">wyjscie</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">wczytywanie</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">zapis</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Analogia: podpakiet to jak <strong>czesc ksiazki</strong> zawierajaca kilka rozdzialow.
+<em>Czesc I: Teoria</em> zawiera rozdzialy 1-4,
+<em>Czesc II: Praktyka</em> zawiera rozdzialy 5-8.</p>
+<p>Importujesz przez:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">moj_projekt.ui</span> <span class="kn">import</span> <span class="n">dialogi</span>
+<span class="kn">from</span> <span class="nn">moj_projekt.ui.dialogi</span> <span class="kn">import</span> <span class="n">DialogGlowny</span>
+<span class="kn">from</span> <span class="nn">moj_projekt.dane.wczytywanie</span> <span class="kn">import</span> <span class="n">wczytaj_gpkg</span>
+</pre></div>
+</div>
+</section>
+<section id="biblioteki-zewnetrzne-to-tez-pakiety">
+<h3>1.5 Biblioteki zewnetrzne to tez pakiety<a class="headerlink" href="#biblioteki-zewnetrzne-to-tez-pakiety" title="Permalink to this heading">#</a></h3>
+<p>GeoPandas, NumPy, Shapely — to wszystko pakiety Pythona
+zainstalowane przez <code class="docutils literal notranslate"><span class="pre">pip</span></code> w okreslonym miejscu na dysku.
+Nie ma tu zadnej magii — ten sam mechanizm co Twoje pliki.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geopandas</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>          <span class="o">&lt;-</span> <span class="n">wykonywany</span> <span class="n">przy</span> <span class="s1">&#39;import geopandas&#39;</span>
+    <span class="n">geodataframe</span><span class="o">.</span><span class="n">py</span>      <span class="o">&lt;-</span> <span class="n">klasa</span> <span class="n">GeoDataFrame</span>
+    <span class="n">geoseries</span><span class="o">.</span><span class="n">py</span>         <span class="o">&lt;-</span> <span class="n">klasa</span> <span class="n">GeoSeries</span>
+    <span class="n">io</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">py</span>          <span class="o">&lt;-</span> <span class="n">funkcje</span> <span class="n">read_file</span><span class="p">()</span> <span class="n">i</span> <span class="n">to_file</span><span class="p">()</span>
+    <span class="n">tools</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">crs</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Kiedy piszesz <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">geopandas</span> <span class="pre">as</span> <span class="pre">gpd</span></code>, Python:</p>
+<ol class="arabic simple">
+<li><p>Szuka folderu <code class="docutils literal notranslate"><span class="pre">geopandas/</span></code> w znanych lokalizacjach.</p></li>
+<li><p>Wykonuje <code class="docutils literal notranslate"><span class="pre">geopandas/__init__.py</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> importuje <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> i udostepnia go jako <code class="docutils literal notranslate"><span class="pre">gpd.GeoDataFrame</span></code>.</p></li>
+</ol>
+<p>Dlatego mozesz pisac <code class="docutils literal notranslate"><span class="pre">gpd.GeoDataFrame</span></code> zamiast pelnej sciezki
+<code class="docutils literal notranslate"><span class="pre">gpd.geodataframe.GeoDataFrame</span></code> — <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> to sktaca.</p>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="rola-pliku-init-py">
+<h2>2. Rola pliku <strong>init</strong>.py<a class="headerlink" href="#rola-pliku-init-py" title="Permalink to this heading">#</a></h2>
+<section id="trzy-role-jednego-pliku">
+<h3>2.1 Trzy role jednego pliku<a class="headerlink" href="#trzy-role-jednego-pliku" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> pelni trzy role jednoczesnie:</p>
+<p><strong>Rola 1 — Oznacza folder jako pakiet</strong></p>
+<p>Sama obecnosc pliku wystarczy. Moze byc zupelnie pusty.
+Bez niego Python widzi zwykly folder, nie pakiet,
+i nie mozna z niego importowac.</p>
+<p>To troche jak <strong>szyld na drzwiach sklepu</strong>.
+Sklep moze byc pusty w srodku — szyld i tak mowi ze to sklep,
+nie mieszkanie.</p>
+<p><strong>Rola 2 — Kod wykonywany przy imporcie</strong></p>
+<p>Kiedy ktos pisze <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">moj_program</span></code>, Python wykonuje
+zawartosc <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>. To swietne miejsce na:</p>
+<ul class="simple">
+<li><p>importy skrocone (udostepnienie kluczowych klas bezposrednio),</p></li>
+<li><p>inicjalizacje globalne,</p></li>
+<li><p>sprawdzenie wersji zaleznosci.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># moj_program/__init__.py</span>
+
+<span class="c1"># Wersja pakietu</span>
+<span class="n">WERSJA</span> <span class="o">=</span> <span class="s1">&#39;2.1.0&#39;</span>
+
+<span class="c1"># Import skrocony — uzytkownik pisze &#39;from moj_program import GlownaKlasa&#39;</span>
+<span class="c1"># zamiast &#39;from moj_program.core.silnik import GlownaKlasa&#39;</span>
+<span class="kn">from</span> <span class="nn">.core.silnik</span> <span class="kn">import</span> <span class="n">GlownaKlasa</span>
+<span class="kn">from</span> <span class="nn">.io.wczytywanie</span> <span class="kn">import</span> <span class="n">wczytaj</span>
+<span class="kn">from</span> <span class="nn">.io.zapis</span> <span class="kn">import</span> <span class="n">zapisz</span>
+</pre></div>
+</div>
+<p>Analogia: <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> to jak <strong>recepcja w biurze</strong>.
+Wchodzisz do budynku (importujesz pakiet) i recepcjonistka
+kieruje Cie do odpowiednich osob (klas i funkcji),
+zeby nie musial chodzic po kazdym pietrze osobno.</p>
+<p><strong>Rola 3 — Kontrola publicznego API</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># __init__.py</span>
+<span class="c1"># Definiuje co jest &#39;publiczne&#39; przy &#39;from pakiet import *&#39;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GlownaKlasa&#39;</span><span class="p">,</span> <span class="s1">&#39;wczytaj&#39;</span><span class="p">,</span> <span class="s1">&#39;zapisz&#39;</span><span class="p">]</span>
+<span class="c1"># Reszta klas i funkcji jest &#39;prywatna&#39; — do uzytku wewnetrznego</span>
+</pre></div>
+</div>
+</section>
+<section id="init-py-w-wtyczce-qgis">
+<h3>2.2 <strong>init</strong>.py w wtyczce QGIS<a class="headerlink" href="#init-py-w-wtyczce-qgis" title="Permalink to this heading">#</a></h3>
+<p>W wtyczce QGIS <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> ma jedna dodatkowa, specjalna role:
+musi zawierac funkcje <code class="docutils literal notranslate"><span class="pre">classFactory()</span></code>, ktora QGIS wywoluje
+przy ladowaniu wtyczki.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># buffer_tool/__init__.py</span>
+
+<span class="k">def</span> <span class="nf">classFactory</span><span class="p">(</span><span class="n">iface</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">.buffer_tool</span> <span class="kn">import</span> <span class="n">BufferTool</span>
+    <span class="k">return</span> <span class="n">BufferTool</span><span class="p">(</span><span class="n">iface</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To jest <strong>umowa miedzy Twoim kodem a QGIS</strong>:
+<em>Daj mi obiekt <code class="docutils literal notranslate"><span class="pre">iface</span></code> (dostep do interfejsu), a ja zwroce Ci
+obiekt ktory bedzie zarzadzal Twoja wtyczka.</em></p>
+<p>QGIS nie interesuje jak nazywa sie Twoja klasa, co robi
+ani gdzie lezy — interesuje go tylko ze <code class="docutils literal notranslate"><span class="pre">classFactory</span></code> istnieje
+i zwraca obiekt z metodami <code class="docutils literal notranslate"><span class="pre">initGui()</span></code> i <code class="docutils literal notranslate"><span class="pre">unload()</span></code>.</p>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="import-wzgledny-i-bezwzgledny">
+<h2>3. Import wzgledny i bezwzgledny<a class="headerlink" href="#import-wzgledny-i-bezwzgledny" title="Permalink to this heading">#</a></h2>
+<section id="dwa-sposoby-importowania">
+<h3>3.1 Dwa sposoby importowania<a class="headerlink" href="#dwa-sposoby-importowania" title="Permalink to this heading">#</a></h3>
+<p>Wewnatrz pakietu jeden modul moze importowac inny na dwa sposoby:</p>
+<p><strong>Import bezwzgledny</strong> — pelna sciezka od korzenia:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">moj_program.io.wczytywanie</span> <span class="kn">import</span> <span class="n">wczytaj</span>
+</pre></div>
+</div>
+<p><strong>Import wzgledny</strong> — sciezka wzgledem biezacego modulu:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.wczytywanie</span> <span class="kn">import</span> <span class="n">wczytaj</span>     <span class="c1"># . = biezacy folder</span>
+<span class="kn">from</span> <span class="nn">..core</span> <span class="kn">import</span> <span class="n">GlownaKlasa</span>       <span class="c1"># .. = folder nadrzedny</span>
+</pre></div>
+</div>
+</section>
+<section id="dlaczego-wtyczki-zawsze-uzywaja-importow-wzglednych">
+<h3>3.2 Dlaczego wtyczki zawsze uzywaja importow wzglednych<a class="headerlink" href="#dlaczego-wtyczki-zawsze-uzywaja-importow-wzglednych" title="Permalink to this heading">#</a></h3>
+<p>Wyobraz sobie ze Twoja wtyczka nazywa sie <code class="docutils literal notranslate"><span class="pre">buffer_tool</span></code>.
+Instalujesz ja i wszystko dziala. Potem inny uzytkownik
+instaluje ja na swoim komputerze — i tez dziala.</p>
+<p>Teraz wyobraz sobie ze uzywasz importu bezwzglednego:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># buffer_tool/buffer_tool.py — ZLE</span>
+<span class="kn">from</span> <span class="nn">buffer_tool.buffer_tool_dialog</span> <span class="kn">import</span> <span class="n">BufferToolDialog</span>
+</pre></div>
+</div>
+<p>To dziala tylko jesli pakiet zostal zainstalowany
+pod nazwa <code class="docutils literal notranslate"><span class="pre">buffer_tool</span></code>. Co jesli uzytkownik zmienil nazwe folderu?
+Co jesli QGIS zaladowal go pod inna nazwa?</p>
+<p>Import wzgledny rozwiazuje ten problem:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># buffer_tool/buffer_tool.py — DOBRZE</span>
+<span class="kn">from</span> <span class="nn">.buffer_tool_dialog</span> <span class="kn">import</span> <span class="n">BufferToolDialog</span>
+</pre></div>
+</div>
+<p>Kropka (<code class="docutils literal notranslate"><span class="pre">.</span></code>) oznacza: <em>szukaj w tym samym folderze co ja</em>.
+Nie obchodzi mnie jak ten folder sie nazywa.</p>
+<p>Analogia: zamiast pisac na kartce
+<em>idz do ulicy Kowalskiej 5, mieszkanie 3</em>,
+piszesz <em>idz do sasiadow po lewej stronie</em>.
+Drugi opis dziala niezaleznie od tego gdzie mieszkasz.</p>
+</section>
+<section id="wyjasnienie-kropek">
+<h3>3.3 Wyjasnienie kropek<a class="headerlink" href="#wyjasnienie-kropek" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.modul</span> <span class="kn">import</span> <span class="n">Klasa</span>      <span class="c1"># . = biezacy pakiet</span>
+<span class="kn">from</span> <span class="nn">..modul</span> <span class="kn">import</span> <span class="n">Klasa</span>     <span class="c1"># .. = pakiet nadrzedny</span>
+<span class="kn">from</span> <span class="nn">...modul</span> <span class="kn">import</span> <span class="n">Klasa</span>    <span class="c1"># ... = dwa poziomy wyzej</span>
+</pre></div>
+</div>
+<p>W praktyce w wtyczkach QGIS uzywa sie niemal wylacznie
+pojedynczej kropki — wszystkie moduly sa w tym samym folderze.</p>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="czym-jest-wtyczka-qgis-intuicja">
+<h2>4. Czym jest wtyczka QGIS — intuicja<a class="headerlink" href="#czym-jest-wtyczka-qgis-intuicja" title="Permalink to this heading">#</a></h2>
+<section id="analogia-wtyczka-jak-aplikacja-w-smartfonie">
+<h3>4.1 Analogia: wtyczka jak aplikacja w smartfonie<a class="headerlink" href="#analogia-wtyczka-jak-aplikacja-w-smartfonie" title="Permalink to this heading">#</a></h3>
+<p>QGIS to jak system operacyjny smartfona (iOS, Android).
+Dostarcza podstawowe funkcje: mapy, warstwy, narzedzia.</p>
+<p>Wtyczka to jak <strong>aplikacja zainstalowana ze sklepu</strong>.
+Korzysta z zasobow systemu (interfejs, dane, algorytmy),
+rozszerza jego mozliwosci, ale dziala wewnatrz jego ram.</p>
+<p>Tak samo jak aplikacja musi byc napisana zgodnie z wytycznymi
+Apple lub Google, wtyczka musi spelniac wymagania QGIS.</p>
+</section>
+<section id="trzy-sposoby-rozszerzania-qgis-porownanie">
+<h3>4.2 Trzy sposoby rozszerzania QGIS — porownanie<a class="headerlink" href="#trzy-sposoby-rozszerzania-qgis-porownanie" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sposob</p></th>
+<th class="head"><p>Analogia</p></th>
+<th class="head"><p>Interfejs</p></th>
+<th class="head"><p>Trwalosc</p></th>
+<th class="head"><p>Dystrybucja</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Skrypt w konsoli</p></td>
+<td><p>Szybka notatka na kartce</p></td>
+<td><p>Brak</p></td>
+<td><p>Jednorazowy</p></td>
+<td><p>Plik .py</p></td>
+</tr>
+<tr class="row-odd"><td><p>Skrypt w edytorze</p></td>
+<td><p>Zapisany przepis</p></td>
+<td><p>Brak</p></td>
+<td><p>Plik .py</p></td>
+<td><p>Plik .py</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Wtyczka</strong></p></td>
+<td><p><strong>Aplikacja w sklepie</strong></p></td>
+<td><p><strong>Wlasny GUI</strong></p></td>
+<td><p><strong>Trwala</strong></p></td>
+<td><p><strong>Repozytorium</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="co-wtyczka-moze-dodac-do-qgis">
+<h3>4.3 Co wtyczka moze dodac do QGIS<a class="headerlink" href="#co-wtyczka-moze-dodac-do-qgis" title="Permalink to this heading">#</a></h3>
+<p>Wtyczka moze dodac do interfejsu QGIS:</p>
+<ul class="simple">
+<li><p><strong>Przycisk w pasku narzedzi</strong> — klikasz, cos sie dzieje.</p></li>
+<li><p><strong>Pozycje w menu</strong> — np. <code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">-&gt;</span> <span class="pre">Moja</span> <span class="pre">Wtyczka</span> <span class="pre">-&gt;</span> <span class="pre">Uruchom</span></code>.</p></li>
+<li><p><strong>Okno dialogowe</strong> — formularz z polami, lista warstw, przycisk OK.</p></li>
+<li><p><strong>Panel dokowany</strong> — staly panel po boku mapy (jak Panel warstw).</p></li>
+<li><p><strong>Algorytm w Processing Toolbox</strong> — Twoj algorytm widoczny
+obok buforowania i innych narzedzi.</p></li>
+<li><p><strong>Nowy typ warstwy</strong> — zaawansowane, rzadko spotykane.</p></li>
+</ul>
+</section>
+<section id="czego-wtyczka-nie-moze">
+<h3>4.4 Czego wtyczka NIE moze<a class="headerlink" href="#czego-wtyczka-nie-moze" title="Permalink to this heading">#</a></h3>
+<p>Wtyczka dziala wewnatrz QGIS i jest ograniczona jego mozliwosciami.
+Nie moze np.:</p>
+<ul class="simple">
+<li><p>zmienic fundamentalnych zasad dzialania QGIS,</p></li>
+<li><p>uzyskac dostepu do danych innych uzytkownikow bez ich wiedzy,</p></li>
+<li><p>dzialac gdy QGIS nie jest uruchomiony.</p></li>
+</ul>
+<p>To drugie ograniczenie jest kluczowe —
+dlatego do automatyzacji na serwerze uzywa sie GeoPandas i QGIS headless,
+a nie wtyczek.</p>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="architektura-aplikacji-qt">
+<h2>5. Architektura aplikacji Qt<a class="headerlink" href="#architektura-aplikacji-qt" title="Permalink to this heading">#</a></h2>
+<section id="czym-jest-qt">
+<h3>5.1 Czym jest Qt<a class="headerlink" href="#czym-jest-qt" title="Permalink to this heading">#</a></h3>
+<p>QGIS jest zbudowany na bibliotece <strong>Qt</strong> (czytaj: <em>kjut</em>).
+Qt to framework do tworzenia interfejsow graficznych,
+napisany w C++, dostepny w Pythonie jako <strong>PyQt</strong>.</p>
+<p>Kiedy widzisz okno QGIS — to Qt.
+Panel warstw, obszar mapy, paski narzedzi, dialogi — Qt.
+Twoja wtyczka rozszerza aplikacje Qt od wewnatrz.</p>
+<img src='img\Qt_designer.png' img>
+</section>
+<section id="widgety-cegielki-interfejsu">
+<h3>5.2 Widgety — cegiełki interfejsu<a class="headerlink" href="#widgety-cegielki-interfejsu" title="Permalink to this heading">#</a></h3>
+<p>W Qt kazdy element interfejsu to <strong>widget</strong>.
+Widget to obiekt Pythona ktory:</p>
+<ul class="simple">
+<li><p>ma wizualny wyglad (rysuje sie na ekranie),</p></li>
+<li><p>reaguje na zdarzenia (klikniecia, wpisywanie tekstu),</p></li>
+<li><p>moze zawierac inne widgety.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QDialog</span> <span class="p">(</span><span class="n">okno</span> <span class="n">dialogowe</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="n">QLabel</span>        <span class="p">(</span><span class="n">etykieta</span> <span class="n">tekstowa</span><span class="p">:</span> <span class="s1">&#39;Warstwa wejsciowa:&#39;</span><span class="p">)</span>
+    <span class="o">+--</span> <span class="n">QComboBox</span>     <span class="p">(</span><span class="n">lista</span> <span class="n">rozwijana</span> <span class="n">z</span> <span class="n">warstwami</span><span class="p">)</span>
+    <span class="o">+--</span> <span class="n">QLabel</span>        <span class="p">(</span><span class="n">etykieta</span><span class="p">:</span> <span class="s1">&#39;Promien bufora:&#39;</span><span class="p">)</span>
+    <span class="o">+--</span> <span class="n">QDoubleSpinBox</span> <span class="p">(</span><span class="n">pole</span> <span class="n">numeryczne</span><span class="p">)</span>
+    <span class="o">+--</span> <span class="n">QPushButton</span>   <span class="p">(</span><span class="n">przycisk</span> <span class="n">OK</span><span class="p">)</span>
+    <span class="o">+--</span> <span class="n">QPushButton</span>   <span class="p">(</span><span class="n">przycisk</span> <span class="n">Anuluj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Analogia: widgety to jak <strong>klocki LEGO</strong>.
+Kazdy klocek ma swoj ksztalt i kolor.
+Laczysz je w dowolne kombinacje tworzac skomplikowane struktury.</p>
+</section>
+<section id="hierarchia-widgetow">
+<h3>5.3 Hierarchia widgetow<a class="headerlink" href="#hierarchia-widgetow" title="Permalink to this heading">#</a></h3>
+<p>Widgety sa zorganizowane w drzewo rodzic-dziecko.
+Widget rodzic:</p>
+<ul class="simple">
+<li><p>kontroluje pozycje i widocznosc dzieci,</p></li>
+<li><p>kiedy jest niszczony, niszczy rowniez swoje dzieci,</p></li>
+<li><p>kiedy jest ukrywany, ukrywa rowniez dzieci.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QMainWindow</span> <span class="p">(</span><span class="n">glowne</span> <span class="n">okno</span> <span class="n">QGIS</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="n">QMenuBar</span> <span class="p">(</span><span class="n">pasek</span> <span class="n">menu</span><span class="p">)</span>
+    <span class="o">|</span>       <span class="o">+--</span> <span class="n">QMenu</span> <span class="p">(</span><span class="s1">&#39;Wtyczki&#39;</span><span class="p">)</span>
+    <span class="o">|</span>               <span class="o">+--</span> <span class="n">QAction</span> <span class="p">(</span><span class="s1">&#39;Moja Wtyczka&#39;</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="n">QToolBar</span> <span class="p">(</span><span class="n">pasek</span> <span class="n">narzedzi</span><span class="p">)</span>
+    <span class="o">|</span>       <span class="o">+--</span> <span class="n">QAction</span> <span class="p">(</span><span class="n">ikona</span> <span class="n">wtyczki</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="n">QgsMapCanvas</span> <span class="p">(</span><span class="n">obszar</span> <span class="n">mapy</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="n">QDockWidget</span> <span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+            <span class="o">+--</span> <span class="n">QgsLayerTreeView</span> <span class="p">(</span><span class="n">panel</span> <span class="n">warstw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Twoja wtyczka dokada sie do tego drzewa:
+dodaje <code class="docutils literal notranslate"><span class="pre">QAction</span></code> do paska narzedzi i menu,
+a po kliknieciu tworzy nowe okno dialogowe (<code class="docutils literal notranslate"><span class="pre">QDialog</span></code>).</p>
+</section>
+<section id="layouty-automatyczne-rozmieszczanie">
+<h3>5.4 Layouty — automatyczne rozmieszczanie<a class="headerlink" href="#layouty-automatyczne-rozmieszczanie" title="Permalink to this heading">#</a></h3>
+<p>Gdybys recznie ustawial pozycje kazdego widgetu w pikselach,
+interfejs rozpadlby sie przy zmianie rozmiaru okna.
+Qt rozwiazuje to przez <strong>layouty</strong> — mechanizmy automatycznego rozmieszczania.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Layout</p></th>
+<th class="head"><p>Dzialanie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QVBoxLayout</span></code></p></td>
+<td><p>Uklada widgety pionowo, jeden pod drugim</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QHBoxLayout</span></code></p></td>
+<td><p>Uklada widgety poziomo, jeden obok drugiego</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QGridLayout</span></code></p></td>
+<td><p>Uklada widgety w siatce wierszy i kolumn</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QFormLayout</span></code></p></td>
+<td><p>Uklada pary etykieta-pole (typowy formularz)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Analogia: layout to jak <strong>tabela w HTML</strong> albo <strong>siatka w CSS Grid</strong>.
+Mowisz: <em>te elementy maja byc w jednej kolumnie</em>, i Qt
+sam oblicza gdzie kazdy trafi przy dowolnym rozmiarze okna.</p>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="cykl-zycia-wtyczki">
+<h2>6. Cykl zycia wtyczki<a class="headerlink" href="#cykl-zycia-wtyczki" title="Permalink to this heading">#</a></h2>
+<section id="kiedy-co-sie-dzieje">
+<h3>6.1 Kiedy co sie dzieje<a class="headerlink" href="#kiedy-co-sie-dzieje" title="Permalink to this heading">#</a></h3>
+<p>Wtyczka ma scisle okreslony cykl zycia. Warto go rozumiec,
+bo bledy wynikajace z jego niezrozumienia sa bardzo czeste.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QGIS</span> <span class="n">startuje</span>
+    <span class="o">|</span>
+    <span class="o">+--</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">Skanuje</span> <span class="n">folder</span> <span class="n">wtyczek</span>
+    <span class="o">|</span>       <span class="n">Czyta</span> <span class="n">metadata</span><span class="o">.</span><span class="n">txt</span> <span class="n">kazdej</span> <span class="n">wtyczki</span>
+    <span class="o">|</span>       <span class="n">Sprawdza</span> <span class="n">czy</span> <span class="n">wtyczka</span> <span class="n">jest</span> <span class="n">wlaczona</span> <span class="n">w</span> <span class="n">Menedzerze</span>
+    <span class="o">|</span>
+    <span class="o">+--</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">Dla</span> <span class="n">kazdej</span> <span class="n">wlaczonej</span> <span class="n">wtyczki</span><span class="p">:</span>
+    <span class="o">|</span>       <span class="kn">import</span> <span class="nn">buffer_tool</span>            <span class="p">(</span><span class="n">wykonuje</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">)</span>
+    <span class="o">|</span>       <span class="n">obj</span> <span class="o">=</span> <span class="n">classFactory</span><span class="p">(</span><span class="n">iface</span><span class="p">)</span>     <span class="p">(</span><span class="n">tworzy</span> <span class="n">obiekt</span> <span class="n">wtyczki</span><span class="p">)</span>
+    <span class="o">|</span>       <span class="n">obj</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">iface</span><span class="p">)</span>           <span class="p">(</span><span class="n">konstruktor</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="o">+--</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">obj</span><span class="o">.</span><span class="n">initGui</span><span class="p">()</span>
+    <span class="o">|</span>       <span class="n">Wtyczka</span> <span class="n">dodaje</span> <span class="n">ikone</span> <span class="n">do</span> <span class="n">paska</span> <span class="n">narzedzi</span>
+    <span class="o">|</span>       <span class="n">Wtyczka</span> <span class="n">dodaje</span> <span class="n">pozycje</span> <span class="n">do</span> <span class="n">menu</span>
+    <span class="o">|</span>
+    <span class="n">QGIS</span> <span class="n">gotowy</span> <span class="n">do</span> <span class="n">pracy</span>
+    <span class="o">|</span>
+    <span class="o">+--</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="n">Uzytkownik</span> <span class="n">klika</span> <span class="n">ikone</span> <span class="n">wtyczki</span>
+    <span class="o">|</span>       <span class="n">obj</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>  <span class="o">&lt;-</span> <span class="n">Twoja</span> <span class="n">logika</span>
+    <span class="o">|</span>       <span class="n">Pojawia</span> <span class="n">sie</span> <span class="n">okno</span> <span class="n">dialogowe</span>
+    <span class="o">|</span>
+    <span class="o">+--</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">Uzytkownik</span> <span class="n">wylacza</span> <span class="n">wtyczke</span> <span class="p">(</span><span class="n">lub</span> <span class="n">zamyka</span> <span class="n">QGIS</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">unload</span><span class="p">()</span>
+            <span class="n">Wtyczka</span> <span class="n">usuwa</span> <span class="n">ikone</span> <span class="n">i</span> <span class="n">menu</span>
+</pre></div>
+</div>
+</section>
+<section id="konstruktor-init-tylko-jedna-rola">
+<h3>6.2 Konstruktor <strong>init</strong> — tylko jedna rola<a class="headerlink" href="#konstruktor-init-tylko-jedna-rola" title="Permalink to this heading">#</a></h3>
+<p>Konstruktor <code class="docutils literal notranslate"><span class="pre">__init__</span></code> powinien robic <strong>tylko jedno</strong>: zachowac referencje
+do <code class="docutils literal notranslate"><span class="pre">iface</span></code> i zainicjalizowac zmienne instancji.</p>
+<p>Nie powinien:</p>
+<ul class="simple">
+<li><p>tworzyc okien dialogowych (okno jeszcze nie jest potrzebne),</p></li>
+<li><p>laczyc sie z bazami danych,</p></li>
+<li><p>wykonywac zadnych obliczen.</p></li>
+</ul>
+<p>Dlaczego? Bo konstruktor jest wywolywany przy kazdym starcie QGIS,
+nawet gdy uzytkownik nie zamierza uzyc wtyczki.
+Ciezka operacja w konstruktorze spowalnia start QGIS.</p>
+</section>
+<section id="initgui-budowanie-interfejsu">
+<h3>6.3 initGui — budowanie interfejsu<a class="headerlink" href="#initgui-budowanie-interfejsu" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">initGui()</span></code> jest wywolywane raz, zaraz po konstruktorze.
+Tu tworzymy <code class="docutils literal notranslate"><span class="pre">QAction</span></code> (akcje = przyciski + komendy menu)
+i dodajemy je do interfejsu QGIS.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">initGui</span><span class="p">():</span>
+    <span class="n">stworz</span> <span class="n">QAction</span> <span class="n">z</span> <span class="n">ikona</span> <span class="n">i</span> <span class="n">tekstem</span>
+    <span class="n">podlacz</span> <span class="n">akcje</span> <span class="n">do</span> <span class="n">metody</span> <span class="n">run</span><span class="p">()</span>
+    <span class="n">dodaj</span> <span class="n">akcje</span> <span class="n">do</span> <span class="n">paska</span> <span class="n">narzedzi</span>
+    <span class="n">dodaj</span> <span class="n">akcje</span> <span class="n">do</span> <span class="n">menu</span> <span class="n">Wtyczki</span>
+</pre></div>
+</div>
+<p>Wazne: w <code class="docutils literal notranslate"><span class="pre">initGui()</span></code> <strong>nie tworzymy jeszcze dialogu</strong>.
+Dialog tworzymy dopiero w <code class="docutils literal notranslate"><span class="pre">run()</span></code>, gdy uzytkownik kliknie przycisk.
+Zarzadzanie pamiecia w Qt jest wazne — niepotrzebne obiekty
+powinny byc tworzone pozno i niszczone wczesnie.</p>
+</section>
+<section id="unload-sprzatanie">
+<h3>6.4 unload — sprzatanie<a class="headerlink" href="#unload-sprzatanie" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">unload()</span></code> jest symetria <code class="docutils literal notranslate"><span class="pre">initGui()</span></code>.
+Wszystko co zostalo dodane w <code class="docutils literal notranslate"><span class="pre">initGui()</span></code> musi byc usuniete w <code class="docutils literal notranslate"><span class="pre">unload()</span></code>.</p>
+<p>Jesli tego nie zrobisz, przy ponownym wlaczeniu wtyczki
+interfejs zapcha sie zduplikowanymi ikonami i pozycjami menu.</p>
+<p>To jest czesty blad przy pierwszych wtyczkach:
+<em>Dlaczego mam dwie ikony?</em> — bo <code class="docutils literal notranslate"><span class="pre">unload()</span></code> jest bledny lub pusty.</p>
+</section>
+<section id="run-logika-biznesowa">
+<h3>6.5 run — logika biznesowa<a class="headerlink" href="#run-logika-biznesowa" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">run()</span></code> jest wywolywane za kazdym razem gdy uzytkownik klika przycisk.
+Tu dzieje sie wszystko:</p>
+<ul class="simple">
+<li><p>tworzy sie lub pokazuje okno dialogowe,</p></li>
+<li><p>czeka sie na decyzje uzytkownika (OK lub Anuluj),</p></li>
+<li><p>jesli OK — pobiera sie wartosci z formularza i wykonuje operacje.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span><span class="p">():</span>
+    <span class="n">pokaz</span> <span class="n">okno</span> <span class="n">dialogowe</span>
+    <span class="n">czekaj</span> <span class="n">na</span> <span class="n">OK</span> <span class="n">lub</span> <span class="n">Anuluj</span>
+
+    <span class="n">jesli</span> <span class="n">Anuluj</span><span class="p">:</span>
+        <span class="n">koniec</span><span class="p">,</span> <span class="n">nie</span> <span class="n">rob</span> <span class="n">nic</span>
+
+    <span class="n">jesli</span> <span class="n">OK</span><span class="p">:</span>
+        <span class="n">pobierz</span> <span class="n">warstwe</span> <span class="n">z</span> <span class="n">listy</span> <span class="n">rozwijanej</span>
+        <span class="n">pobierz</span> <span class="n">promien</span> <span class="n">z</span> <span class="n">pola</span> <span class="n">numerycznego</span>
+        <span class="n">sprawdz</span> <span class="n">czy</span> <span class="n">dane</span> <span class="n">sa</span> <span class="n">poprawne</span>
+        <span class="n">wykonaj</span> <span class="n">buforowanie</span>
+        <span class="n">pokaz</span> <span class="n">komunikat</span> <span class="n">o</span> <span class="n">sukcesie</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s7'></a></p>
+</section>
+</section>
+<section id="minimalne-wymagania-wtyczki">
+<h2>7. Minimalne wymagania wtyczki<a class="headerlink" href="#minimalne-wymagania-wtyczki" title="Permalink to this heading">#</a></h2>
+<section id="co-qgis-sprawdza-przy-ladowaniu">
+<h3>7.1 Co QGIS sprawdza przy ladowaniu<a class="headerlink" href="#co-qgis-sprawdza-przy-ladowaniu" title="Permalink to this heading">#</a></h3>
+<p>QGIS ladujac wtyczke sprawdza kolejno:</p>
+<ol class="arabic simple">
+<li><p>Czy folder jest w katalogu wtyczek?</p></li>
+<li><p>Czy istnieje <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code> z wymaganymi polami?</p></li>
+<li><p>Czy istnieje <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> z funkcja <code class="docutils literal notranslate"><span class="pre">classFactory</span></code>?</p></li>
+<li><p>Czy <code class="docutils literal notranslate"><span class="pre">classFactory</span></code> zwraca obiekt z metodami <code class="docutils literal notranslate"><span class="pre">initGui</span></code> i <code class="docutils literal notranslate"><span class="pre">unload</span></code>?</p></li>
+</ol>
+<p>Brak ktoregolwiek z tych elementow = wtyczka sie nie zaladuje.</p>
+</section>
+<section id="minimalna-struktura">
+<h3>7.2 Minimalna struktura<a class="headerlink" href="#minimalna-struktura" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>moja_wtyczka/
+    __init__.py       &lt;- classFactory — wymagany przez QGIS
+    metadata.txt      &lt;- metadane — wymagany przez QGIS
+    moja_wtyczka.py   &lt;- klasa glowna z initGui i unload
+</pre></div>
+</div>
+<p>Trzy pliki. Wiecej nie trzeba zeby QGIS zaladowal wtyczke.</p>
+</section>
+<section id="wymagane-pola-metadata-txt">
+<h3>7.3 Wymagane pola metadata.txt<a class="headerlink" href="#wymagane-pola-metadata-txt" title="Permalink to this heading">#</a></h3>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[general]</span><span class="w"></span>
+<span class="na">name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s">Buffer Tool</span><span class="w"></span>
+<span class="na">qgisMinimumVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3.0</span><span class="w"></span>
+<span class="na">description</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s">Narzedzie do buforowania warstw wektorowych</span><span class="w"></span>
+<span class="na">version</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s">0.1</span><span class="w"></span>
+<span class="na">author</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s">Jan Kowalski</span><span class="w"></span>
+<span class="na">email</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s">jan@example.com</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Bez ktoregokolwiek z tych szesciu pol QGIS odrzuci wtyczke.</p>
+<p>Opcjonalne ale przydatne:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">about</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s">Dluzszy opis co wtyczka robi i dla kogo</span><span class="w"></span>
+<span class="na">repository</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s">https://github.com/uzytkownik/buffer-tool</span><span class="w"></span>
+<span class="na">tracker</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="s">https://github.com/uzytkownik/buffer-tool/issues</span><span class="w"></span>
+<span class="na">experimental</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">True</span><span class="w"></span>
+<span class="na">deprecated</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s">False</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Pole <code class="docutils literal notranslate"><span class="pre">experimental</span> <span class="pre">=</span> <span class="pre">True</span></code> sprawia ze wtyczka jest widoczna
+w Menedzerze wtyczek tylko gdy uzytkownik wlaczy opcje
+<em>Pokazuj wtyczki eksperymentalne</em>. Dobrze ustawic to na <code class="docutils literal notranslate"><span class="pre">True</span></code>
+podczas rozwoju, zeby przypadkowo nie trafic do repozytorium.</p>
+</section>
+<section id="trzy-wymagane-metody-klasy-glownej">
+<h3>7.4 Trzy wymagane metody klasy glownej<a class="headerlink" href="#trzy-wymagane-metody-klasy-glownej" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MojaWtyczka</span><span class="p">:</span>
+
+    <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">zachowaj</span> <span class="n">iface</span> <span class="n">jako</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span>
+        <span class="o">-</span> <span class="n">zainicjalizuj</span> <span class="n">zmienne</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">NIE</span> <span class="n">twórz</span> <span class="n">GUI</span> <span class="n">tutaj</span>
+
+    <span class="n">initGui</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">stworz</span> <span class="n">QAction</span> <span class="n">z</span> <span class="n">ikona</span> <span class="n">i</span> <span class="n">tekstem</span>
+        <span class="o">-</span> <span class="n">podlacz</span> <span class="n">QAction</span> <span class="n">do</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span>
+        <span class="o">-</span> <span class="n">dodaj</span> <span class="n">QAction</span> <span class="n">do</span> <span class="n">paska</span> <span class="n">narzedzi</span>
+        <span class="o">-</span> <span class="n">dodaj</span> <span class="n">QAction</span> <span class="n">do</span> <span class="n">menu</span>
+        <span class="o">-</span> <span class="n">zapamietaj</span> <span class="n">QAction</span> <span class="n">w</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span>
+
+    <span class="n">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">dla</span> <span class="n">kazdej</span> <span class="n">akcji</span> <span class="n">w</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="n">usun</span> <span class="n">z</span> <span class="n">paska</span> <span class="n">narzedzi</span>
+            <span class="n">usun</span> <span class="n">z</span> <span class="n">menu</span>
+</pre></div>
+</div>
+</section>
+<section id="lokalizacja-folderu-wtyczek">
+<h3>7.5 Lokalizacja folderu wtyczek<a class="headerlink" href="#lokalizacja-folderu-wtyczek" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>System</p></th>
+<th class="head"><p>Sciezka</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Windows</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%APPDATA%\QGIS\QGIS3\profiles\default\python\plugins\</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>macOS</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/QGIS/QGIS3/profiles/default/python/plugins/</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Linux</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Mozesz tez sprawdzic sciezke bezposrednio w konsoli Pythona QGIS:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qgis.utils</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plugin_paths</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s8'></a></p>
+</section>
+</section>
+<section id="plugin-builder-co-generuje-i-dlaczego">
+<h2>8. Plugin Builder — co generuje i dlaczego<a class="headerlink" href="#plugin-builder-co-generuje-i-dlaczego" title="Permalink to this heading">#</a></h2>
+<section id="po-co-plugin-builder">
+<h3>8.1 Po co Plugin Builder<a class="headerlink" href="#po-co-plugin-builder" title="Permalink to this heading">#</a></h3>
+<p>Pisanie minimalnej wtyczki od zera jest mozliwe ale nudne.
+Plugin Builder to wtyczka do QGIS ktora generuje szkielet
+nowej wtyczki — wszystkie wymagane pliki z poprawna struktura
+i przykladowym kodem.</p>
+<p>To jak <strong>kreator nowego projektu</strong> w IntelliJ lub VS Code:
+zamiast recznie tworzyc dziesieci plikow konfiguracyjnych,
+odpowiadasz na kilka pytan i dostajesz gotowy szkielet.</p>
+</section>
+<section id="co-generuje-plugin-builder">
+<h3>8.2 Co generuje Plugin Builder<a class="headerlink" href="#co-generuje-plugin-builder" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buffer_tool</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>                  <span class="o">&lt;-</span> <span class="n">classFactory</span>
+    <span class="n">buffer_tool</span><span class="o">.</span><span class="n">py</span>               <span class="o">&lt;-</span> <span class="n">glowna</span> <span class="n">klasa</span> <span class="n">z</span> <span class="n">initGui</span><span class="o">/</span><span class="n">unload</span><span class="o">/</span><span class="n">run</span>
+    <span class="n">buffer_tool_dialog</span><span class="o">.</span><span class="n">py</span>        <span class="o">&lt;-</span> <span class="n">klasa</span> <span class="n">okna</span> <span class="n">dialogowego</span>
+    <span class="n">buffer_tool_dialog_base</span><span class="o">.</span><span class="n">ui</span>   <span class="o">&lt;-</span> <span class="n">projekt</span> <span class="n">GUI</span> <span class="p">(</span><span class="n">do</span> <span class="n">edycji</span> <span class="n">w</span> <span class="n">Qt</span> <span class="n">Designer</span><span class="p">)</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">txt</span>                 <span class="o">&lt;-</span> <span class="n">metadane</span>
+    <span class="n">resources</span><span class="o">.</span><span class="n">py</span>                 <span class="o">&lt;-</span> <span class="n">skompilowane</span> <span class="n">zasoby</span> <span class="p">(</span><span class="n">ikony</span><span class="p">)</span>
+    <span class="n">resources</span><span class="o">.</span><span class="n">qrc</span>                <span class="o">&lt;-</span> <span class="n">lista</span> <span class="n">zasobow</span> <span class="p">(</span><span class="n">ikony</span><span class="p">,</span> <span class="n">obrazki</span><span class="p">)</span>
+    <span class="n">icon</span><span class="o">.</span><span class="n">png</span>                     <span class="o">&lt;-</span> <span class="n">domyslna</span> <span class="n">ikona</span> <span class="n">wtyczki</span>
+    <span class="n">pb_tool</span><span class="o">.</span><span class="n">cfg</span>                  <span class="o">&lt;-</span> <span class="n">konfiguracja</span> <span class="n">narzedzia</span> <span class="n">pb_tool</span>
+    <span class="n">README</span><span class="o">.</span><span class="n">html</span>                  <span class="o">&lt;-</span> <span class="n">wygenerowana</span> <span class="n">dokumentacja</span>
+</pre></div>
+</div>
+</section>
+<section id="rola-kazdego-pliku">
+<h3>8.3 Rola kazdego pliku<a class="headerlink" href="#rola-kazdego-pliku" title="Permalink to this heading">#</a></h3>
+<p><strong><code class="docutils literal notranslate"><span class="pre">buffer_tool.py</span></code></strong> — serce wtyczki.
+Zawiera klase <code class="docutils literal notranslate"><span class="pre">BufferTool</span></code> z metodami <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, <code class="docutils literal notranslate"><span class="pre">initGui</span></code>, <code class="docutils literal notranslate"><span class="pre">unload</span></code>, <code class="docutils literal notranslate"><span class="pre">run</span></code>.
+Plugin Builder wypelnia je sensownym kodem startowym.
+Tu bedziesz spedzac wiekszos czasu.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">buffer_tool_dialog.py</span></code></strong> — klasa okna dialogowego.
+Laduje plik <code class="docutils literal notranslate"><span class="pre">.ui</span></code> i udostepnia jego widgety jako atrybuty klasy.
+Zwykle nie edytujesz tego pliku bezposrednio.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">buffer_tool_dialog_base.ui</span></code></strong> — projekt interfejsu.
+Plik XML opisujacy wyglad okna dialogowego.
+Edytujesz go <strong>wylacznie w Qt Designer</strong> — nigdy recznie.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">resources.qrc</span></code> i <code class="docutils literal notranslate"><span class="pre">resources.py</span></code></strong> — zasoby takie jak ikony.
+Qt kompiluje obrazki do pliku <code class="docutils literal notranslate"><span class="pre">.py</span></code>, zeby byly latwo dostepne.
+Jezeli zmieniasz ikone, musisz przekompilowac zasoby przez <code class="docutils literal notranslate"><span class="pre">pyrcc5</span></code>.</p>
+</section>
+<section id="szablon-tool-button-with-dialog">
+<h3>8.4 Szablon: Tool button with dialog<a class="headerlink" href="#szablon-tool-button-with-dialog" title="Permalink to this heading">#</a></h3>
+<p>Plugin Builder oferuje kilka szablonow. My uzywamy
+<strong>Tool button with dialog</strong> — najczestszy typ:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Ikona</span> <span class="n">w</span> <span class="n">pasku</span> <span class="n">narzedzi</span>
+    <span class="o">|</span>
+    <span class="n">klikniecie</span>
+    <span class="o">|</span>
+    <span class="n">Okno</span> <span class="n">dialogowe</span> <span class="n">z</span> <span class="n">formularzem</span>
+        <span class="o">|</span>
+        <span class="n">OK</span>        <span class="o">-&gt;</span> <span class="n">wykonaj</span> <span class="n">operacje</span>
+        <span class="n">Anuluj</span>    <span class="o">-&gt;</span> <span class="n">zamknij</span> <span class="n">bez</span> <span class="n">zmian</span>
+</pre></div>
+</div>
+<p>Inne szablony:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Szablon</p></th>
+<th class="head"><p>Opis</p></th>
+<th class="head"><p>Kiedy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Tool button with dialog</p></td>
+<td><p>Przycisk + modal dialog</p></td>
+<td><p>Wiekszosc przypadkow</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tool button with dock widget</p></td>
+<td><p>Przycisk + staly panel</p></td>
+<td><p>Narzedzia inspektujace</p></td>
+</tr>
+<tr class="row-even"><td><p>Processing provider</p></td>
+<td><p>Nowy algorytm</p></td>
+<td><p>Integracja z Processing</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="kroki-w-kreatorze-plugin-builder">
+<h3>8.5 Kroki w kreatorze Plugin Builder<a class="headerlink" href="#kroki-w-kreatorze-plugin-builder" title="Permalink to this heading">#</a></h3>
+<p><strong>Ekran 1 — Podstawowe informacje:</strong></p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pole</p></th>
+<th class="head"><p>Przyklad</p></th>
+<th class="head"><p>Uwaga</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Class name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BufferTool</span></code></p></td>
+<td><p>PascalCase, bez spacji — nazwa klasy Pythona</p></td>
+</tr>
+<tr class="row-odd"><td><p>Plugin name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Buffer</span> <span class="pre">Tool</span></code></p></td>
+<td><p>Widoczna w QGIS dla uzytkownika</p></td>
+</tr>
+<tr class="row-even"><td><p>Module name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">buffer_tool</span></code></p></td>
+<td><p>snake_case — nazwa folderu i plikow</p></td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Buforowanie</span> <span class="pre">warstw</span></code></p></td>
+<td><p>Krotki opis</p></td>
+</tr>
+<tr class="row-even"><td><p>Author</p></td>
+<td><p>Jan Kowalski</p></td>
+<td><p>Twoje imie</p></td>
+</tr>
+<tr class="row-odd"><td><p>Email</p></td>
+<td><p><a class="reference external" href="mailto:jan&#37;&#52;&#48;example&#46;com">jan<span>&#64;</span>example<span>&#46;</span>com</a></p></td>
+<td><p>Twoj email</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ekran 2 — Szablon:</strong>
+Wybierz <em>Tool button with dialog</em>.</p>
+<p><strong>Ekran 3 — Opcje:</strong>
+Zaznacz <em>Flag as experimental</em>.
+Odznacz i18n (internacjonalizacja) i testy jednostkowe.</p>
+<p><strong>Kliknij Generate</strong> — pliki pojawia sie w folderze wtyczek.</p>
+<hr class="docutils" />
+<p><a id='s9'></a></p>
+</section>
+</section>
+<section id="qt-designer-jak-myslec-o-interfejsie">
+<h2>9. Qt Designer — jak myslec o interfejsie<a class="headerlink" href="#qt-designer-jak-myslec-o-interfejsie" title="Permalink to this heading">#</a></h2>
+<section id="czym-jest-qt-designer">
+<h3>9.1 Czym jest Qt Designer<a class="headerlink" href="#czym-jest-qt-designer" title="Permalink to this heading">#</a></h3>
+<img src='img\Qt_designer.png' img>
+<p>Qt Designer to graficzny edytor interfejsow Qt.
+Przeciagasz elementy myszka, ustawiasz ich wlasciwosci,
+i Designer generuje plik <code class="docutils literal notranslate"><span class="pre">.ui</span></code> (XML) opisujacy co narysowales.</p>
+<p>Relacja Designer — QGIS wyglada tak:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Qt</span> <span class="n">Designer</span>
+    <span class="o">|</span>
+    <span class="n">rysujesz</span> <span class="n">okno</span> <span class="n">dialogowe</span>
+    <span class="o">|</span>
+    <span class="n">zapisujesz</span> <span class="o">-&gt;</span> <span class="n">buffer_tool_dialog_base</span><span class="o">.</span><span class="n">ui</span> <span class="p">(</span><span class="n">XML</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="n">Python</span> <span class="o">+</span> <span class="n">uic</span><span class="o">.</span><span class="n">loadUiType</span><span class="p">()</span>
+    <span class="o">|</span>
+    <span class="n">generuje</span> <span class="n">klase</span> <span class="n">Pythona</span> <span class="n">w</span> <span class="n">locie</span>
+    <span class="o">|</span>
+    <span class="n">kod</span> <span class="n">Twojej</span> <span class="n">wtyczki</span> <span class="n">uzywa</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">nazwaWidgetu</span>
+</pre></div>
+</div>
+<p>Dzieki temu nie musisz recznie kompilowac interfejsu —
+<code class="docutils literal notranslate"><span class="pre">uic.loadUiType()</span></code> robi to automatycznie przy kazdym uruchomieniu.</p>
+</section>
+<section id="podstawowe-widgety-ktore-bedziesz-uzywac">
+<h3>9.2 Podstawowe widgety ktore bedziesz uzywac<a class="headerlink" href="#podstawowe-widgety-ktore-bedziesz-uzywac" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Widget</p></th>
+<th class="head"><p>Do czego sluzy</p></th>
+<th class="head"><p>Jak go uzyc w kodzie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QLabel</span></code></p></td>
+<td><p>Tekst informacyjny, etykieta</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.lblNazwa.setText('...')</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QLineEdit</span></code></p></td>
+<td><p>Pole tekstowe (jedna linia)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.ledNazwa.text()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QSpinBox</span></code></p></td>
+<td><p>Liczba calkowita ze strzalkami</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.spbWiek.value()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QDoubleSpinBox</span></code></p></td>
+<td><p>Liczba zmiennoprzec. ze strzalkami</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.spbPromien.value()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QComboBox</span></code></p></td>
+<td><p>Lista rozwijana</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.cmbTyp.currentText()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QCheckBox</span></code></p></td>
+<td><p>Pole wyboru tak/nie</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.chkDolacz.isChecked()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QPushButton</span></code></p></td>
+<td><p>Przycisk</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.btnWybierz.clicked.connect(...)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QProgressBar</span></code></p></td>
+<td><p>Pasek postepu</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.prgPostep.setValue(50)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsMapLayerComboBox</span></code></p></td>
+<td><p>Lista warstw z projektu QGIS</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.dlg.mMapLayerComboBox.currentLayer()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="qgsmaplayercombobox-specjalnosc-qgis">
+<h3>9.3 QgsMapLayerComboBox — specjalnosc QGIS<a class="headerlink" href="#qgsmaplayercombobox-specjalnosc-qgis" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">QgsMapLayerComboBox</span></code> to widget stworzony specjalnie dla QGIS.
+Automatycznie wypelnia sie warstwami z otwartego projektu
+i aktualizuje gdy uzytkownik dodaje lub usuwa warstwy.</p>
+<p>W Qt Designer nie ma go na liscie standardowych widgetow.
+Dodajesz go przez mechanizm <strong>Promote to</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">Przeciagnij</span> <span class="n">zwykly</span> <span class="n">QComboBox</span> <span class="n">na</span> <span class="n">okno</span>
+<span class="mf">2.</span> <span class="n">Kliknij</span> <span class="n">prawym</span> <span class="n">przyciskiem</span> <span class="o">-&gt;</span> <span class="s1">&#39;Promote to...&#39;</span>
+<span class="mf">3.</span> <span class="n">Promoted</span> <span class="k">class</span> <span class="nc">name</span><span class="p">:</span> <span class="n">QgsMapLayerComboBox</span>
+<span class="mf">4.</span> <span class="n">Header</span> <span class="n">file</span><span class="p">:</span> <span class="n">qgis</span><span class="o">.</span><span class="n">gui</span>
+<span class="mf">5.</span> <span class="n">Kliknij</span> <span class="n">Add</span> <span class="o">-&gt;</span> <span class="n">Promote</span>
+</pre></div>
+</div>
+<p>Qt Designer nie wie co to jest <code class="docutils literal notranslate"><span class="pre">QgsMapLayerComboBox</span></code> —
+to klasa spoza standardowej biblioteki Qt.
+Mechanizm Promote mowi Designerowi:
+<em>w pliku .ui zapisz ze to jest QgsMapLayerComboBox,
+a PyQGIS przy wczytaniu sam bedzie wiedzial co to znaczy.</em></p>
+</section>
+<section id="konwencja-nazewnicza-widgetow">
+<h3>9.4 Konwencja nazewnicza widgetow<a class="headerlink" href="#konwencja-nazewnicza-widgetow" title="Permalink to this heading">#</a></h3>
+<p>Nazwy nadawane widgetom w Qt Designer staja sie nazwami atrybutow
+w kodzie Pythona. Dobra konwencja jest wazna.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Prefiks</p></th>
+<th class="head"><p>Widget</p></th>
+<th class="head"><p>Przyklad</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lbl</span></code></p></td>
+<td><p>QLabel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lblWarstwa</span></code>, <code class="docutils literal notranslate"><span class="pre">lblPromien</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">led</span></code></p></td>
+<td><p>QLineEdit</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ledSciezka</span></code>, <code class="docutils literal notranslate"><span class="pre">ledNazwa</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spb</span></code></p></td>
+<td><p>QSpinBox / QDoubleSpinBox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">spbPromien</span></code>, <code class="docutils literal notranslate"><span class="pre">spbLiczba</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cmb</span></code></p></td>
+<td><p>QComboBox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cmbTyp</span></code>, <code class="docutils literal notranslate"><span class="pre">cmbFormat</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">chk</span></code></p></td>
+<td><p>QCheckBox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">chkDolaczMale</span></code>, <code class="docutils literal notranslate"><span class="pre">chkNadpisz</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">btn</span></code></p></td>
+<td><p>QPushButton</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">btnWybierzPlik</span></code>, <code class="docutils literal notranslate"><span class="pre">btnPodglad</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">prg</span></code></p></td>
+<td><p>QProgressBar</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">prgPostep</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Wtedy w kodzie piszesz:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">warstwa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">mMapLayerComboBox</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+<span class="n">promien</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">spbPromien</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+<span class="n">sciezka</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">ledSciezka</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>I od razu wiadomo co jest co, bez zaglądania do Qt Designer.</p>
+</section>
+<section id="layouty-w-qt-designer">
+<h3>9.5 Layouty w Qt Designer<a class="headerlink" href="#layouty-w-qt-designer" title="Permalink to this heading">#</a></h3>
+<p>Zamiast ustawiac pozycje widgetow recznie, uzywaj layoutow.
+W Qt Designer: zaznacz wszystkie widgety, potem
+<code class="docutils literal notranslate"><span class="pre">Form</span> <span class="pre">-&gt;</span> <span class="pre">Lay</span> <span class="pre">Out</span> <span class="pre">Vertically</span></code> lub <code class="docutils literal notranslate"><span class="pre">Lay</span> <span class="pre">Out</span> <span class="pre">Horizontally</span></code>.</p>
+<p>Wtedy okno bedzie sie poprawnie zachowywac przy zmianie rozmiaru.
+Bez layoutu widgety zostana na sztywno w miejscu,
+a przy powiekszeniu okna pojawi sie pusta przestrzen.</p>
+<hr class="docutils" />
+<p><a id='s10'></a></p>
+</section>
+</section>
+<section id="sygnaly-i-sloty-komunikacja-w-gui">
+<h2>10. Sygnaly i sloty — komunikacja w GUI<a class="headerlink" href="#sygnaly-i-sloty-komunikacja-w-gui" title="Permalink to this heading">#</a></h2>
+<section id="problem-z-gui">
+<h3>10.1 Problem z GUI<a class="headerlink" href="#problem-z-gui" title="Permalink to this heading">#</a></h3>
+<p>Tradycyjny kod dziala sekwencyjnie — linia po linii.
+GUI nie moze tak dzialac: musi <strong>czekac na uzytkownika</strong>.
+Nie wiesz kiedy kliknie przycisk, nie wiesz w jakiej kolejnosci
+wypelni formularz. Nie mozesz napisac <code class="docutils literal notranslate"><span class="pre">czekaj_az_kliknie()</span></code>.</p>
+<p>Qt rozwiazuje to przez mechanizm <strong>sygnalow i slotow</strong>.</p>
+</section>
+<section id="sygnal-i-slot-intuicja">
+<h3>10.2 Sygnal i slot — intuicja<a class="headerlink" href="#sygnal-i-slot-intuicja" title="Permalink to this heading">#</a></h3>
+<p><strong>Sygnal</strong> to zdarzenie emitowane przez widget.
+<em>Cos sie stalo — ktos kliknal, zmienil wartosc, wpisal tekst.</em></p>
+<p><strong>Slot</strong> to funkcja wywolywana w odpowiedzi na sygnal.
+<em>Skoro cos sie stalo, zrob to i tamto.</em></p>
+<p>Laczysz je przez <code class="docutils literal notranslate"><span class="pre">.connect()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">przycisk</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">moja_funkcja</span><span class="p">)</span>
+<span class="c1"># sygnal^         ^slot</span>
+</pre></div>
+</div>
+<p>Analogia: sygnal to jak <strong>dzwonek u drzwi</strong>.
+Nie wiesz kiedy ktos zadzwoni — ale wiesz ze kiedy zadzwoni,
+chcesz otworzyc drzwi. Podlaczycie dzwonek do otwierania drzwi
+raz na poczatku — potem system sam reaguje.</p>
+</section>
+<section id="wiele-sygnalow-i-slotow">
+<h3>10.3 Wiele sygnalow i slotow<a class="headerlink" href="#wiele-sygnalow-i-slotow" title="Permalink to this heading">#</a></h3>
+<p>Jeden sygnal moze byc podlaczony do wielu slotow.
+Jeden slot moze byc podlaczony do wielu sygnalow.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Jeden przycisk -&gt; dwie akcje</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">zapisz_wyniki</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">odswierz_mape</span><span class="p">)</span>
+
+<span class="c1"># Dwa zdarzenia -&gt; ta sama reakcja</span>
+<span class="n">cmb</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">zaktualizuj_podglad</span><span class="p">)</span>
+<span class="n">spb</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">zaktualizuj_podglad</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="najczesciej-uzywane-sygnaly-w-wtyczkach">
+<h3>10.4 Najczesciej uzywane sygnaly w wtyczkach<a class="headerlink" href="#najczesciej-uzywane-sygnaly-w-wtyczkach" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Widget</p></th>
+<th class="head"><p>Sygnal</p></th>
+<th class="head"><p>Kiedy jest emitowany</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QPushButton</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clicked</span></code></p></td>
+<td><p>Po kliknieciu</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QCheckBox</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stateChanged(int)</span></code></p></td>
+<td><p>Po zaznaczeniu/odznaczeniu</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QComboBox</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">currentIndexChanged(int)</span></code></p></td>
+<td><p>Po wyborze pozycji</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QDoubleSpinBox</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valueChanged(float)</span></code></p></td>
+<td><p>Po zmianie wartosci</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QLineEdit</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">textChanged(str)</span></code></p></td>
+<td><p>Przy kazdym wcisnieciu klawisza</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QLineEdit</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">editingFinished</span></code></p></td>
+<td><p>Po utracie fokusu lub Enter</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsMapLayerComboBox</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">layerChanged(layer)</span></code></p></td>
+<td><p>Po wybraniu innej warstwy</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lambda-sygnal-z-parametrem">
+<h3>10.5 Lambda — sygnal z parametrem<a class="headerlink" href="#lambda-sygnal-z-parametrem" title="Permalink to this heading">#</a></h3>
+<p>Czasem chcemy przekazac dodatkowy parametr do slota.
+Uzywa sie do tego funkcji lambda:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Chcemy przekazac wartosc &#39;gpkg&#39; do funkcji</span>
+<span class="n">btn_gpkg</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">zapisz</span><span class="p">(</span><span class="s1">&#39;gpkg&#39;</span><span class="p">))</span>
+<span class="n">btn_json</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">zapisz</span><span class="p">(</span><span class="s1">&#39;geojson&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="rozlaczanie-sygnalow">
+<h3>10.6 Rozlaczanie sygnalow<a class="headerlink" href="#rozlaczanie-sygnalow" title="Permalink to this heading">#</a></h3>
+<p>Sygnal mozna rozlaczyc przez <code class="docutils literal notranslate"><span class="pre">.disconnect()</span></code>.
+Wazne gdy widget jest niszczony lub gdy logika sie zmienia:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Podlacz</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">moja_funkcja</span><span class="p">)</span>
+
+<span class="c1"># Rozlacz konkretna funkcje</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="n">moja_funkcja</span><span class="p">)</span>
+
+<span class="c1"># Rozlacz wszystko</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="messagebar-wlasciwy-sposob-komunikacji">
+<h3>10.7 messageBar — wlasciwy sposob komunikacji<a class="headerlink" href="#messagebar-wlasciwy-sposob-komunikacji" title="Permalink to this heading">#</a></h3>
+<p>W skryptach uzywalismy <code class="docutils literal notranslate"><span class="pre">print()</span></code>. W wtyczkach to zly pomysl —
+uzytkownik nie widzi konsoli Pythona.</p>
+<p>QGIS ma wbudowany <strong>pasek komunikatow</strong> (messageBar) —
+kolorowy pasek pojawiajacy sie na gorze obszaru mapy.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Poziom</span>           <span class="n">Kolor</span>     <span class="n">Kiedy</span> <span class="n">uzywac</span>
+<span class="o">---</span>
+<span class="n">pushInfo</span>         <span class="n">niebieski</span>  <span class="n">Informacja</span> <span class="p">(</span><span class="n">operacja</span> <span class="n">rozpoczeta</span><span class="p">)</span>
+<span class="n">pushSuccess</span>      <span class="n">zielony</span>    <span class="n">Sukces</span> <span class="p">(</span><span class="n">operacja</span> <span class="n">zakonczona</span><span class="p">)</span>
+<span class="n">pushWarning</span>      <span class="n">zolty</span>      <span class="n">Ostrzezenie</span> <span class="p">(</span><span class="n">cos</span> <span class="n">moze</span> <span class="n">byc</span> <span class="n">zle</span><span class="p">)</span>
+<span class="n">pushCritical</span>     <span class="n">czerwony</span>   <span class="n">Blad</span> <span class="p">(</span><span class="n">operacja</span> <span class="n">sie</span> <span class="n">nie</span> <span class="n">powiodla</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Komunikat znika samoczynnie po kilku sekundach lub
+uzytkownik moze go zamknac recznie.
+To standard UX w QGIS — uzytkownik jest przyzwyczajony do tego paska.</p>
+<hr class="docutils" />
+<p><a id='s11'></a></p>
+</section>
+</section>
+<section id="podsumowanie-mapa-pojec">
+<h2>11. Podsumowanie — mapa pojec<a class="headerlink" href="#podsumowanie-mapa-pojec" title="Permalink to this heading">#</a></h2>
+<section id="hierarchia-tego-co-budujemy">
+<h3>11.1 Hierarchia tego co budujemy<a class="headerlink" href="#hierarchia-tego-co-budujemy" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Python</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="n">Modul</span> <span class="p">(</span><span class="o">.</span><span class="n">py</span><span class="p">)</span>              <span class="n">pojedynczy</span> <span class="n">plik</span> <span class="n">z</span> <span class="n">kodem</span>
+    <span class="o">|</span>
+    <span class="o">+--</span> <span class="n">Pakiet</span> <span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">)</span>
+            <span class="o">|</span>
+            <span class="o">+--</span> <span class="n">Wtyczka</span> <span class="n">QGIS</span>    <span class="n">pakiet</span> <span class="n">ze</span> <span class="n">specjalnymi</span> <span class="n">wymaganiami</span>
+                    <span class="o">|</span>
+                    <span class="o">+--</span> <span class="n">classFactory</span>    <span class="n">umowa</span> <span class="n">z</span> <span class="n">QGIS</span>
+                    <span class="o">+--</span> <span class="n">initGui</span>         <span class="n">budowanie</span> <span class="n">GUI</span>
+                    <span class="o">+--</span> <span class="n">unload</span>          <span class="n">sprzatanie</span>
+                    <span class="o">+--</span> <span class="n">run</span>             <span class="n">logika</span>
+                    <span class="o">+--</span> <span class="n">Qt</span> <span class="n">Dialog</span>       <span class="n">okno</span> <span class="n">z</span> <span class="n">formularzem</span>
+                            <span class="o">|</span>
+                            <span class="o">+--</span> <span class="n">Widgety</span> <span class="p">(</span><span class="n">QLabel</span><span class="p">,</span> <span class="n">QSpinBox</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+                            <span class="o">+--</span> <span class="n">Sygnaly</span> <span class="n">i</span> <span class="n">sloty</span>
+</pre></div>
+</div>
+</section>
+<section id="narzedzia-ktorych-uzywamy">
+<h3>11.2 Narzedzia ktorych uzywamy<a class="headerlink" href="#narzedzia-ktorych-uzywamy" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Narzedzie</p></th>
+<th class="head"><p>Rola</p></th>
+<th class="head"><p>Kiedy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Plugin Builder</strong></p></td>
+<td><p>Generuje szkielet wtyczki</p></td>
+<td><p>Raz, na poczatku</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Qt Designer</strong></p></td>
+<td><p>Projektuje GUI (plik .ui)</p></td>
+<td><p>Przy kazdej zmianie interfejsu</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Plugin Reloader</strong></p></td>
+<td><p>Przeladowuje wtyczke bez restartu QGIS</p></td>
+<td><p>Przy kazdej zmianie kodu</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Menedzer wtyczek</strong></p></td>
+<td><p>Wlacza/wylacza wtyczke</p></td>
+<td><p>Przy pierwszym uruchomieniu</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slownik-pojec">
+<h3>11.3 Slownik pojec<a class="headerlink" href="#slownik-pojec" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pojecie</p></th>
+<th class="head"><p>Definicja</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Modul</strong></p></td>
+<td><p>Pojedynczy plik <code class="docutils literal notranslate"><span class="pre">.py</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Pakiet</strong></p></td>
+<td><p>Folder z modulami i plikiem <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></strong></p></td>
+<td><p>Plik inicjalizujacy pakiet; w wtyczce musi zawierac <code class="docutils literal notranslate"><span class="pre">classFactory</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Import wzgledny</strong></p></td>
+<td><p>Import uzywajacy kropki (<code class="docutils literal notranslate"><span class="pre">.modul</span></code>) — niezalezny od nazwy pakietu</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">classFactory</span></code></strong></p></td>
+<td><p>Funkcja wywolywana przez QGIS — musi zwrocic obiekt wtyczki</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">initGui</span></code></strong></p></td>
+<td><p>Metoda dodajaca przyciski i menu do interfejsu QGIS</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">unload</span></code></strong></p></td>
+<td><p>Metoda usuwajaca elementy GUI — symetria initGui</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Qt</strong></p></td>
+<td><p>Framework do tworzenia GUI, na ktorym zbudowany jest QGIS</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Widget</strong></p></td>
+<td><p>Element interfejsu Qt (przycisk, pole tekstowe, lista)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Layout</strong></p></td>
+<td><p>Mechanizm automatycznego rozmieszczania widgetow</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Sygnal</strong></p></td>
+<td><p>Zdarzenie emitowane przez widget (np. klikniecie)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Slot</strong></p></td>
+<td><p>Funkcja wywolywana w odpowiedzi na sygnal</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">.connect()</span></code></strong></p></td>
+<td><p>Laczenie sygnalu ze slotem</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Plugin Builder</strong></p></td>
+<td><p>Wtyczka QGIS generujaca szkielet nowej wtyczki</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Qt Designer</strong></p></td>
+<td><p>Graficzny edytor interfejsow Qt, generuje pliki <code class="docutils literal notranslate"><span class="pre">.ui</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Plik <code class="docutils literal notranslate"><span class="pre">.ui</span></code></strong></p></td>
+<td><p>XML opisujacy wyglad okna — edytowany w Qt Designer</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Promote to</strong></p></td>
+<td><p>Mechanizm Qt Designer zastepujacy widget klasa pochodna</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">QgsMapLayerComboBox</span></code></strong></p></td>
+<td><p>Widget QGIS — lista rozwijana z warstwami projektu</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>messageBar</strong></p></td>
+<td><p>Pasek komunikatow QGIS — zamiast print() w wtyczkach</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Plugin Reloader</strong></p></td>
+<td><p>Wtyczka przeladowujaca inna wtyczke bez restartu QGIS</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><em>Wyklad 6 — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">C4: QgsGeometry, QgsFeature i praca z warstwami</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentow I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o-tym-wykladzie">O tym wykladzie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-python-organizuje-kod-moduly-i-pakiety">1. Jak Python organizuje kod — moduly i pakiety</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-ktory-rozwiazujemy">1.1 Problem, ktory rozwiazujemy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modul-jeden-plik-jedna-odpowiedzialnosc">1.2 Modul — jeden plik, jedna odpowiedzialnosc</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pakiet-folder-modulow">1.3 Pakiet — folder modulow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pakiety-zagniezdzone">1.4 Pakiety zagniezdzone</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteki-zewnetrzne-to-tez-pakiety">1.5 Biblioteki zewnetrzne to tez pakiety</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rola-pliku-init-py">2. Rola pliku <strong>init</strong>.py</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-role-jednego-pliku">2.1 Trzy role jednego pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#init-py-w-wtyczce-qgis">2.2 <strong>init</strong>.py w wtyczce QGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-wzgledny-i-bezwzgledny">3. Import wzgledny i bezwzgledny</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dwa-sposoby-importowania">3.1 Dwa sposoby importowania</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-wtyczki-zawsze-uzywaja-importow-wzglednych">3.2 Dlaczego wtyczki zawsze uzywaja importow wzglednych</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wyjasnienie-kropek">3.3 Wyjasnienie kropek</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-wtyczka-qgis-intuicja">4. Czym jest wtyczka QGIS — intuicja</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogia-wtyczka-jak-aplikacja-w-smartfonie">4.1 Analogia: wtyczka jak aplikacja w smartfonie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-sposoby-rozszerzania-qgis-porownanie">4.2 Trzy sposoby rozszerzania QGIS — porownanie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-wtyczka-moze-dodac-do-qgis">4.3 Co wtyczka moze dodac do QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czego-wtyczka-nie-moze">4.4 Czego wtyczka NIE moze</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architektura-aplikacji-qt">5. Architektura aplikacji Qt</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-qt">5.1 Czym jest Qt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#widgety-cegielki-interfejsu">5.2 Widgety — cegiełki interfejsu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchia-widgetow">5.3 Hierarchia widgetow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layouty-automatyczne-rozmieszczanie">5.4 Layouty — automatyczne rozmieszczanie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cykl-zycia-wtyczki">6. Cykl zycia wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-co-sie-dzieje">6.1 Kiedy co sie dzieje</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konstruktor-init-tylko-jedna-rola">6.2 Konstruktor <strong>init</strong> — tylko jedna rola</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initgui-budowanie-interfejsu">6.3 initGui — budowanie interfejsu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unload-sprzatanie">6.4 unload — sprzatanie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-logika-biznesowa">6.5 run — logika biznesowa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimalne-wymagania-wtyczki">7. Minimalne wymagania wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-qgis-sprawdza-przy-ladowaniu">7.1 Co QGIS sprawdza przy ladowaniu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimalna-struktura">7.2 Minimalna struktura</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wymagane-pola-metadata-txt">7.3 Wymagane pola metadata.txt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-wymagane-metody-klasy-glownej">7.4 Trzy wymagane metody klasy glownej</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lokalizacja-folderu-wtyczek">7.5 Lokalizacja folderu wtyczek</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plugin-builder-co-generuje-i-dlaczego">8. Plugin Builder — co generuje i dlaczego</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#po-co-plugin-builder">8.1 Po co Plugin Builder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-generuje-plugin-builder">8.2 Co generuje Plugin Builder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rola-kazdego-pliku">8.3 Rola kazdego pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#szablon-tool-button-with-dialog">8.4 Szablon: Tool button with dialog</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kroki-w-kreatorze-plugin-builder">8.5 Kroki w kreatorze Plugin Builder</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-designer-jak-myslec-o-interfejsie">9. Qt Designer — jak myslec o interfejsie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-qt-designer">9.1 Czym jest Qt Designer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-widgety-ktore-bedziesz-uzywac">9.2 Podstawowe widgety ktore bedziesz uzywac</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qgsmaplayercombobox-specjalnosc-qgis">9.3 QgsMapLayerComboBox — specjalnosc QGIS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konwencja-nazewnicza-widgetow">9.4 Konwencja nazewnicza widgetow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layouty-w-qt-designer">9.5 Layouty w Qt Designer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sygnaly-i-sloty-komunikacja-w-gui">10. Sygnaly i sloty — komunikacja w GUI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-z-gui">10.1 Problem z GUI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sygnal-i-slot-intuicja">10.2 Sygnal i slot — intuicja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wiele-sygnalow-i-slotow">10.3 Wiele sygnalow i slotow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#najczesciej-uzywane-sygnaly-w-wtyczkach">10.4 Najczesciej uzywane sygnaly w wtyczkach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lambda-sygnal-z-parametrem">10.5 Lambda — sygnal z parametrem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rozlaczanie-sygnalow">10.6 Rozlaczanie sygnalow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#messagebar-wlasciwy-sposob-komunikacji">10.7 messageBar — wlasciwy sposob komunikacji</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-mapa-pojec">11. Podsumowanie — mapa pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchia-tego-co-budujemy">11.1 Hierarchia tego co budujemy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#narzedzia-ktorych-uzywamy">11.2 Narzedzia ktorych uzywamy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-pojec">11.3 Slownik pojec</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
