@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '11. Wyklad_7_Analiza_Rastrowa';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="C5: Operacje geometryczne i relacje przestrzenne" href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html" />
     <link rel="prev" title="Wyklad 6: Architektura wtyczek QGIS" href="10.%20Wyklad_6_Budowa_wtyczki.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -175,6 +176,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10.%20Wyklad_6_Budowa_wtyczki.html">Wyklad 6: Architektura wtyczek QGIS</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Wyklad 7: Analiza danych rastrowych w QGIS i Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html">C5: Operacje geometryczne i relacje przestrzenne</a></li>
 </ul>
 
     </div>
@@ -1058,13 +1060,13 @@ NDVI przyjmuje wartosci od -1 do 1:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\kamil\AppData\Local\Temp\ipykernel_29880\1211238594.py:11: RuntimeWarning: invalid value encountered in divide
-  (nir - red) / mianownik,
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NDVI min: -0.674
 NDVI max: 0.471
 NDVI mean: -0.217
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\kamil\AppData\Local\Temp\ipykernel_13752\1211238594.py:11: RuntimeWarning: invalid value encountered in divide
+  (nir - red) / mianownik,
 </pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
@@ -1815,9 +1817,16 @@ rasterio do obliczen, PyQGIS ponownie do zapisu i wizualizacji.</p>
 </table>
 </section>
 <section id="dane-do-cwiczen">
-
+<h3>Dane do cwiczen<a class="headerlink" href="#dane-do-cwiczen" title="Permalink to this heading">#</a></h3>
+<p>Bezplatne rastry do pobrania:</p>
+<ul class="simple">
+<li><p><strong>NMT Polski (ISOK):</strong> <a class="reference external" href="https://opendata.geoportal.gov.pl">https://opendata.geoportal.gov.pl</a></p></li>
+<li><p><strong>Sentinel-2:</strong> <a class="reference external" href="https://scihub.copernicus.eu">https://scihub.copernicus.eu</a></p></li>
+<li><p><strong>SRTM 30m (NMT swiata):</strong> <a class="reference external" href="https://earthexplorer.usgs.gov">https://earthexplorer.usgs.gov</a></p></li>
+<li><p><strong>Landsat:</strong> <a class="reference external" href="https://earthexplorer.usgs.gov">https://earthexplorer.usgs.gov</a></p></li>
+</ul>
 <hr class="docutils" />
-<p><em>Wyklad alternatywny: Analiza rastrowa — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
+<p><em>Wyklad alternatywny: Analiza rastrowa — Programowanie w GIS (QGIS) — studia licencjackie.</em></p>
 </section>
 </section>
 </section>
@@ -1860,6 +1869,15 @@ rasterio do obliczen, PyQGIS ponownie do zapisu i wizualizacji.</p>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Wyklad 6: Architektura wtyczek QGIS</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">C5: Operacje geometryczne i relacje przestrzenne</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
