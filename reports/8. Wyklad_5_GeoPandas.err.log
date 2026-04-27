@@ -1,0 +1,94 @@
+Traceback (most recent call last):
+  File "C:\Users\kamil\AppData\Roaming\Python\Python39\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\ProgramData\Anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\ProgramData\Anaconda3\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\ProgramData\Anaconda3\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\ProgramData\Anaconda3\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\ProgramData\Anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\ProgramData\Anaconda3\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import geopandas as gpd
+from shapely.geometry import Point
+
+# Stworz prosty GeoDataFrame
+gdf = gpd.GeoDataFrame(
+    {'miasto': ['Wroclaw', 'Warszawa', 'Krakow']},
+    geometry=[Point(17.038, 51.108), Point(21.012, 52.230), Point(19.945, 50.065)],
+    crs='EPSG:4326'
+)
+
+print('Oryginal (EPSG:4326 — stopnie):')
+for _, row in gdf.iterrows():
+    print(f'  {row.miasto:<12} x={row.geometry.x:.4f}  y={row.geometry.y:.4f}')
+
+# Reprojekcja do PL-1992
+gdf_pl = gdf.to_crs('EPSG:2180')
+
+print('\nPo to_crs(EPSG:2180) — metry:')
+for _, row in gdf_pl.iterrows():
+    print(f'  {row.miasto:<12} x={row.geometry.x:,.0f}  y={row.geometry.y:,.0f}')
+
+# Reprojekcja do Web Mercator
+gdf_wm = gdf.to_crs('EPSG:3857')
+
+print('\nPo to_crs(EPSG:3857) — Web Mercator:')
+for _, row in gdf_wm.iterrows():
+    print(f'  {row.miasto:<12} x={row.geometry.x:,.0f}  y={row.geometry.y:,.0f}')
+
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mImportError[0m                               Traceback (most recent call last)
+Input [1;32mIn [6][0m, in [0;36m<cell line: 16>[1;34m()[0m
+[0;32m     13[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m'[39m[38;5;124m  [39m[38;5;132;01m{[39;00mrow[38;5;241m.[39mmiasto[38;5;132;01m:[39;00m[38;5;124m<12[39m[38;5;132;01m}[39;00m[38;5;124m x=[39m[38;5;132;01m{[39;00mrow[38;5;241m.[39mgeometry[38;5;241m.[39mx[38;5;132;01m:[39;00m[38;5;124m.4f[39m[38;5;132;01m}[39;00m[38;5;124m  y=[39m[38;5;132;01m{[39;00mrow[38;5;241m.[39mgeometry[38;5;241m.[39my[38;5;132;01m:[39;00m[38;5;124m.4f[39m[38;5;132;01m}[39;00m[38;5;124m'[39m)
+[0;32m     15[0m [38;5;66;03m# Reprojekcja do PL-1992[39;00m
+[1;32m---> 16[0m gdf_pl [38;5;241m=[39m [43mgdf[49m[38;5;241;43m.[39;49m[43mto_crs[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mEPSG:2180[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[0;32m     18[0m [38;5;28mprint[39m([38;5;124m'[39m[38;5;130;01m\n[39;00m[38;5;124mPo to_crs(EPSG:2180) — metry:[39m[38;5;124m'[39m)
+[0;32m     19[0m [38;5;28;01mfor[39;00m _, row [38;5;129;01min[39;00m gdf_pl[38;5;241m.[39miterrows():
+
+File [1;32m~\AppData\Roaming\Python\Python39\site-packages\geopandas\geodataframe.py:1701[0m, in [0;36mGeoDataFrame.to_crs[1;34m(self, crs, epsg, inplace)[0m
+[0;32m   1699[0m [38;5;28;01melse[39;00m:
+[0;32m   1700[0m     df [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mcopy()
+[1;32m-> 1701[0m geom [38;5;241m=[39m [43mdf[49m[38;5;241;43m.[39;49m[43mgeometry[49m[38;5;241;43m.[39;49m[43mto_crs[49m[43m([49m[43mcrs[49m[38;5;241;43m=[39;49m[43mcrs[49m[43m,[49m[43m [49m[43mepsg[49m[38;5;241;43m=[39;49m[43mepsg[49m[43m)[49m
+[0;32m   1702[0m df[38;5;241m.[39mgeometry [38;5;241m=[39m geom
+[0;32m   1703[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m inplace:
+
+File [1;32m~\AppData\Roaming\Python\Python39\site-packages\geopandas\geoseries.py:1207[0m, in [0;36mGeoSeries.to_crs[1;34m(self, crs, epsg)[0m
+[0;32m   1128[0m [38;5;28;01mdef[39;00m [38;5;21mto_crs[39m(
+[0;32m   1129[0m     [38;5;28mself[39m, crs: Optional[Any] [38;5;241m=[39m [38;5;28;01mNone[39;00m, epsg: Optional[[38;5;28mint[39m] [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[0;32m   1130[0m ) [38;5;241m-[39m[38;5;241m>[39m GeoSeries:
+[0;32m   1131[0m     [38;5;124;03m"""Returns a ``GeoSeries`` with all geometries transformed to a new[39;00m
+[0;32m   1132[0m [38;5;124;03m    coordinate reference system.[39;00m
+[0;32m   1133[0m 
+[1;32m   (...)[0m
+[0;32m   1204[0m 
+[0;32m   1205[0m [38;5;124;03m    """[39;00m
+[0;32m   1206[0m     [38;5;28;01mreturn[39;00m GeoSeries(
+[1;32m-> 1207[0m         [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mvalues[49m[38;5;241;43m.[39;49m[43mto_crs[49m[43m([49m[43mcrs[49m[38;5;241;43m=[39;49m[43mcrs[49m[43m,[49m[43m [49m[43mepsg[49m[38;5;241;43m=[39;49m[43mepsg[49m[43m)[49m, index[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39mindex, name[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39mname
+[0;32m   1208[0m     )
+
+File [1;32m~\AppData\Roaming\Python\Python39\site-packages\geopandas\_compat.py:85[0m, in [0;36mrequires_pyproj.<locals>.wrapper[1;34m(*args, **kwargs)[0m
+[0;32m     83[0m [38;5;28;01mdef[39;00m [38;5;21mwrapper[39m([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[0;32m     84[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m HAS_PYPROJ:
+[1;32m---> 85[0m         [38;5;28;01mraise[39;00m [38;5;167;01mImportError[39;00m(
+[0;32m     86[0m             [38;5;124mf[39m[38;5;124m"[39m[38;5;124mThe [39m[38;5;124m'[39m[38;5;124mpyproj[39m[38;5;124m'[39m[38;5;124m package is required for [39m[38;5;132;01m{[39;00mfunc[38;5;241m.[39m[38;5;18m__name__[39m[38;5;132;01m}[39;00m[38;5;124m to work. [39m[38;5;124m"[39m
+[0;32m     87[0m             [38;5;124m"[39m[38;5;124mInstall it and initialize the object with a CRS before using it.[39m[38;5;124m"[39m
+[0;32m     88[0m             [38;5;124mf[39m[38;5;124m"[39m[38;5;130;01m\n[39;00m[38;5;124mImporting pyproj resulted in: [39m[38;5;132;01m{[39;00mpyproj_import_error[38;5;132;01m}[39;00m[38;5;124m"[39m
+[0;32m     89[0m         )
+[0;32m     90[0m     [38;5;28;01mreturn[39;00m func([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+[1;31mImportError[0m: The 'pyproj' package is required for to_crs to work. Install it and initialize the object with a CRS before using it.
+Importing pyproj resulted in: No module named 'pyproj'
+ImportError: The 'pyproj' package is required for to_crs to work. Install it and initialize the object with a CRS before using it.
+Importing pyproj resulted in: No module named 'pyproj'
+

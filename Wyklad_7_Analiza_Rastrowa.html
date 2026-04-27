@@ -1,0 +1,1986 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Wyklad 7: Analiza danych rastrowych w QGIS i Python &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Wyklad_7_Analiza_Rastrowa';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.%20Wyklad_6_Budowa_wtyczki.html">Wyklad 6: Architektura wtyczek QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.%20Wyklad_7_Analiza_Rastrowa.html">Wyklad 7: Analiza danych rastrowych w QGIS i Python</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FWyklad_7_Analiza_Rastrowa.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Wyklad_7_Analiza_Rastrowa.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Wyklad 7: Analiza danych rastrowych w QGIS i Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentow I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-rozni-sie-raster-od-wektora-przypomnienie">Czym rozni sie raster od wektora — przypomnienie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-uzywac-danych-rastrowych">Kiedy uzywac danych rastrowych</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-korzystac-z-tego-notatnika">Jak korzystac z tego notatnika</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-danych-rastrowych">1. Model danych rastrowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-pojecia">1.1 Podstawowe pojecia</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wspolrzedne-rastra-geotransformacja">1.2 Wspolrzedne rastra — geotransformacja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wartosc-nodata">1.3 Wartosc NoData</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popularne-formaty-rastrowe">1.4 Popularne formaty rastrowe</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-rastra-w-pyqgis-qgsrasterlayer">2. Wczytywanie rastra w PyQGIS — QgsRasterLayer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasa-qgsrasterlayer">2.1 Klasa QgsRasterLayer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytanie-pliku">2.2 Wczytanie pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-metadane">2.3 Podstawowe metadane</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statystyki-pasma">2.4 Statystyki pasma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odczyt-wartosci-w-punkcie">2.5 Odczyt wartosci w punkcie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacje-o-kazdym-pasmie">2.6 Informacje o kazdym pasmie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-rastra-w-rasterio">3. Wczytywanie rastra w rasterio</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-rasterio">3.1 Czym jest rasterio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowy-odczyt">3.2 Podstawowy odczyt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maska-nodata">3.3 Maska NoData</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeliczanie-wspolrzednych">3.4 Przeliczanie wspolrzednych</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-na-pasmach-i-pikselach-numpy">4. Operacje na pasmach i pikselach — NumPy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-numpy">4.1 Dlaczego NumPy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-operacje-arytmetyczne">4.2 Podstawowe operacje arytmetyczne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-miedzy-pasmami-przyklad-ndvi">4.3 Operacje miedzy pasmami — przykład NDVI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-pikseli-maski-logiczne">4.4 Filtrowanie pikseli — maski logiczne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-wykonac-te-same-operacje-w-qgis">Jak wykonac te same operacje w QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulator-rastrowy-interfejs-graficzny">Kalkulator rastrowy — interfejs graficzny</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statystyki-pasma-przez-wlasciwosci-warstwy">Statystyki pasma — przez wlasciwosci warstwy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulator-ratrowy-pyqgis">Kalkulator ratrowy - PyQGIS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-rastra-do-obszaru-clip-by-mask">5. Przycinanie rastra do obszaru — clip by mask</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#po-co-przycinamy">5.1 Po co przycinamy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-w-pyqgis-przez-processing">5.2 Przycinanie w PyQGIS przez Processing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-przez-prostokat-bbox">5.3 Przycinanie przez prostokat (bbox)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-w-rasterio">5.4 Przycinanie w rasterio</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pryzciecie-indeksami">Pryzcięcie indeksami</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#przyciecie-shapefile-m">Przycięcie shapefile’m</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reklasyfikacja">6. Reklasyfikacja</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-reklasyfikacja">6.1 Czym jest reklasyfikacja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reklasyfikacja-w-pyqgis-przez-processing">6.2 Reklasyfikacja w PyQGIS przez Processing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reklasyfikacja-przez-numpy-rasterio">6.3 Reklasyfikacja przez NumPy (rasterio)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulator-rastrowy-w-pyqgis">6.4 Kalkulator rastrowy w PyQGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksport-i-wizualizacja-wynikow">8. Eksport i wizualizacja wynikow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-rastra-w-rasterio">8.1 Zapis rastra w rasterio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksport-przez-pyqgis">8.2 Eksport przez PyQGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyqgis-vs-rasterio-kiedy-co-uzywac">9. PyQGIS vs rasterio — kiedy co uzywac</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zasada">Zasada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-slownik-pojec">10. Podsumowanie i slownik pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-omowilismy">Co omowilismy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-pojec">Slownik pojec</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="wyklad-7-analiza-danych-rastrowych-w-qgis-i-python">
+<h1>Wyklad 7: Analiza danych rastrowych w QGIS i Python<a class="headerlink" href="#wyklad-7-analiza-danych-rastrowych-w-qgis-i-python" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-kurs-dla-studentow-i-stopnia">
+<h2>Programowanie w GIS — Kurs dla studentow I stopnia<a class="headerlink" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Tematy:</strong> Dane rastrowe | PyQGIS | rasterio | NumPy | Kalkulator rastrowy | Statystyki strefowe<br />
+<strong>Wymagania wstepne:</strong> Wyklad 2 — PyQGIS, podstawy NumPy</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="czym-rozni-sie-raster-od-wektora-przypomnienie">
+<h2>Czym rozni sie raster od wektora — przypomnienie<a class="headerlink" href="#czym-rozni-sie-raster-od-wektora-przypomnienie" title="Permalink to this heading">#</a></h2>
+<p>Dane wektorowe opisuja swiat jako <strong>obiekty</strong> (punkty, linie, poligony).
+Dane rastrowe opisuja swiat jako <strong>siatke komorek</strong> (pikseli),
+gdzie kazda komorka ma jedna lub wiecej wartosci liczbowych.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Wektor</span><span class="p">:</span>                     <span class="n">Raster</span><span class="p">:</span>
+                            <span class="o">+---+---+---+---+</span>
+    <span class="o">/</span>\                      <span class="o">|</span><span class="mi">231</span><span class="o">|</span><span class="mi">245</span><span class="o">|</span><span class="mi">198</span><span class="o">|</span><span class="mi">187</span><span class="o">|</span>
+   <span class="o">/</span>  \                     <span class="o">+---+---+---+---+</span>
+  <span class="o">/</span> <span class="n">las</span>\                    <span class="o">|</span><span class="mi">220</span><span class="o">|</span><span class="mi">234</span><span class="o">|</span><span class="mi">201</span><span class="o">|</span><span class="mi">192</span><span class="o">|</span>
+ <span class="o">/</span><span class="n">______</span>\                   <span class="o">+---+---+---+---+</span>
+                            <span class="o">|</span><span class="mi">198</span><span class="o">|</span><span class="mi">210</span><span class="o">|</span><span class="mi">245</span><span class="o">|</span><span class="mi">230</span><span class="o">|</span>
+<span class="n">Jeden</span> <span class="n">obiekt</span> <span class="o">=</span> <span class="n">jeden</span> <span class="n">polygon</span> <span class="o">+---+---+---+---+</span>
+                            <span class="n">Jeden</span> <span class="n">piksel</span> <span class="o">=</span> <span class="n">jedna</span> <span class="n">wartosc</span>
+</pre></div>
+</div>
+</section>
+<section id="kiedy-uzywac-danych-rastrowych">
+<h2>Kiedy uzywac danych rastrowych<a class="headerlink" href="#kiedy-uzywac-danych-rastrowych" title="Permalink to this heading">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Zjawisko</p></th>
+<th class="head"><p>Dlaczego raster</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Numeryczny Model Terenu (NMT)</p></td>
+<td><p>Wysokosc jest ciagla — kazdemu punktowi odpowiada jedna wartosc</p></td>
+</tr>
+<tr class="row-odd"><td><p>Zobrazowanie satelitarne</p></td>
+<td><p>Kamera rejestruje swiato w pikselach</p></td>
+</tr>
+<tr class="row-even"><td><p>Temperatura powietrza</p></td>
+<td><p>Zjawisko cigle, interpolowane na siatke</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pokrycie terenu</p></td>
+<td><p>Klasyfikacja na regularnej siatce</p></td>
+</tr>
+<tr class="row-even"><td><p>Opad atmosferyczny</p></td>
+<td><p>Mierzone w punktach, interpolowane jako raster</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="jak-korzystac-z-tego-notatnika">
+<h2>Jak korzystac z tego notatnika<a class="headerlink" href="#jak-korzystac-z-tego-notatnika" title="Permalink to this heading">#</a></h2>
+<p>Komorki <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[QGIS]</span></code> uruchamiaj w Konsoli Pythona QGIS.<br />
+Komorki <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">[JUPYTER]</span></code> uruchamiaj tutaj — wymagaja <code class="docutils literal notranslate"><span class="pre">rasterio</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install rasterio numpy matplotlib
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="model-danych-rastrowych">
+<h2>1. Model danych rastrowych<a class="headerlink" href="#model-danych-rastrowych" title="Permalink to this heading">#</a></h2>
+<section id="podstawowe-pojecia">
+<h3>1.1 Podstawowe pojecia<a class="headerlink" href="#podstawowe-pojecia" title="Permalink to this heading">#</a></h3>
+<p><strong>Piksel</strong> — podstawowa jednostka rastra. Kazdy piksel:</p>
+<ul class="simple">
+<li><p>zajmuje okreslony obszar na ziemi (rozdzielczosc przestrzenna),</p></li>
+<li><p>ma jedna lub wiecej wartosci numerycznych (pasma),</p></li>
+<li><p>jest prostokątem (najczesciej kwadratem).</p></li>
+</ul>
+<p><strong>Rozdzielczosc przestrzenna</strong> — rozmiar piksela na ziemi.
+Raster 10 m ma piksele pokrywajace 10 m × 10 m.
+Im mniejszy piksel, tym wiecej szczegolów — i wiekszy plik.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Satelita</p></th>
+<th class="head"><p>Rozdzielczosc</p></th>
+<th class="head"><p>Zastosowanie</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sentinel-2</p></td>
+<td><p>10 m / 20 m / 60 m</p></td>
+<td><p>Monitoring, rolnictwo</p></td>
+</tr>
+<tr class="row-odd"><td><p>Landsat 8/9</p></td>
+<td><p>30 m</p></td>
+<td><p>Dlugoletni monitoring</p></td>
+</tr>
+<tr class="row-even"><td><p>SPOT-7</p></td>
+<td><p>1.5 m</p></td>
+<td><p>Szczegolowe mapy</p></td>
+</tr>
+<tr class="row-odd"><td><p>Drone ortofoto</p></td>
+<td><p>5–20 cm</p></td>
+<td><p>Precyzja rolnicza, budowlana</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pasmo (band)</strong> — jedna warstwa wartosci. Zobrazowanie RGB ma 3 pasma.
+Satelita Sentinel-2 ma 13 pasm (rozny zakres spektralny).</p>
+</section>
+<section id="wspolrzedne-rastra-geotransformacja">
+<h3>1.2 Wspolrzedne rastra — geotransformacja<a class="headerlink" href="#wspolrzedne-rastra-geotransformacja" title="Permalink to this heading">#</a></h3>
+<p>Dane wektorowe określają swoje położenie na Ziemi, bo każdy punkt ma zapisane współrzędne geograficzne. Raster działa inaczej — to zwykła siatka liczb, jak arkusz kalkulacyjny.</p>
+<p>Żeby raster miał sens przestrzenny, potrzebuje georeferencji — informacji łączącej numery wierszy i kolumn siatki z rzeczywistymi współrzędnymi na Ziemi.</p>
+<p>Geotransformacja to ogólny standard GIS, a nie cecha konkretnego oprogramowania. Stosuje go QGIS, rasterio, GDAL, ArcGIS i każde inne narzędzie GIS pracujące z rastrami. Zapis geotransformacji jest częścią formatu pliku — np. w GeoTIFF jest zapisana w nagłówku pliku, dlatego plik “wie” gdzie leży niezależnie od tego jakim programem go otworzysz.</p>
+<p>Geotransformacja to krotka sześciu liczb (standard GDAL):</p>
+<p>(x_lewy_gory, rozdzielczosc_x, obrot_x,
+y_gory,       obrot_y,        -rozdzielczosc_y)</p>
+<p>Dla zdecydowanej większości rastrów obrot_x = obrot_y = 0 — raster jest wyrównany do osi współrzędnych i nie jest obrócony. Dlatego w praktyce liczy się tylko cztery wartości:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x_lewy_gory — współrzędna X lewego górnego rogu rastra
+y_gory — współrzędna Y lewego górnego rogu rastra
+rozdzielczosc_x — szerokość jednego piksela w jednostkach CRS
+-rozdzielczosc_y — wysokość piksela, ujemna bo oś Y rośnie w górę a wiersze są numerowane od góry w dół
+</pre></div>
+</div>
+<p>Każde narzędzie GIS odczytuje tę samą geotransformację z pliku, tylko pokazuje ją trochę inaczej:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># GDAL / rasterio — krotka 6 liczb</span>
+<span class="n">src</span><span class="o">.</span><span class="n">transform</span>
+<span class="c1"># Affine(0.1, 0.0, 14.1,</span>
+<span class="c1">#        0.0, -0.1, 55.0)</span>
+
+<span class="c1"># PyQGIS — osobne metody</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">rasterUnitsPerPixelX</span><span class="p">()</span>   <span class="c1"># rozdzielczosc_x</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">rasterUnitsPerPixelY</span><span class="p">()</span>   <span class="c1"># rozdzielczosc_y (zwraca wartosc dodatnia)</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">extent</span><span class="p">()</span><span class="o">.</span><span class="n">xMinimum</span><span class="p">()</span>      <span class="c1"># x_lewy_gory</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">extent</span><span class="p">()</span><span class="o">.</span><span class="n">yMaximum</span><span class="p">()</span>      <span class="c1"># y_gory</span>
+</pre></div>
+</div>
+<p>To są dwa różne interfejsy do tej samej informacji zapisanej w pliku.</p>
+</section>
+<section id="wartosc-nodata">
+<h3>1.3 Wartosc NoData<a class="headerlink" href="#wartosc-nodata" title="Permalink to this heading">#</a></h3>
+<p>Nie kazdy piksel ma sensowna wartosc — poza obszarem pomiaru
+lub tam gdzie dane sa niedostepne, uzywana jest wartosc <strong>NoData</strong>.
+Typowe wartosci: <code class="docutils literal notranslate"><span class="pre">-9999</span></code>, <code class="docutils literal notranslate"><span class="pre">-32768</span></code>, <code class="docutils literal notranslate"><span class="pre">255</span></code>, <code class="docutils literal notranslate"><span class="pre">nan</span></code>.</p>
+<p>Kluczowe: NoData <strong>nie jest zerem</strong>. Nalezy ja traktowac jak brak danych,
+nie jak wartosc. Wiele bledow analitycznych pochodzi z ignorowania NoData.</p>
+</section>
+<section id="popularne-formaty-rastrowe">
+<h3>1.4 Popularne formaty rastrowe<a class="headerlink" href="#popularne-formaty-rastrowe" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Format</p></th>
+<th class="head"><p>Rozszerzenie</p></th>
+<th class="head"><p>Uwagi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GeoTIFF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.tif</span></code>, <code class="docutils literal notranslate"><span class="pre">.tiff</span></code></p></td>
+<td><p>Standard — geotransformacja wbudowana w plik</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cloud Optimized GeoTIFF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.tif</span></code> (COG)</p></td>
+<td><p>Zoptymalizowany do streamingu z serwera</p></td>
+</tr>
+<tr class="row-even"><td><p>NetCDF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.nc</span></code></p></td>
+<td><p>Dane naukowe, czas jako wymiar</p></td>
+</tr>
+<tr class="row-odd"><td><p>HDF5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.h5</span></code>, <code class="docutils literal notranslate"><span class="pre">.hdf</span></code></p></td>
+<td><p>Duze dane satelitarne</p></td>
+</tr>
+<tr class="row-even"><td><p>ASCII Grid</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.asc</span></code></p></td>
+<td><p>Prosty format tekstowy, przestarzaly</p></td>
+</tr>
+<tr class="row-odd"><td><p>JPEG2000</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.jp2</span></code></p></td>
+<td><p>Kompresja stratna, Sentinel-2</p></td>
+</tr>
+</tbody>
+</table>
+<p>Na tym wykladzie uzywamy <strong>GeoTIFF</strong> — jest jednym z najpopularniejszych formatów.</p>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="wczytywanie-rastra-w-pyqgis-qgsrasterlayer">
+<h2>2. Wczytywanie rastra w PyQGIS — QgsRasterLayer<a class="headerlink" href="#wczytywanie-rastra-w-pyqgis-qgsrasterlayer" title="Permalink to this heading">#</a></h2>
+<section id="klasa-qgsrasterlayer">
+<h3>2.1 Klasa QgsRasterLayer<a class="headerlink" href="#klasa-qgsrasterlayer" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">QgsRasterLayer</span></code> to odpowiednik <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code> dla danych rastrowych.
+Dziedziczy po <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code> i dodaje metody specyficzne dla rastrow.</p>
+</section>
+<section id="wczytanie-pliku">
+<h3>2.2 Wczytanie pliku<a class="headerlink" href="#wczytanie-pliku" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Wczytaj raster z pliku</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsRasterLayer</span><span class="p">,</span> <span class="n">QgsProject</span>
+
+<span class="n">sciezka</span> <span class="o">=</span> <span class="s1">&#39;C:/sample.tif&#39;</span>   <span class="c1"># zmien na swoja sciezke</span>
+
+<span class="n">raster</span> <span class="o">=</span> <span class="n">QgsRasterLayer</span><span class="p">(</span><span class="n">sciezka</span><span class="p">,</span> <span class="s1">&#39;NMT&#39;</span><span class="p">,</span> <span class="s1">&#39;gdal&#39;</span><span class="p">)</span>
+<span class="c1">#                        ^sciezka  ^nazwa  ^dostawca</span>
+
+<span class="k">if</span> <span class="n">raster</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Raster wczytany poprawnie!&#39;</span><span class="p">)</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Blad wczytywania: </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">error</span><span class="p">()</span><span class="o">.</span><span class="n">message</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="raster1.png" />
+</section>
+<section id="podstawowe-metadane">
+<h3>2.3 Podstawowe metadane<a class="headerlink" href="#podstawowe-metadane" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Metadane rastra</span>
+<span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>  <span class="c1"># zaznacz warstwe rastrowa w Panelu warstw</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Nazwa          : </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRS            : </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Liczba pasm    : </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">bandCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Szerokosc (px) : </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wysokosc  (px) : </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Rozdzielczosc</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Rozdzielczosc X: </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">rasterUnitsPerPixelX</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Rozdzielczosc Y: </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">rasterUnitsPerPixelY</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Zasieg</span>
+<span class="n">ext</span> <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">extent</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;xMin: </span><span class="si">{</span><span class="n">ext</span><span class="o">.</span><span class="n">xMinimum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;xMax: </span><span class="si">{</span><span class="n">ext</span><span class="o">.</span><span class="n">xMaximum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;yMin: </span><span class="si">{</span><span class="n">ext</span><span class="o">.</span><span class="n">yMinimum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;yMax: </span><span class="si">{</span><span class="n">ext</span><span class="o">.</span><span class="n">yMaximum</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="raster5.png" />
+<img src="raster3.png" />
+<img src="raster4.png" />
+</section>
+<section id="statystyki-pasma">
+<h3>2.4 Statystyki pasma<a class="headerlink" href="#statystyki-pasma" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Statystyki wartosci pikseli</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsRasterBandStats</span>
+
+<span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">numer_pasma</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># pasma numerowane od 1</span>
+
+<span class="n">stats</span> <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">bandStatistics</span><span class="p">(</span>
+    <span class="n">numer_pasma</span><span class="p">,</span>
+    <span class="n">QgsRasterBandStats</span><span class="o">.</span><span class="n">All</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Minimum  : </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">minimumValue</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Maksimum : </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">maximumValue</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Srednia  : </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">mean</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Odch.std : </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">stdDev</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="raster6.png" />
+<img src="raster2.png" />
+</section>
+<section id="odczyt-wartosci-w-punkcie">
+<h3>2.5 Odczyt wartosci w punkcie<a class="headerlink" href="#odczyt-wartosci-w-punkcie" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Odczytaj wartosc piksela w danym punkcie</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsPointXY</span>
+
+<span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="c1"># Wspolrzedne punktu (musza byc w CRS rastra)</span>
+<span class="n">punkt</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">)</span>   <span class="c1"># Wroclaw</span>
+
+<span class="n">wynik</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">punkt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1 = numer pasma</span>
+
+<span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wartosc w punkcie: </span><span class="si">{</span><span class="n">wynik</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Punkt poza zasiegiem rastra lub wartosc NoData&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="informacje-o-kazdym-pasmie">
+<h3>2.6 Informacje o kazdym pasmie<a class="headerlink" href="#informacje-o-kazdym-pasmie" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Przejdz przez wszystkie pasma</span>
+<span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Raster ma </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">bandCount</span><span class="p">()</span><span class="si">}</span><span class="s1"> pasm:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">raster</span><span class="o">.</span><span class="n">bandCount</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">nazwa</span> <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">generateBandName</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">typ</span>   <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">dataType</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Pasmo </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">nazwa</span><span class="si">}</span><span class="s1"> (typ danych: </span><span class="si">{</span><span class="n">typ</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="raster7.png" />
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="wczytywanie-rastra-w-rasterio">
+<h2>3. Wczytywanie rastra w rasterio<a class="headerlink" href="#wczytywanie-rastra-w-rasterio" title="Permalink to this heading">#</a></h2>
+<section id="czym-jest-rasterio">
+<h3>3.1 Czym jest rasterio<a class="headerlink" href="#czym-jest-rasterio" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">rasterio</span></code> to biblioteka Pythona do odczytu i zapisu danych rastrowych.
+Dziala niezaleznie od QGIS, na bazie biblioteki GDAL.
+Zwraca dane jako tablice NumPy — mozna na nich wykonywac dowolne obliczenia.</p>
+<p><a class="reference external" href="https://rasterio.readthedocs.io/en/latest/index.html">https://rasterio.readthedocs.io/en/latest/index.html</a></p>
+</section>
+<section id="podstawowy-odczyt">
+<h3>3.2 Podstawowy odczyt<a class="headerlink" href="#podstawowy-odczyt" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Otwarcie pliku (jak open() dla zwyklych plikow)</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sample.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+
+    <span class="c1"># Metadane</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>          <span class="c1"># uklad wspolrzednych</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>        <span class="c1"># liczba pasm</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>        <span class="c1"># szerokosc w pikselach</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>       <span class="c1"># wysokosc w pikselach</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>       <span class="c1"># typy danych per pasmo</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">nodata</span><span class="p">)</span>       <span class="c1"># wartosc NoData</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">transform</span><span class="p">)</span>    <span class="c1"># geotransformacja</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>       <span class="c1"># zasieg (left, bottom, right, top)</span>
+
+    <span class="c1"># Odczyt danych jako tablica NumPy</span>
+    <span class="n">pasmo1</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>        <span class="c1"># jedno pasmo, shape: (height, width)</span>
+    <span class="n">wszystkie</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>      <span class="c1"># wszystkie pasma, shape: (count, height, width)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pasmo1</span><span class="p">))</span>             <span class="c1"># numpy.ndarray</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pasmo1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>             <span class="c1"># (height, width)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pasmo1</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>             <span class="c1"># int16, float32, uint8...</span>
+</pre></div>
+</div>
+</section>
+<section id="maska-nodata">
+<h3>3.3 Maska NoData<a class="headerlink" href="#maska-nodata" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;nmt.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">dane</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>              <span class="c1"># surowe dane z NoData</span>
+    <span class="n">maska</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">dataset_mask</span><span class="p">()</span>      <span class="c1"># 0 = NoData, 255 = dane</span>
+
+    <span class="c1"># Zamien NoData na NaN (dla float)</span>
+    <span class="n">dane_float</span> <span class="o">=</span> <span class="n">dane</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">dane_float</span><span class="p">[</span><span class="n">maska</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="c1"># Obliczenia tylko na poprawnych pikselach</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Srednia (z NaN): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">dane_float</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pikselei NoData: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">maska</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="przeliczanie-wspolrzednych">
+<h3>3.4 Przeliczanie wspolrzednych<a class="headerlink" href="#przeliczanie-wspolrzednych" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rasterio.transform</span> <span class="kn">import</span> <span class="n">rowcol</span><span class="p">,</span> <span class="n">xy</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;nmt.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="c1"># Wspolrzedne geograficzne -&gt; numer wiersza i kolumny</span>
+    <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">rowcol</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span> <span class="mf">17.038</span><span class="p">,</span> <span class="mf">51.108</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wroclaw: wiersz=</span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s1">, kolumna=</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Wartosc w tym pikselu</span>
+    <span class="n">dane</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wartosc NMT w Wroclawiu: </span><span class="si">{</span><span class="n">dane</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Numer wiersza/kolumny -&gt; wspolrzedne centrum piksela</span>
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">xy</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Centrum piksela: lon=</span><span class="si">{</span><span class="n">lon</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">, lat=</span><span class="si">{</span><span class="n">lat</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Otwarcie pliku (jak open() dla zwyklych plikow)</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sample.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+
+    <span class="c1"># Metadane</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>          <span class="c1"># uklad wspolrzednych</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>        <span class="c1"># liczba pasm</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>        <span class="c1"># szerokosc w pikselach</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>       <span class="c1"># wysokosc w pikselach</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>       <span class="c1"># typy danych per pasmo</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">nodata</span><span class="p">)</span>       <span class="c1"># wartosc NoData</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">transform</span><span class="p">)</span>    <span class="c1"># geotransformacja</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>       <span class="c1"># zasieg (left, bottom, right, top)</span>
+
+    <span class="c1"># Odczyt danych jako tablica NumPy</span>
+    <span class="n">pasmo1</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>        <span class="c1"># jedno pasmo, shape: (height, width)</span>
+    <span class="n">wszystkie</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>      <span class="c1"># wszystkie pasma, shape: (count, height, width)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pasmo1</span><span class="p">))</span>             <span class="c1"># numpy.ndarray</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pasmo1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>             <span class="c1"># (height, width)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pasmo1</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>             <span class="c1"># int16, float32, uint8...</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PROJCS[&quot;WGS 84 / UTM zone 31N&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;World Geodetic System 1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,3],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]
+3
+1001
+1001
+(&#39;uint16&#39;, &#39;uint16&#39;, &#39;uint16&#39;)
+None
+| 10.00, 0.00, 590520.00|
+| 0.00,-10.00, 5790630.00|
+| 0.00, 0.00, 1.00|
+BoundingBox(left=590520.0, bottom=5780620.0, right=600530.0, top=5790630.0)
+&lt;class &#39;numpy.ndarray&#39;&gt;
+(1001, 1001)
+uint16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sample.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/47ed660d904a8e1737c88e26fb9b8effe3d4393d4d3b58bb0fa08231a115d190.png" src="_images/47ed660d904a8e1737c88e26fb9b8effe3d4393d4d3b58bb0fa08231a115d190.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sample.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">dane</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>              <span class="c1"># surowe dane z NoData</span>
+    <span class="n">maska</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">dataset_mask</span><span class="p">()</span>      <span class="c1"># 0 = NoData, 255 = dane</span>
+
+    <span class="c1"># Zamien NoData na NaN (dla float)</span>
+    <span class="n">dane_float</span> <span class="o">=</span> <span class="n">dane</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">dane_float</span><span class="p">[</span><span class="n">maska</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="c1"># Obliczenia tylko na poprawnych pikselach</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Srednia (z NaN): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">dane_float</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pikselei NoData: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">maska</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Srednia (z NaN): 1009.32
+Pikselei NoData: 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rasterio.transform</span> <span class="kn">import</span> <span class="n">rowcol</span><span class="p">,</span> <span class="n">xy</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sample.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="c1"># Wspolrzedne geograficzne -&gt; numer wiersza i kolumny</span>
+    <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">rowcol</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span> <span class="mi">597561</span><span class="p">,</span> <span class="mi">5785199</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;wiersz=</span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s1">, kolumna=</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Wartosc w tym pikselu</span>
+    <span class="n">dane</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wartosc rastra: </span><span class="si">{</span><span class="n">dane</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Numer wiersza/kolumny -&gt; wspolrzedne centrum piksela</span>
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">xy</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Centrum piksela: lon=</span><span class="si">{</span><span class="n">lon</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">, lat=</span><span class="si">{</span><span class="n">lat</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wiersz=543, kolumna=704
+Wartosc rastra: 1197
+Centrum piksela: lon=597565.0000, lat=5785195.0000
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="operacje-na-pasmach-i-pikselach-numpy">
+<h2>4. Operacje na pasmach i pikselach — NumPy<a class="headerlink" href="#operacje-na-pasmach-i-pikselach-numpy" title="Permalink to this heading">#</a></h2>
+<section id="dlaczego-numpy">
+<h3>4.1 Dlaczego NumPy<a class="headerlink" href="#dlaczego-numpy" title="Permalink to this heading">#</a></h3>
+<p>Raster wczytany przez rasterio to tablica NumPy.
+NumPy pozwala wykonywac operacje na milionach pikseli naraz, co jest znacznie szybsze niz petla po kazdym pikselu (algebra liniowa).</p>
+<p>Przyklad: raster 1000×1000 pikseli ma 1 000 000 komorek.
+Petla Python: kilka sekund. Operacja NumPy: ulamek sekundy.</p>
+</section>
+<section id="podstawowe-operacje-arytmetyczne">
+<h3>4.2 Podstawowe operacje arytmetyczne<a class="headerlink" href="#podstawowe-operacje-arytmetyczne" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># dane to tablica NumPy shape (height, width)</span>
+<span class="c1"># Kazda operacja dziala na kazdym pikselu jednoczesnie</span>
+
+<span class="c1"># Przeliczenie metrow na stopy (jeśli to na przykład NMT)</span>
+<span class="n">dane_stopy</span> <span class="o">=</span> <span class="n">dane</span> <span class="o">*</span> <span class="mf">3.28084</span>
+
+<span class="c1"># Normalizacja do zakresu 0-1</span>
+<span class="n">dane_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">dane</span> <span class="o">-</span> <span class="n">dane</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">dane</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">dane</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+<span class="c1"># Dodanie stalej do kazdego piksela</span>
+<span class="n">dane_przesuniete</span> <span class="o">=</span> <span class="n">dane</span> <span class="o">+</span> <span class="mi">100</span>
+
+<span class="c1"># Pierwiastek kwadratowy z kazdego piksela</span>
+<span class="n">dane_sqrt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">dane</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># maximum by uniknac ujemnych</span>
+</pre></div>
+</div>
+</section>
+<section id="operacje-miedzy-pasmami-przyklad-ndvi">
+<h3>4.3 Operacje miedzy pasmami — przykład NDVI<a class="headerlink" href="#operacje-miedzy-pasmami-przyklad-ndvi" title="Permalink to this heading">#</a></h3>
+<p>NDVI (Normalized Difference Vegetation Index) to klasyczny wskaznik
+zdrowia roslinnosci obliczany z danych wielospektralnych:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NDVI</span> <span class="o">=</span> <span class="p">(</span><span class="n">NIR</span> <span class="o">-</span> <span class="n">RED</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">NIR</span> <span class="o">+</span> <span class="n">RED</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>gdzie NIR = pasmo bliskiej podczerwieni, RED = pasmo czerwone.
+NDVI przyjmuje wartosci od -1 do 1:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Wartosc</p></th>
+<th class="head"><p>Interpretacja</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&gt; 0.6</p></td>
+<td><p>Gesta roslinnosc (las)</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.2 – 0.6</p></td>
+<td><p>Roslinnosc rozrzedzona (trawy, uprawy)</p></td>
+</tr>
+<tr class="row-even"><td><p>0.0 – 0.2</p></td>
+<td><p>Slaba roslinnosc lub gleba</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt; 0.0</p></td>
+<td><p>Woda, snieg, skaly</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sentinel2.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="c1"># Sentinel-2: pasmo 4 = RED, pasmo 8 = NIR</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">nir</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Unikamy dzielenia przez zero</span>
+<span class="n">mianownik</span> <span class="o">=</span> <span class="n">nir</span> <span class="o">+</span> <span class="n">red</span>
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">mianownik</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">nir</span> <span class="o">-</span> <span class="n">red</span><span class="p">)</span> <span class="o">/</span> <span class="n">mianownik</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NDVI min: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NDVI max: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NDVI mean: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="filtrowanie-pikseli-maski-logiczne">
+<h3>4.4 Filtrowanie pikseli — maski logiczne<a class="headerlink" href="#filtrowanie-pikseli-maski-logiczne" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Znajdz piksele wyzsze niz 500 m</span>
+<span class="n">maska_wysokie</span> <span class="o">=</span> <span class="n">dane</span> <span class="o">&gt;</span> <span class="mi">500</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pikseli &gt; 500m: </span><span class="si">{</span><span class="n">maska_wysokie</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Oblicz srednia tylko dla wysokich terenow</span>
+<span class="n">srednia_wysokie</span> <span class="o">=</span> <span class="n">dane</span><span class="p">[</span><span class="n">maska_wysokie</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Srednia wysokosc terenow &gt; 500m: </span><span class="si">{</span><span class="n">srednia_wysokie</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Pokoloruj piksele NoData na zero</span>
+<span class="n">dane_clean</span> <span class="o">=</span> <span class="n">dane</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">dane_clean</span><span class="p">[</span><span class="n">dane</span> <span class="o">==</span> <span class="o">-</span><span class="mi">9999</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Znajdz piksele w zakresie 200-500 m</span>
+<span class="n">niziny</span> <span class="o">=</span> <span class="p">(</span><span class="n">dane</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dane</span> <span class="o">&lt;=</span> <span class="mi">200</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Procent nizin: </span><span class="si">{</span><span class="n">niziny</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sample.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="c1"># tylko przykład, to nie NDVI</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">nir</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Unikamy dzielenia przez zero</span>
+<span class="n">mianownik</span> <span class="o">=</span> <span class="n">nir</span> <span class="o">+</span> <span class="n">red</span>
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">mianownik</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">nir</span> <span class="o">-</span> <span class="n">red</span><span class="p">)</span> <span class="o">/</span> <span class="n">mianownik</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NDVI min: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NDVI max: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NDVI mean: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NDVI min: -0.674
+NDVI max: 0.471
+NDVI mean: -0.217
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\kamil\AppData\Local\Temp\ipykernel_31572\1211238594.py:11: RuntimeWarning: invalid value encountered in divide
+  (nir - red) / mianownik,
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">Input In [5],</span> in <span class="ni">&lt;cell line: 20&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;NDVI mean: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+<span class="ne">---&gt; </span><span class="mi">20</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="ne">NameError</span>: name &#39;pyplot&#39; is not defined
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 864x864 with 0 Axes&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="jak-wykonac-te-same-operacje-w-qgis">
+<h3>Jak wykonac te same operacje w QGIS<a class="headerlink" href="#jak-wykonac-te-same-operacje-w-qgis" title="Permalink to this heading">#</a></h3>
+<section id="kalkulator-rastrowy-interfejs-graficzny">
+<h4>Kalkulator rastrowy — interfejs graficzny<a class="headerlink" href="#kalkulator-rastrowy-interfejs-graficzny" title="Permalink to this heading">#</a></h4>
+<p>Wszystkie operacje arytmetyczne na pasmach mozna wykonac przez:
+<code class="docutils literal notranslate"><span class="pre">Raster</span> <span class="pre">-&gt;</span> <span class="pre">Kalkulator</span> <span class="pre">rastrowy</span></code></p>
+<img src="raster8.png"/>
+Skladnia nazwy pasma w kalkulatorze:
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;nazwa_warstwy@numer_pasma&quot;</span>
+</pre></div>
+</div>
+<p>Nazwy dostepnych warstw i pasm widac w panelu po lewej stronie —
+mozna je klikac zamiast wpisywac recznie.</p>
+<p><strong>NDVI:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s2">&quot;sentinel2@4&quot;</span> <span class="o">-</span> <span class="s2">&quot;sentinel2@3&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="s2">&quot;sentinel2@4&quot;</span> <span class="o">+</span> <span class="s2">&quot;sentinel2@3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Maska logiczna</strong> — piksele w zakresie 200–500 m:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s2">&quot;nmt@1&quot;</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">)</span> <span class="n">AND</span> <span class="p">(</span><span class="s2">&quot;nmt@1&quot;</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Wynik: raster z wartosciami 0 (falsz) i 1 (prawda).</p>
+<p><strong>Przeliczenie metrow na stopy:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;nmt@1&quot;</span> <span class="o">*</span> <span class="mf">3.28084</span>
+</pre></div>
+</div>
+<p><strong>Normalizacja 0–1</strong> (gdy znasz min i max z wlasciwosci warstwy):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s2">&quot;nmt@1&quot;</span> <span class="o">-</span> <span class="mi">80</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">280</span> <span class="o">-</span> <span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="statystyki-pasma-przez-wlasciwosci-warstwy">
+<h4>Statystyki pasma — przez wlasciwosci warstwy<a class="headerlink" href="#statystyki-pasma-przez-wlasciwosci-warstwy" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Kliknij dwukrotnie warstwe rastrowa w Panelu warstw</p></li>
+<li><p>Zakladka <strong>Histogram</strong> -&gt; kliknij <code class="docutils literal notranslate"><span class="pre">Oblicz</span> <span class="pre">histogram</span></code></p></li>
+<li><p>Zakladka <strong>Informacje</strong> -&gt; sekcja <code class="docutils literal notranslate"><span class="pre">Statystyki</span> <span class="pre">pasma</span></code></p></li>
+</ol>
+<p>Lub przez Processing:
+<code class="docutils literal notranslate"><span class="pre">Przetwarzanie</span> <span class="pre">-&gt;</span> <span class="pre">Skrzynka</span> <span class="pre">narzedzi</span> <span class="pre">-&gt;</span> <span class="pre">QGIS</span> <span class="pre">-&gt;</span> <span class="pre">Statystyki</span> <span class="pre">rastra</span></code></p>
+</section>
+<section id="kalkulator-ratrowy-pyqgis">
+<h4>Kalkulator ratrowy - PyQGIS<a class="headerlink" href="#kalkulator-ratrowy-pyqgis" title="Permalink to this heading">#</a></h4>
+<p>W PyQGIS wykonujemy te operacje za pomocą processingu.</p>
+<p><strong>UWAGA</strong>: To pierwszy raz kiedy processing pojawia się na wykładach. Może też być wykorzystywany do przetwarzania innych danych, w tym wektorowych. Tutaj spojrzymy na dane rastrowe.</p>
+<p>Wszelkie funkcje processing uruchamiamy poleceniem</p>
+<p><code class="docutils literal notranslate"><span class="pre">processing.run()</span></code>
+Każdy processing ma swoje konkretne parametry. Przykładowo kalkulator rastra wywołujemy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;qgis:rastercalculator&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">parametry</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Przykładowo</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">nazwa</span>  <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;qgis:rastercalculator&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;EXPRESSION&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;(&quot;</span><span class="si">{</span><span class="n">nazwa</span><span class="si">}</span><span class="s1">@1&quot; - &quot;</span><span class="si">{</span><span class="n">nazwa</span><span class="si">}</span><span class="s1">@3&quot;) / (&quot;</span><span class="si">{</span><span class="n">nazwa</span><span class="si">}</span><span class="s1">@1&quot; + &quot;</span><span class="si">{</span><span class="n">nazwa</span><span class="si">}</span><span class="s1">@3&quot;)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;LAYERS&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="n">raster</span><span class="p">],</span>
+    <span class="s1">&#39;CELLSIZE&#39;</span>  <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;EXTENT&#39;</span>    <span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;CRS&#39;</span>       <span class="p">:</span> <span class="n">raster</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>    <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+
+<span class="n">ndvi_path</span> <span class="o">=</span> <span class="n">ndvi</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">]</span>
+<span class="n">ndvi_layer</span> <span class="o">=</span> <span class="n">QgsRasterLayer</span><span class="p">(</span><span class="n">ndvi_path</span><span class="p">,</span> <span class="s1">&#39;NDVI&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">ndvi_layer</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">ndvi_layer</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NDVI obliczony i dodany do projektu.&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Błąd tworzenia warstwy NDVI.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Inne przykłady:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Maska logiczna: piksele powyzej 500m ---</span>
+<span class="c1"># (zakladamy ze pasmo 1 to NMT w metrach)</span>
+<span class="n">maska</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;qgis:rastercalculator&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;EXPRESSION&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">nazwa</span><span class="si">}</span><span class="s1">@1&quot; &gt; 500&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;LAYERS&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="n">raster</span><span class="p">],</span>
+    <span class="s1">&#39;CELLSIZE&#39;</span>  <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;EXTENT&#39;</span>    <span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;CRS&#39;</span>       <span class="p">:</span> <span class="n">raster</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>    <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+<span class="n">maska_layer</span> <span class="o">=</span> <span class="n">maska</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">]</span>
+<span class="n">maska_layer</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s1">&#39;Maska_powyzej_500m&#39;</span><span class="p">)</span>
+<span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">maska_layer</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Maska logiczna dodana do projektu.&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- Statystyki pasma przez PyQGIS ---</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsRasterBandStats</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Statystyki pasm warstwy: </span><span class="si">{</span><span class="n">raster</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;Pasmo&quot;</span><span class="si">:</span><span class="s1">&lt;8</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="s2">&quot;Min&quot;</span><span class="si">:</span><span class="s1">&gt;10</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="s2">&quot;Max&quot;</span><span class="si">:</span><span class="s1">&gt;10</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="s2">&quot;Srednia&quot;</span><span class="si">:</span><span class="s1">&gt;10</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="s2">&quot;Std&quot;</span><span class="si">:</span><span class="s1">&gt;10</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">52</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">raster</span><span class="o">.</span><span class="n">bandCount</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">bandStatistics</span><span class="p">(</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">QgsRasterBandStats</span><span class="o">.</span><span class="n">All</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">&lt;8</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">minimumValue</span><span class="si">:</span><span class="s1">&gt;10.3f</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">maximumValue</span><span class="si">:</span><span class="s1">&gt;10.3f</span><span class="si">}</span><span class="s1">&#39;</span>
+          <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">mean</span><span class="si">:</span><span class="s1">&gt;10.3f</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">stdDev</span><span class="si">:</span><span class="s1">&gt;10.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- Przeliczenie metrow na stopy (pasmo 1) ---</span>
+<span class="n">stopy</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;qgis:rastercalculator&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;EXPRESSION&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">nazwa</span><span class="si">}</span><span class="s1">@1&quot; * 3.28084&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;LAYERS&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="n">raster</span><span class="p">],</span>
+    <span class="s1">&#39;CELLSIZE&#39;</span>  <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;EXTENT&#39;</span>    <span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;CRS&#39;</span>       <span class="p">:</span> <span class="n">raster</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>    <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+<span class="n">stopy_layer</span> <span class="o">=</span> <span class="n">stopy</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">]</span>
+<span class="n">stopy_layer</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s1">&#39;NMT_stopy&#39;</span><span class="p">)</span>
+<span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">stopy_layer</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pasmo 1 przeliczone na stopy i dodane do projektu.&#39;</span><span class="p">)</span>
+
+<span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+</section>
+<section id="przycinanie-rastra-do-obszaru-clip-by-mask">
+<h2>5. Przycinanie rastra do obszaru — clip by mask<a class="headerlink" href="#przycinanie-rastra-do-obszaru-clip-by-mask" title="Permalink to this heading">#</a></h2>
+<section id="po-co-przycinamy">
+<h3>5.1 Po co przycinamy<a class="headerlink" href="#po-co-przycinamy" title="Permalink to this heading">#</a></h3>
+<p>Dane rastrowe czesto pokrywaja wiekszy obszar niz potrzebujemy.
+Satelitarne sceny pokrywaja setki km². Jezeli interesuje nas
+tylko jeden powiat, przycinamy raster do jego granicy.</p>
+<p>Efekty przycinania:</p>
+<ul class="simple">
+<li><p>mniejszy plik — szybszy odczyt i obliczenia,</p></li>
+<li><p>wyniki analizy ograniczone do obszaru zainteresowania,</p></li>
+<li><p>piksele poza obszarem maskowane jako NoData.</p></li>
+</ul>
+</section>
+<section id="przycinanie-w-pyqgis-przez-processing">
+<h3>5.2 Przycinanie w PyQGIS przez Processing<a class="headerlink" href="#przycinanie-w-pyqgis-przez-processing" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Przytnij raster do granicy warstwy wektorowej</span>
+<span class="kn">import</span> <span class="nn">processing</span>
+
+<span class="n">raster</span>  <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;NMT&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">maska</span>   <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;granica_obszaru&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">wynik</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;gdal:cliprasterbymasklayer&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;INPUT&#39;</span>   <span class="p">:</span> <span class="n">raster</span><span class="p">,</span>
+    <span class="s1">&#39;MASK&#39;</span>    <span class="p">:</span> <span class="n">maska</span><span class="p">,</span>
+    <span class="s1">&#39;NODATA&#39;</span>  <span class="p">:</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span>
+    <span class="s1">&#39;CROP_TO_CUTLINE&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>    <span class="c1"># przytnij do bounding box maski</span>
+    <span class="s1">&#39;KEEP_RESOLUTION&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>    <span class="c1"># zachowaj oryginalna rozdzielczosc</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>  <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+
+<span class="n">raster_przyciety_sciezka</span> <span class="o">=</span> <span class="n">wynik</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">]</span>
+
+</pre></div>
+</div>
+</section>
+<section id="przycinanie-przez-prostokat-bbox">
+<h3>5.3 Przycinanie przez prostokat (bbox)<a class="headerlink" href="#przycinanie-przez-prostokat-bbox" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Szybsze przycinanie — przez prostokat</span>
+<span class="kn">import</span> <span class="nn">processing</span>
+
+<span class="n">raster</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;NMT&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">wynik</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;gdal:cliprasterbyextent&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;INPUT&#39;</span>  <span class="p">:</span> <span class="n">raster</span><span class="p">,</span>
+    <span class="s1">&#39;PROJWIN&#39;</span><span class="p">:</span> <span class="s1">&#39;16.8,17.3,50.9,51.3&#39;</span><span class="p">,</span>  <span class="c1"># xmin,xmax,ymin,ymax</span>
+    <span class="s1">&#39;NODATA&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span>
+    <span class="s1">&#39;OUTPUT&#39;</span> <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="przycinanie-w-rasterio">
+<h3>5.4 Przycinanie w rasterio<a class="headerlink" href="#przycinanie-w-rasterio" title="Permalink to this heading">#</a></h3>
+<section id="pryzciecie-indeksami">
+<h4>Pryzcięcie indeksami<a class="headerlink" href="#pryzciecie-indeksami" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">from</span> <span class="nn">rasterio.windows</span> <span class="kn">import</span> <span class="n">Window</span>
+
+<span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">900</span>
+<span class="n">c0</span><span class="p">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">700</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;sample.tif&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Window</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">c1</span><span class="o">-</span><span class="n">c0</span><span class="p">,</span> <span class="n">r1</span><span class="o">-</span><span class="n">r0</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+
+<span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">rgb</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">p2</span><span class="p">,</span> <span class="n">p98</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">98</span><span class="p">))</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p98</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">p98</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1fad9bc2b9b10570d0a1f5c4d15872b9f8ed845ef829991ba45a26727702668a.png" src="_images/1fad9bc2b9b10570d0a1f5c4d15872b9f8ed845ef829991ba45a26727702668a.png" />
+</div>
+</div>
+</section>
+<section id="przyciecie-shapefile-m">
+<h4>Przycięcie shapefile’m<a class="headerlink" href="#przyciecie-shapefile-m" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">import</span> <span class="nn">rasterio.mask</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;wektor_przycięcia.shp&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;sample.tif&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+
+    <span class="n">out_image</span><span class="p">,</span> <span class="n">out_transform</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span>
+        <span class="n">src</span><span class="p">,</span>
+        <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span>
+        <span class="n">crop</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">out_meta</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">out_meta</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">out_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">out_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s2">&quot;transform&quot;</span><span class="p">:</span> <span class="n">out_transform</span>
+    <span class="p">})</span>
+
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;sample_clip.tif&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">out_meta</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest</span><span class="p">:</span>
+        <span class="n">dest</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out_image</span><span class="p">)</span>
+        
+<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">out_image</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># normalizacja do 0–1, żeby dobrze się wyświetlało</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">p2</span><span class="p">,</span> <span class="n">p98</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">98</span><span class="p">))</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p98</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">p98</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\kamil\AppData\Roaming\Python\Python39\site-packages\geopandas\array.py:334: UserWarning: Cannot set the CRS, falling back to None. The CRS support requires the &#39;pyproj&#39; package, but it is not installed or does not import correctly. The functions depending on CRS will raise an error or may produce unexpected results.
+  self.crs = crs
+C:\Users\kamil\AppData\Roaming\Python\Python39\site-packages\geopandas\geodataframe.py:409: UserWarning: Cannot set the CRS, falling back to None. The CRS support requires the &#39;pyproj&#39; package, but it is not installed or does not import correctly. The functions depending on CRS will raise an error or may produce unexpected results.
+  level.crs = crs
+</pre></div>
+</div>
+<img alt="_images/425dd04e1f64ef9006abbf44a213ab981cd5eae20a5953f64ace7b40c6516554.png" src="_images/425dd04e1f64ef9006abbf44a213ab981cd5eae20a5953f64ace7b40c6516554.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+</section>
+<section id="reklasyfikacja">
+<h2>6. Reklasyfikacja<a class="headerlink" href="#reklasyfikacja" title="Permalink to this heading">#</a></h2>
+<section id="czym-jest-reklasyfikacja">
+<h3>6.1 Czym jest reklasyfikacja<a class="headerlink" href="#czym-jest-reklasyfikacja" title="Permalink to this heading">#</a></h3>
+<p>Reklasyfikacja (ang. <em>reclassify</em>) zamienia wartosci ciagłe
+na kategorie dyskretne. Przyklad:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Wartosc NMT    -&gt;  Klasa
+0   – 200 m        1  (niziny)
+200 – 500 m        2  (wyzyny)
+500 – 1500 m       3  (gory niskie)
+&gt; 1500 m           4  (gory wysokie)
+</pre></div>
+</div>
+</section>
+<section id="reklasyfikacja-w-pyqgis-przez-processing">
+<h3>6.2 Reklasyfikacja w PyQGIS przez Processing<a class="headerlink" href="#reklasyfikacja-w-pyqgis-przez-processing" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Reklasyfikuj NMT na klasy wysokosciowe</span>
+<span class="kn">import</span> <span class="nn">processing</span>
+
+<span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="c1"># Tabela reklasyfikacji: [[min, max, nowa_wartosc], ...]</span>
+<span class="n">tabela</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span>    <span class="mi">200</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>   <span class="c1"># niziny</span>
+    <span class="p">[</span><span class="mi">200</span><span class="p">,</span>  <span class="mi">500</span><span class="p">,</span>  <span class="mi">2</span><span class="p">],</span>   <span class="c1"># wyzyny</span>
+    <span class="p">[</span><span class="mi">500</span><span class="p">,</span>  <span class="mi">1300</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>   <span class="c1"># gory niskie</span>
+    <span class="p">[</span><span class="mi">1300</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>   <span class="c1"># gory wysokie</span>
+<span class="p">]</span>
+
+<span class="n">wynik</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;native:reclassifybytable&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;INPUT_RASTER&#39;</span>    <span class="p">:</span> <span class="n">raster</span><span class="p">,</span>
+    <span class="s1">&#39;RASTER_BAND&#39;</span>     <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;TABLE&#39;</span>           <span class="p">:</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tabela</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">row</span><span class="p">],</span>
+    <span class="s1">&#39;NO_DATA&#39;</span>         <span class="p">:</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span>
+    <span class="s1">&#39;RANGE_BOUNDARIES&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>      <span class="c1"># 0 = min &lt;= x &lt; max</span>
+    <span class="s1">&#39;NODATA_FOR_MISSING&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>          <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+
+<span class="n">reklasy</span> <span class="o">=</span> <span class="n">wynik</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">]</span>
+<span class="n">reklasy_layer</span> <span class="o">=</span> <span class="n">QgsRasterLayer</span><span class="p">(</span><span class="n">reklasy</span><span class="p">,</span> <span class="s1">&#39;reclassfied&#39;</span><span class="p">)</span>
+<span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">reklasy_layer</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reklasyfikacja zakonczona.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="reklasyfikacja-przez-numpy-rasterio">
+<h3>6.3 Reklasyfikacja przez NumPy (rasterio)<a class="headerlink" href="#reklasyfikacja-przez-numpy-rasterio" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># dane = tablica NumPy z wartosciami NMT</span>
+<span class="n">wynik</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">dane</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>  <span class="c1"># wypelnij NoData</span>
+
+<span class="c1"># Przypisz klasy przez maski logiczne</span>
+<span class="n">wynik</span><span class="p">[(</span><span class="n">dane</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>    <span class="o">&amp;</span> <span class="p">(</span><span class="n">dane</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">)]</span>  <span class="o">=</span> <span class="mi">1</span>
+<span class="n">wynik</span><span class="p">[(</span><span class="n">dane</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="p">(</span><span class="n">dane</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">)]</span>  <span class="o">=</span> <span class="mi">2</span>
+<span class="n">wynik</span><span class="p">[(</span><span class="n">dane</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="p">(</span><span class="n">dane</span> <span class="o">&lt;</span> <span class="mi">1500</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">wynik</span><span class="p">[</span><span class="n">dane</span> <span class="o">&gt;=</span> <span class="mi">1500</span><span class="p">]</span>                   <span class="o">=</span> <span class="mi">4</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Klasa 1 (niziny)    : </span><span class="si">{</span><span class="p">(</span><span class="n">wynik</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> px&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Klasa 2 (wyzyny)    : </span><span class="si">{</span><span class="p">(</span><span class="n">wynik</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> px&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Klasa 3 (gory niskie): </span><span class="si">{</span><span class="p">(</span><span class="n">wynik</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> px&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Klasa 4 (gory wys.) : </span><span class="si">{</span><span class="p">(</span><span class="n">wynik</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> px&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="kalkulator-rastrowy-w-pyqgis">
+<h3>6.4 Kalkulator rastrowy w PyQGIS<a class="headerlink" href="#kalkulator-rastrowy-w-pyqgis" title="Permalink to this heading">#</a></h3>
+<p>Kalkulator rastrowy pozwala pisac wyrazenia matematyczne
+operujace na pasmach rastra.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Oblicz nachylenie terenu przez Processing</span>
+<span class="kn">import</span> <span class="nn">processing</span>
+
+<span class="n">nmt</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayersByName</span><span class="p">(</span><span class="s1">&#39;NMT&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Nachylenie terenu</span>
+<span class="n">nachylenie</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;gdal:slope&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;INPUT&#39;</span>          <span class="p">:</span> <span class="n">nmt</span><span class="p">,</span>
+    <span class="s1">&#39;BAND&#39;</span>           <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;SCALE&#39;</span>          <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;AS_PERCENT&#39;</span>     <span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># w stopniach</span>
+    <span class="s1">&#39;COMPUTE_EDGES&#39;</span>  <span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>         <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+
+<span class="c1"># Ekspozycja terenu (aspect)</span>
+<span class="n">ekspozycja</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;gdal:aspect&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;INPUT&#39;</span>   <span class="p">:</span> <span class="n">nmt</span><span class="p">,</span>
+    <span class="s1">&#39;BAND&#39;</span>    <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>  <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+
+<span class="c1"># Cieniowanie rzezby (hillshade)</span>
+<span class="n">hillshade</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;gdal:hillshade&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;INPUT&#39;</span>       <span class="p">:</span> <span class="n">nmt</span><span class="p">,</span>
+    <span class="s1">&#39;BAND&#39;</span>        <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;Z_FACTOR&#39;</span>    <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>      <span class="c1"># wyolbrzmienie pionowe</span>
+    <span class="s1">&#39;SCALE&#39;</span>       <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;AZIMUTH&#39;</span>     <span class="p">:</span> <span class="mi">315</span><span class="p">,</span>    <span class="c1"># kierunek swiatla</span>
+    <span class="s1">&#39;ALTITUDE&#39;</span>    <span class="p">:</span> <span class="mi">45</span><span class="p">,</span>     <span class="c1"># kat swiatla</span>
+    <span class="s1">&#39;OUTPUT&#39;</span>      <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+<span class="p">})</span>
+
+<span class="k">for</span> <span class="n">wynik</span><span class="p">,</span> <span class="n">nazwa</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">nachylenie</span><span class="p">,</span> <span class="s1">&#39;Nachylenie&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">ekspozycja</span><span class="p">,</span> <span class="s1">&#39;Ekspozycja&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">hillshade</span><span class="p">,</span>  <span class="s1">&#39;Cieniowanie&#39;</span><span class="p">)</span>
+<span class="p">]:</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">wynik</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">]</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="n">nazwa</span><span class="p">)</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wszystkie pochodne NMT dodane do projektu.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nmt</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;SRTM.tif&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">nmt</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;terrain&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Elevation [m]&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;NMT / DEM&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a0952fce4240a5f801d3bb789188e30b0f9214a2402c72a6b9382cda68cb2e2b.png" src="_images/a0952fce4240a5f801d3bb789188e30b0f9214a2402c72a6b9382cda68cb2e2b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">mcolors</span>
+
+<span class="n">nmt</span> <span class="o">=</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reklasyfikacja</span>
+<span class="n">klasy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">nmt</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<span class="n">klasy</span><span class="p">[(</span><span class="n">nmt</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>   <span class="o">&amp;</span> <span class="p">(</span><span class="n">nmt</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">)]</span>  <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># niziny</span>
+<span class="n">klasy</span><span class="p">[(</span><span class="n">nmt</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">nmt</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">)]</span>  <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># wyzyny</span>
+<span class="n">klasy</span><span class="p">[(</span><span class="n">nmt</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">nmt</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># gory niskie</span>
+<span class="n">klasy</span><span class="p">[</span><span class="n">nmt</span> <span class="o">&gt;=</span> <span class="mi">1000</span><span class="p">]</span>                 <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># gory wysokie</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wizualizacja</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">im0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nmt</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;terrain&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;m n.p.m.&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;NMT — wartosci ciagłe&#39;</span><span class="p">)</span>
+
+<span class="n">cmap_klasy</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">([</span><span class="s1">&#39;#4FC3F7&#39;</span><span class="p">,</span><span class="s1">&#39;#81C784&#39;</span><span class="p">,</span><span class="s1">&#39;#A5D6A7&#39;</span><span class="p">,</span><span class="s1">&#39;#D7CCC8&#39;</span><span class="p">])</span>
+<span class="n">im1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">klasy</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_klasy</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">4.5</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;Niziny&#39;</span><span class="p">,</span> <span class="s1">&#39;Wyzyny&#39;</span><span class="p">,</span> <span class="s1">&#39;Gory niskie&#39;</span><span class="p">,</span> <span class="s1">&#39;Gory wysokie&#39;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Reklasyfikacja — 4 klasy&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Reklasyfikacja — 4 klasy&#39;)
+</pre></div>
+</div>
+<img alt="_images/c972d56c70b06910b941f108f4cbc5c560d198575fd6ccb71aac7f52e772c99f.png" src="_images/c972d56c70b06910b941f108f4cbc5c560d198575fd6ccb71aac7f52e772c99f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Nachylenie (gradient)</span>
+<span class="n">gy</span><span class="p">,</span> <span class="n">gx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">nmt</span><span class="p">)</span>
+<span class="n">nachylenie</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">gy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Wizualizacja</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">im0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nmt</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;terrain&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;m n.p.m.&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;NMT — wartosci ciagłe&#39;</span><span class="p">)</span>
+
+<span class="n">im2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nachylenie</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gradient&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Nachylenie terenu (gradient NMT)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Nachylenie terenu (gradient NMT)&#39;)
+</pre></div>
+</div>
+<img alt="_images/ad299a4d4771467f0ff5a69dc754163dba6626d01ec5ea84d5a9d7d05f807c8d.png" src="_images/ad299a4d4771467f0ff5a69dc754163dba6626d01ec5ea84d5a9d7d05f807c8d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Hillshade</span>
+<span class="n">az_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">315</span><span class="p">)</span>
+<span class="n">alt_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">hillshade</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alt_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">nachylenie</span><span class="p">))</span>
+             <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">alt_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">nachylenie</span><span class="p">))</span>
+             <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">az_rad</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="o">-</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">)))</span>
+<span class="n">hillshade</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">hillshade</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">im0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nmt</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;terrain&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;m n.p.m.&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;NMT — wartosci ciagłe&#39;</span><span class="p">)</span>
+
+<span class="n">im3</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hillshade</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Cieniowanie rzezby (hillshade)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Cieniowanie rzezby (hillshade)&#39;)
+</pre></div>
+</div>
+<img alt="_images/110bc3f4b39532be1680f385da16eec3849c48a70f55ce37edd632b4ff82d215.png" src="_images/110bc3f4b39532be1680f385da16eec3849c48a70f55ce37edd632b4ff82d215.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s8'></a></p>
+</section>
+</section>
+<section id="eksport-i-wizualizacja-wynikow">
+<h2>8. Eksport i wizualizacja wynikow<a class="headerlink" href="#eksport-i-wizualizacja-wynikow" title="Permalink to this heading">#</a></h2>
+<section id="zapis-rastra-w-rasterio">
+<h3>8.1 Zapis rastra w rasterio<a class="headerlink" href="#zapis-rastra-w-rasterio" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;SRTM.tif&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">profile</span>
+
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;SRTM_copy.tif&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">profile</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+        <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Raster zapisany.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="eksport-przez-pyqgis">
+<h3>8.2 Eksport przez PyQGIS<a class="headerlink" href="#eksport-przez-pyqgis" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] Zapisz raster tymczasowy do pliku</span>
+<span class="kn">import</span> <span class="nn">processing</span>
+
+<span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;gdal:translate&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;INPUT&#39;</span><span class="p">:</span> <span class="n">raster</span><span class="p">,</span>
+    <span class="s1">&#39;TARGET_CRS&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;NODATA&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;COPY_SUBDATASETS&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;EXTRA&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DATA_TYPE&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;OUTPUT&#39;</span><span class="p">:</span> <span class="s1">&#39;C:/temp/output.tif&#39;</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Raster zapisany.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>LUB</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsRasterFileWriter</span>
+
+<span class="n">raster</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">raster</span><span class="o">.</span><span class="n">pipe</span><span class="p">()</span>
+
+<span class="n">writer</span> <span class="o">=</span> <span class="n">QgsRasterFileWriter</span><span class="p">(</span><span class="s2">&quot;C:/temp/output.tif&quot;</span><span class="p">)</span>
+
+<span class="n">writer</span><span class="o">.</span><span class="n">writeRaster</span><span class="p">(</span>
+    <span class="n">pipe</span><span class="p">,</span>
+    <span class="n">raster</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
+    <span class="n">raster</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
+    <span class="n">raster</span><span class="o">.</span><span class="n">extent</span><span class="p">(),</span>
+    <span class="n">raster</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Raster zapisany.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s9'></a></p>
+</section>
+</section>
+<section id="pyqgis-vs-rasterio-kiedy-co-uzywac">
+<h2>9. PyQGIS vs rasterio — kiedy co uzywac<a class="headerlink" href="#pyqgis-vs-rasterio-kiedy-co-uzywac" title="Permalink to this heading">#</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Zadanie</p></th>
+<th class="head"><p>PyQGIS</p></th>
+<th class="head"><p>rasterio</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Wczytanie rastra do projektu QGIS</p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">QgsRasterLayer</span></code></p></td>
+<td><p>Nie</p></td>
+</tr>
+<tr class="row-odd"><td><p>Odczyt wartosci w punkcie</p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">dataProvider().sample()</span></code></p></td>
+<td><p>Tak — przez transformacje</p></td>
+</tr>
+<tr class="row-even"><td><p>Statystyki pasma</p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">bandStatistics()</span></code></p></td>
+<td><p>Tak — przez NumPy</p></td>
+</tr>
+<tr class="row-odd"><td><p>Clip by mask</p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">gdal:cliprasterbymasklayer</span></code></p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">rasterio.mask</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Reklasyfikacja</p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">native:reclassifybytable</span></code></p></td>
+<td><p>Tak — maski NumPy</p></td>
+</tr>
+<tr class="row-odd"><td><p>Zonal statistics</p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">native:zonalstatisticsfb</span></code></p></td>
+<td><p>Tak — petla + mask</p></td>
+</tr>
+<tr class="row-even"><td><p>Obliczenia arytmetyczne (NDVI)</p></td>
+<td><p>Tak — kalkulator rastrowy</p></td>
+<td><p>Tak — NumPy (szybciej)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hillshade, slope, aspect</p></td>
+<td><p>Tak — <code class="docutils literal notranslate"><span class="pre">gdal:hillshade</span></code> itd.</p></td>
+<td><p>Mozliwe — NumPy (trudniej)</p></td>
+</tr>
+<tr class="row-even"><td><p>Praca bez QGIS (serwer, Jupyter)</p></td>
+<td><p>Nie</p></td>
+<td><p>Tak</p></td>
+</tr>
+<tr class="row-odd"><td><p>Integracja z data science</p></td>
+<td><p>Slaba</p></td>
+<td><p>Doskonala (pandas, sklearn)</p></td>
+</tr>
+<tr class="row-even"><td><p>Wizualizacja</p></td>
+<td><p>QGIS Canvas</p></td>
+<td><p>Matplotlib (wiecej kontroli)</p></td>
+</tr>
+</tbody>
+</table>
+<section id="zasada">
+<h3>Zasada<a class="headerlink" href="#zasada" title="Permalink to this heading">#</a></h3>
+<p>Jezeli pracujesz wewnatrz projektu QGIS i potrzebujesz
+algorytmow Processing Toolbox — uzyj <strong>PyQGIS</strong>.</p>
+<p>Jezeli robisz skomplikowane obliczenia numeryczne,
+pracujesz w Jupyter lub na serwerze — uzyj <strong>rasterio + NumPy</strong>.</p>
+<p>W praktyce czesto laczymy oba: PyQGIS do wczytania i clipowania,
+rasterio do obliczen, PyQGIS ponownie do zapisu i wizualizacji.</p>
+<hr class="docutils" />
+<p><a id='s10'></a></p>
+</section>
+</section>
+<section id="podsumowanie-i-slownik-pojec">
+<h2>10. Podsumowanie i slownik pojec<a class="headerlink" href="#podsumowanie-i-slownik-pojec" title="Permalink to this heading">#</a></h2>
+<section id="co-omowilismy">
+<h3>Co omowilismy<a class="headerlink" href="#co-omowilismy" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>model danych rastrowych: piksel, pasmo, rozdzielczosc, NoData, geotransformacja,</p></li>
+<li><p>wczytywanie rastra przez <code class="docutils literal notranslate"><span class="pre">QgsRasterLayer</span></code> i <code class="docutils literal notranslate"><span class="pre">rasterio.open()</span></code>,</p></li>
+<li><p>odczyt metadanych: CRS, liczba pasm, rozdzielczosc, zasieg, statystyki,</p></li>
+<li><p>odczyt wartosci w punkcie przez <code class="docutils literal notranslate"><span class="pre">dataProvider().sample()</span></code> i <code class="docutils literal notranslate"><span class="pre">rowcol()</span></code>,</p></li>
+<li><p>operacje NumPy na pikselach: arytmetyka, maski logiczne, NDVI,</p></li>
+<li><p>przycinanie do obszaru: <code class="docutils literal notranslate"><span class="pre">gdal:cliprasterbymasklayer</span></code> i <code class="docutils literal notranslate"><span class="pre">rasterio.mask</span></code>,</p></li>
+<li><p>reklasyfikacja: <code class="docutils literal notranslate"><span class="pre">native:reclassifybytable</span></code> i maski NumPy,</p></li>
+<li><p>pochodne NMT: nachylenie, ekspozycja, hillshade przez Processing,</p></li>
+<li><p>zapis rastra i wizualizacja w Matplotlib.</p></li>
+</ul>
+</section>
+<section id="slownik-pojec">
+<h3>Slownik pojec<a class="headerlink" href="#slownik-pojec" title="Permalink to this heading">#</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pojecie</p></th>
+<th class="head"><p>Definicja</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Piksel</strong></p></td>
+<td><p>Podstawowa komorka rastra przechowujaca wartosc numeryczna</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Pasmo (band)</strong></p></td>
+<td><p>Jedna warstwa wartosci w rastrze wielospektralnym</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Rozdzielczosc przestrzenna</strong></p></td>
+<td><p>Rozmiar piksela na ziemi (np. 10 m × 10 m)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Geotransformacja</strong></p></td>
+<td><p>Szesc liczb laczacych numery wierszy/kolumn ze wspolrzednymi</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>NoData</strong></p></td>
+<td><p>Specjalna wartosc oznaczajaca brak danych (nie jest zerem!)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GeoTIFF</strong></p></td>
+<td><p>Format rastrowy przechowujacy geotransformacje i CRS wewnatrz pliku</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>QgsRasterLayer</strong></p></td>
+<td><p>Klasa PyQGIS reprezentujaca warstwe rastrowa</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>rasterio</strong></p></td>
+<td><p>Biblioteka Pythona do odczytu i zapisu rastrow, zwraca NumPy</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>NumPy ndarray</strong></p></td>
+<td><p>Wielowymiarowa tablica liczb — format danych rastrowych w Python</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>NDVI</strong></p></td>
+<td><p>Normalized Difference Vegetation Index — wskaznik zdrowia roslinnosci</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Clip by mask</strong></p></td>
+<td><p>Przycinanie rastra do ksztaltu warstwy wektorowej</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Reklasyfikacja</strong></p></td>
+<td><p>Zamiana wartosci ciaglych na kategorie dyskretne</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Hillshade</strong></p></td>
+<td><p>Cieniowanie rzezby terenu — wizualizacja NMT</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>NMT</strong></p></td>
+<td><p>Numeryczny Model Terenu — raster wysokosci powierzchni gruntu</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>bandStatistics()</strong></p></td>
+<td><p>Metoda PyQGIS obliczajaca min, max, srednia, odch.std dla pasma</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><em>Wyklad alternatywny: Analiza rastrowa — Programowanie w GIS (QGIS) — studia inżynierskie.</em></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-kurs-dla-studentow-i-stopnia">Programowanie w GIS — Kurs dla studentow I stopnia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-rozni-sie-raster-od-wektora-przypomnienie">Czym rozni sie raster od wektora — przypomnienie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kiedy-uzywac-danych-rastrowych">Kiedy uzywac danych rastrowych</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-korzystac-z-tego-notatnika">Jak korzystac z tego notatnika</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-danych-rastrowych">1. Model danych rastrowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-pojecia">1.1 Podstawowe pojecia</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wspolrzedne-rastra-geotransformacja">1.2 Wspolrzedne rastra — geotransformacja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wartosc-nodata">1.3 Wartosc NoData</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popularne-formaty-rastrowe">1.4 Popularne formaty rastrowe</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-rastra-w-pyqgis-qgsrasterlayer">2. Wczytywanie rastra w PyQGIS — QgsRasterLayer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasa-qgsrasterlayer">2.1 Klasa QgsRasterLayer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytanie-pliku">2.2 Wczytanie pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-metadane">2.3 Podstawowe metadane</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statystyki-pasma">2.4 Statystyki pasma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odczyt-wartosci-w-punkcie">2.5 Odczyt wartosci w punkcie</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacje-o-kazdym-pasmie">2.6 Informacje o kazdym pasmie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wczytywanie-rastra-w-rasterio">3. Wczytywanie rastra w rasterio</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-rasterio">3.1 Czym jest rasterio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowy-odczyt">3.2 Podstawowy odczyt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maska-nodata">3.3 Maska NoData</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeliczanie-wspolrzednych">3.4 Przeliczanie wspolrzednych</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-na-pasmach-i-pikselach-numpy">4. Operacje na pasmach i pikselach — NumPy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-numpy">4.1 Dlaczego NumPy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#podstawowe-operacje-arytmetyczne">4.2 Podstawowe operacje arytmetyczne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operacje-miedzy-pasmami-przyklad-ndvi">4.3 Operacje miedzy pasmami — przykład NDVI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtrowanie-pikseli-maski-logiczne">4.4 Filtrowanie pikseli — maski logiczne</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-wykonac-te-same-operacje-w-qgis">Jak wykonac te same operacje w QGIS</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulator-rastrowy-interfejs-graficzny">Kalkulator rastrowy — interfejs graficzny</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statystyki-pasma-przez-wlasciwosci-warstwy">Statystyki pasma — przez wlasciwosci warstwy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulator-ratrowy-pyqgis">Kalkulator ratrowy - PyQGIS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-rastra-do-obszaru-clip-by-mask">5. Przycinanie rastra do obszaru — clip by mask</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#po-co-przycinamy">5.1 Po co przycinamy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-w-pyqgis-przez-processing">5.2 Przycinanie w PyQGIS przez Processing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-przez-prostokat-bbox">5.3 Przycinanie przez prostokat (bbox)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przycinanie-w-rasterio">5.4 Przycinanie w rasterio</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pryzciecie-indeksami">Pryzcięcie indeksami</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#przyciecie-shapefile-m">Przycięcie shapefile’m</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reklasyfikacja">6. Reklasyfikacja</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#czym-jest-reklasyfikacja">6.1 Czym jest reklasyfikacja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reklasyfikacja-w-pyqgis-przez-processing">6.2 Reklasyfikacja w PyQGIS przez Processing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reklasyfikacja-przez-numpy-rasterio">6.3 Reklasyfikacja przez NumPy (rasterio)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulator-rastrowy-w-pyqgis">6.4 Kalkulator rastrowy w PyQGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksport-i-wizualizacja-wynikow">8. Eksport i wizualizacja wynikow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-rastra-w-rasterio">8.1 Zapis rastra w rasterio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksport-przez-pyqgis">8.2 Eksport przez PyQGIS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyqgis-vs-rasterio-kiedy-co-uzywac">9. PyQGIS vs rasterio — kiedy co uzywac</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zasada">Zasada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-i-slownik-pojec">10. Podsumowanie i slownik pojec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#co-omowilismy">Co omowilismy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slownik-pojec">Slownik pojec</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
