@@ -1,0 +1,796 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Materiały dodatkowe (część 2) &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '16. Wtyczki - materiały dodatkowe 2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Materiały dodatkowe (część 2)" href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.%20Wyklad_6_Budowa_wtyczki.html">Wyklad 6: Architektura wtyczek QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.%20Wyklad_7_Analiza_Rastrowa.html">Wyklad 7: Analiza danych rastrowych w QGIS i Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html">C5: Operacje geometryczne i relacje przestrzenne</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.%20Cwiczenia%206_Pierwsza_Wtyczka_Szkielet_GUI.html">C6: Pierwsza wtyczka QGIS — szkielet i interfejs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.%20Cwiczenia%207%20Logika_Wtyczki_Projekt_Koncowy.html">C7: Logika wtyczki, Processing i projekt koncowy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html">Materiały dodatkowe (część 2)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Materiały dodatkowe (część 2)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F16. Wtyczki - materiały dodatkowe 2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/16. Wtyczki - materiały dodatkowe 2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Materiały dodatkowe (część 2)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#umiejscowienie-wtyczki-w-glownym-oknie">Umiejscowienie wtyczki w głównym oknie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rozwijanie-interfejsu-wtyczki">Rozwijanie interfejsu wtyczki</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-widzetow">Programowanie widżetów</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uruchamanie-funkcji-za-pomoca-przycisksow">Uruchamanie funkcji za pomocą przycisksów</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#druga-zakladka-wtyczki">Druga zakładka wtyczki</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="materialy-dodatkowe-czesc-2">
+<h1>Materiały dodatkowe (część 2)<a class="headerlink" href="#materialy-dodatkowe-czesc-2" title="Permalink to this heading">#</a></h1>
+<p>Jedna uwaga. Na górze wtyczki warto zaimportować wszystkie funkcjonalności QGISa, w razie gdyby coś wam nie działało upewnijcie się że na górze dodany został import:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;qgis&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="umiejscowienie-wtyczki-w-glownym-oknie">
+<h2>Umiejscowienie wtyczki w głównym oknie<a class="headerlink" href="#umiejscowienie-wtyczki-w-glownym-oknie" title="Permalink to this heading">#</a></h2>
+<p>Obecnie nasz plugin jest już dostępny i jest otwieralny w środowisku QGIS. Dostępny jest jako ikonka na głównym pasku.</p>
+<p>Możemy zmienić umiejscowienie wtyczki w QGIS i umieścić ją w rozwijalnym menu. Jest to zwłaszcza przydatne gdy chcemy dodać więcej niż jedno uruchamialne okno w ramach naszej wtyczki.</p>
+<p>Do tego musimy (poza ikoną QAction) zdefiniować nowe menu QMenu:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="n">QMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">())</span> <span class="c1">#tworzymy nowy obiekt QMenu przypisany do głownego okna</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;Menu Wtyczki&quot;</span><span class="p">)</span> <span class="c1">#nadajemy nazwę menu</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Teraz do menu możemy dodać naszą “Akcję” czyli ikonkę. W ten sam sposob możemy dodawać naszą aplikacją do już istniejących pasków rozwijalnych menu.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>W tym momencie nasz pasek menu jeszcze nie został dodany do interfejsu QGIS, by to zrobić musimy wykonać dwa kroki:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">menuBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">()</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span> <span class="c1">#pobrać referencję do głównego paska menu</span>
+<span class="n">menuBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">menuAction</span><span class="p">())</span>
+<span class="c1">#i metodą addAction dodać nasze nowe menu do menuBar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pamiętamy o zmianie funkcji unload() by usuawała menu przy a nie ikonkę!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Teraz nasza wtyczka dostępna jest w nowym menu:</p>
+<img src='wyk7_img/1.png' /></section>
+<section id="rozwijanie-interfejsu-wtyczki">
+<h2>Rozwijanie interfejsu wtyczki<a class="headerlink" href="#rozwijanie-interfejsu-wtyczki" title="Permalink to this heading">#</a></h2>
+<p>Rozwińmy naszą wtyczkę. Dodajmy kilka nowych elementów:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>TabWidget - zakładki.
+
+W zakładce 1:
+Dwa przyciski PushButton
+I pole tekstowe LineEdit
+
+W zakładce 2:
+Jeden SpinBox
+Jeden CheckBox
+</pre></div>
+</div>
+<p>Nazwy pozostawiam domyślne, zmieniłem jednak tekst wyświetlany na elementach.</p>
+<img src='wyk7_img/2.png' /><img src='wyk7_img/3.PNG' /><p>Oczywiście elementy można modyfikować - zmieniać nazwy, tekst, parametry, wszystko zależnie od klasy obiektu. Przyciski mogą być wyłączane i uruchamiane  w zależności od wciśnięcia jakiegoś innego przycisku lub załadowania określonego pliku. SpinBox może mieć ustaloną domyślną wartość, być zwiększany za każdym kliknięciem o więcej niż 1 i tak dalej. Omówienie wszystkich funkcjonalności widżetów Qt jest zbędne, gdyż ich liczba jest naprawdę duża a w zależności od używanego widżetu w Qt Designer łatwo jest poznać i edytować parametry każdego elementu.</p>
+<p>Istotne jest zaznaczenie, że parametry elementów które możemy zmieniać w Qt Designer, możemy też zmieniać w Pythonie używając tych samych nazw. Na przykład QWidget posiada parametr enabled (czyli czy widżet jest “klikalny”). W programowaniu wtyczki możemy odwołać się do tego przycisku i użyć na nim metody setEnabled by zmienić jego parametr w czasie działania wtyczki. Jeśli nie jest to jasne, to bez obwaw, później zobaczymy to na przykładzie.</p>
+<p>Zapisujemy okno i pamiętamy o przełożeniu na interfejs Pythona (tak jak na ćwiczeniach)</p>
+<p>Po przeładowaniu wtyczki zmiany są widoczne:</p>
+<img src='wyk7_img/4.PNG' /><p>Przyciski nie wykonują jednak żadnej akcji bo takowej nie zaprogramowaliśmy!</p>
+</section>
+<section id="programowanie-widzetow">
+<h2>Programowanie widżetów<a class="headerlink" href="#programowanie-widzetow" title="Permalink to this heading">#</a></h2>
+<p>Zacznijmy od oprogramowania naszego przycisku “Otwórz”, jak się domyślamy, ma on pozwalać na otwarcie/wczytanie warstwy do QGIS.</p>
+<p>Nasz przycisk ma domyślną nazwę pushButton co widać w pliku <a class="reference external" href="http://form.py">form.py</a></p>
+<img src='wyk7_img/5.PNG' /><p>Działanie przycisków będziemy oprogramowywać w funkcji run().</p>
+<p>Nasz intefrejs został już zapisany pod zmienną klasy self.form. Każdy widżet jest powiązany (dziedziczy) z intefejsem, więc będziemy używać odwołania self.form aby połączyć się z każym widżetem naszego interfejsu.</p>
+<p>A zatem odwołanie do naszego przycisku to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">pushButton</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Wykorzystując to odwołanie możemy wykonywać na nim opracje. Przykładowo zmienić tekst:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Otwieraj&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Efekt:</p>
+<img src='wyk7_img/6.PNG' /><p>Dwie uwagi:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1.Kod należy wprowdzić przed metodą show(), bo metoda show() zatrzymuje wykonywanie kodu
+
+2. Jako, że zmianę tekstu zaprogramowaliśmy w funkcji run, która jest uruchamiana przy otwarciu okna, zmianę widzimy od razu.
+</pre></div>
+</div>
+</section>
+<section id="uruchamanie-funkcji-za-pomoca-przycisksow">
+<h2>Uruchamanie funkcji za pomocą przycisksów<a class="headerlink" href="#uruchamanie-funkcji-za-pomoca-przycisksow" title="Permalink to this heading">#</a></h2>
+<p>Aby oprogramować działanie przycisku związane z akcją na nim wykonaną należy wykorzystać sformułowanie:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    self.form.nazwa_widżetu.nazwa_sygnału.connect(self.nazwa_funkcji)
+</pre></div>
+</div>
+<p>Strukturę tę już widzieliśmy na poprzednim wykładzie. Dla naszego przycisku będzie wyglądać tak:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">otworz</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Czyli pushButton po wciśnięciu uruchomi funkcję otworz, którą musimy zaprogramować. Programujemy ją poniżej funkcji run().</p>
+<p>Istnieje wiele innych sygnałów z których możemy korzystać. Clicked jest podstawowym dla przycisków, ale może to również być zmiana tekstu w polu tekstowym, zmiana wartości SpinBox itp.</p>
+<p>Tworzymy zatem nową funkcję, która otworzy okno wyboru pliku.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">otworz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sciezka</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;Otworz&quot;</span><span class="p">,</span> <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;*.shp&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">accepted</span><span class="p">:</span> <span class="c1">#jeśli okno zostanie zamknięte</span>
+            <span class="k">pass</span> <span class="c1">#tu rób coś</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>QFileDialog to okno wyboru pliku, które zostanie otworzone przy wywołaniu tej funkcji. Wywoływana jest metoda getOpenFileName, która przekaże scieżkę do wybranego pliku do zmiennej “sciezka”.</p>
+<p>Metoda getOpenFileName przyjmuje argumenty (obiekt nadrzędny (tu self.okno), nazwa okna, folder w którym ma się domyślnie otworzć i filtr (tutaj dowolny plik o rozszerzeniu shp).</p>
+<p>Po przeładowaniu wtyczki możemy zobaczyć czy funkcja działa:</p>
+<img src='wyk7_img/7.PNG' /><p>Oczywiście po wybraniu pliku nic się nie stanie. Należy oprogramować dodanie pliku z odczytanej ścieżki do projektu.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">otworz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sciezka</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;Otworz&quot;</span><span class="p">,</span> <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;*.shp&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">accepted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addVectorLayer</span><span class="p">(</span><span class="n">sciezka</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;plik&quot;</span><span class="p">,</span> <span class="s2">&quot;ogr&quot;</span><span class="p">)</span> <span class="c1">#[0] bo pod [1] przechowywany jest jeszcze typ pliku</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Wyświetlmy jeszcze tę ścieżkę do pliku w naszym widżecie LineEdit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">otworz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sciezka</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;Otworz&quot;</span><span class="p">,</span> <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;*.shp&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">accepted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addVectorLayer</span><span class="p">(</span><span class="n">sciezka</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;plik&quot;</span><span class="p">,</span> <span class="s2">&quot;ogr&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">sciezka</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#zmieniamy tekst w lineEdit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src='wyk7_img/8.PNG' /><p>Oprogramujmy również nasz przycisk “Zapisz”. W funkcji run() musimy dodać uruchomienie nowej funkcji zapis. Skorzystamy z innego sygnału “released”, czyli okno uruchomi się dopiero po tym jak <b> puścimy </b> przycisk:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">pushButton_2</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zapisz</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Analogicznie tworzymy funkcję zapisu. Zapisywana będzie aktywna warstwa:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">zapisz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sciezka</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;Zapisz&quot;</span><span class="p">,</span> <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">accepted</span><span class="p">:</span>
+            <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">writeAsVectorFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">(),</span> <span class="n">sciezka</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="druga-zakladka-wtyczki">
+<h3>Druga zakładka wtyczki<a class="headerlink" href="#druga-zakladka-wtyczki" title="Permalink to this heading">#</a></h3>
+<p>Przejdźmy do drugiej zakładki. Oprogramujmy jeszcze nasz CheckBox i SpinBox, tak by każde kliknięcie CheckBox powodowało zwiększenie liczby w SpinBox o 1 i zwiększało jego rozmiar. Do dzieła!</p>
+<p>Oprogramujmy kliknięcie CheckBox w run():</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">checkBox</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modyfikacje</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Następnie w połączonej funkcji dokonujemy zmian parametrów widżetów:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">modyfikacje</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">value</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>W pierwszej linijce ustalamy wartość spinBox na podstawie jego obecnej wartości o podnosimy ją o 1</p>
+<p>W drugiej linijce zmieniamy geometrię obiektu. setGeometry przyjmuje argumenty (pozycja x, pozycja y, szerokosc, wysokosc). Pobieramy je z obecnych wartości a szerokość i wysokości zwiększamy o 1. W rezultacie:</p>
+<img src='wyk7_img/9.PNG' /><p>W sumie nasz kod wyglądania obecnie tak:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.PyQt.QtGui</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qgis.PyQt.QtWidgets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.form</span> <span class="kn">import</span> <span class="n">Ui_Okno</span>
+
+
+<span class="k">def</span> <span class="nf">classFactory</span><span class="p">(</span><span class="n">iface</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">NaszPlugin</span><span class="p">(</span><span class="n">iface</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">NaszPlugin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;To klasa naszego pluginu&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inicjalizacja</span>
+<span class="sd">        :param iface: QgisInterface</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="o">=</span> <span class="n">iface</span>
+
+    <span class="k">def</span> <span class="nf">initGui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">kamil</span><span class="se">\\</span><span class="s2">AppData</span><span class="se">\\</span><span class="s2">Roaming</span><span class="se">\\</span><span class="s2">QGIS</span><span class="se">\\</span><span class="s2">QGIS3</span><span class="se">\\</span><span class="s2">profiles</span><span class="se">\\</span><span class="s2">default</span><span class="se">\\</span><span class="s2">python</span><span class="se">\\</span><span class="s2">plugins</span><span class="se">\\</span><span class="s2">plugin</span><span class="se">\\</span><span class="s2">icon.png&quot;&quot;&quot;</span><span class="p">),</span><span class="s2">&quot;NaszPlugin&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="n">QMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;Menu Wtyczki&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="c1">#self.iface.addToolBarIcon(self.action)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+
+        <span class="n">menuBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">()</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span>
+        <span class="n">menuBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">menuAction</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">QDialog</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span> <span class="o">=</span> <span class="n">Ui_Okno</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Otwieraj&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">otworz</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">pushButton_2</span><span class="o">.</span><span class="n">released</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zapisz</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">checkBox</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modyfikacje</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">otworz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sciezka</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;Otworz&quot;</span><span class="p">,</span> <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;*.shp&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">accepted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addVectorLayer</span><span class="p">(</span><span class="n">sciezka</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;plik&quot;</span><span class="p">,</span> <span class="s2">&quot;ogr&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">sciezka</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">zapisz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sciezka</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;Zapisz&quot;</span><span class="p">,</span> <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">accepted</span><span class="p">:</span>
+            <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">writeAsVectorFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">(),</span> <span class="n">sciezka</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">modyfikacje</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">value</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">spinBox</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>W tym momencie powinniście być w stanie oprogramować komunikację między widżetami wtyczki.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Materiały dodatkowe (część 2)</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#umiejscowienie-wtyczki-w-glownym-oknie">Umiejscowienie wtyczki w głównym oknie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rozwijanie-interfejsu-wtyczki">Rozwijanie interfejsu wtyczki</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-widzetow">Programowanie widżetów</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uruchamanie-funkcji-za-pomoca-przycisksow">Uruchamanie funkcji za pomocą przycisksów</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#druga-zakladka-wtyczki">Druga zakładka wtyczki</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
