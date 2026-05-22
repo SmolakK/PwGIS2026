@@ -1,0 +1,1056 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C6: Pierwsza wtyczka QGIS — szkielet i interfejs &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '13. Cwiczenia 6_Pierwsza_Wtyczka_Szkielet_GUI';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="C7: Logika wtyczki, Processing i projekt koncowy" href="14.%20Cwiczenia%207%20Logika_Wtyczki_Projekt_Koncowy.html" />
+    <link rel="prev" title="C5: Operacje geometryczne i relacje przestrzenne" href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.%20Wyklad_6_Budowa_wtyczki.html">Wyklad 6: Architektura wtyczek QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.%20Wyklad_7_Analiza_Rastrowa.html">Wyklad 7: Analiza danych rastrowych w QGIS i Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html">C5: Operacje geometryczne i relacje przestrzenne</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">C6: Pierwsza wtyczka QGIS — szkielet i interfejs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.%20Cwiczenia%207%20Logika_Wtyczki_Projekt_Koncowy.html">C7: Logika wtyczki, Processing i projekt koncowy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html">Materiały dodatkowe (część 2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%202.html">Materiały dodatkowe (część 2)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F13. Cwiczenia 6_Pierwsza_Wtyczka_Szkielet_GUI.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/13. Cwiczenia 6_Pierwsza_Wtyczka_Szkielet_GUI.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>C6: Pierwsza wtyczka QGIS — szkielet i interfejs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-struktury-plikow-od-podstaw">1. Tworzenie struktury plikow od podstaw</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-stworz-folder-wtyczki">Zadanie 1.1 — Stworz folder wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-stworz-puste-pliki">Zadanie 1.2 — Stworz puste pliki</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plik-init-py-classfactory">2. Plik <strong>init</strong>.py — classFactory</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-napisz-init-py">Zadanie 2.1 — Napisz <strong>init</strong>.py</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plik-metadata-txt">3. Plik metadata.txt</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-napisz-metadata-txt">Zadanie 3.1 — Napisz metadata.txt</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#glowna-klasa-wtyczki">4. Glowna klasa wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-napisz-minimalny-szkielet">Zadanie 4.1 — Napisz minimalny szkielet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-zrozum-przeplyw-sterowania">Zadanie 4.2 — Zrozum przepływ sterowania</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacja-i-pierwsze-uruchomienie">5. Instalacja i pierwsze uruchomienie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-wlacz-wtyczke-w-menedzerze">Zadanie 5.1 — Wlacz wtyczke w Menedzerze</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-przetestuj-dzialanie">Zadanie 5.2 — Przetestuj dzialanie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-designer-projektowanie-dialogu">6. Qt Designer — projektowanie dialogu</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-zaprojektuj-dialog-w-qt-designer">Zadanie 6.1 — Zaprojektuj dialog w Qt Designer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podlaczenie-gui-do-kodu">7. Podlaczenie GUI do kodu</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-dodaj-knowerter-okna">Zadanie 7.1 — Dodaj “knowerter” okna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-2-zaktualizuj-glowna-klase">Zadanie 7.2 — Zaktualizuj glowna klase</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plugin-reloader-szybkie-testowanie">8. Plugin Reloader — szybkie testowanie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-1-skonfiguruj-plugin-reloader">Zadanie 8.1 — Skonfiguruj Plugin Reloader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-2-przetestuj-cykl-wprowadzania-zmian">Zadanie 8.2 — Przetestuj cykl wprowadzania zmian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-3-diagnozowanie-bledow">Zadanie 8.3 — Diagnozowanie bledow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pierwsza-funkcjonalnosc-wtyczki">9. Pierwsza funkcjonalność wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-9-1-nowa-funkcjonalnosc-i-dzialanie-sygnalu-i-slotu">Zadanie 9.1 — Nowa funkcjonalność i działanie sygnału i slotu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-9-2-rozbuduj-wtyczke">Zadanie 9.2 — Rozbuduj wtyczke</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c6">Podsumowanie C6</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="c6-pierwsza-wtyczka-qgis-szkielet-i-interfejs">
+<h1>C6: Pierwsza wtyczka QGIS — szkielet i interfejs<a class="headerlink" href="#c6-pierwsza-wtyczka-qgis-szkielet-i-interfejs" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-cwiczenia">
+<h2>Programowanie w GIS — Cwiczenia<a class="headerlink" href="#programowanie-w-gis-cwiczenia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Cwiczenie:</strong> C6<br />
+<strong>Czas:</strong> ~90 minut</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="cele-cwiczenia">
+<h2>Cele cwiczenia<a class="headerlink" href="#cele-cwiczenia" title="Permalink to this heading">#</a></h2>
+<p>Po ukonczeniu tego cwiczenia bedziesz potrafil/a:</p>
+<ul class="simple">
+<li><p>recznie stworzyc minimalna strukture plikow wtyczki QGIS,</p></li>
+<li><p>napisac wymagane metody <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, <code class="docutils literal notranslate"><span class="pre">initGui</span></code>, <code class="docutils literal notranslate"><span class="pre">unload</span></code> i <code class="docutils literal notranslate"><span class="pre">run</span></code>,</p></li>
+<li><p>zainstalowac i uruchomic wtyczke w QGIS,</p></li>
+<li><p>zaprojektowac okno dialogowe w Qt Designer,</p></li>
+<li><p>podlaczyc widgety do kodu przez sygnaly i sloty,</p></li>
+<li><p>korzystac z Plugin Reloader do szybkiego testowania.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="przygotowanie">
+<h2>Przygotowanie<a class="headerlink" href="#przygotowanie" title="Permalink to this heading">#</a></h2>
+<p>Przed rozpoczeciem cwiczenia:</p>
+<ol class="arabic simple">
+<li><p>Zainstaluj <strong>Plugin Reloader</strong> przez Menedzera wtyczek.</p></li>
+<li><p>Znajdz folder wtyczek QGIS na swoim komputerze.
+Sprawdz sciezke w Konsoli Pythona:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qgis.utils</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plugin_paths</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Otworz dowolny edytor tekstu (VS Code, Notepad++, PyCharm).</p></li>
+<li><p>Wczytaj do projektu warstwe panstw Natural Earth.</p></li>
+</ol>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="tworzenie-struktury-plikow-od-podstaw">
+<h2>1. Tworzenie struktury plikow od podstaw<a class="headerlink" href="#tworzenie-struktury-plikow-od-podstaw" title="Permalink to this heading">#</a></h2>
+<p>Zamiast uzywac Plugin Builder, stworzymy wtyczke recznie.
+Dzieki temu zobaczysz dokladnie co jest niezbedne i dlaczego.</p>
+<section id="zadanie-1-1-stworz-folder-wtyczki">
+<h3>Zadanie 1.1 — Stworz folder wtyczki<a class="headerlink" href="#zadanie-1-1-stworz-folder-wtyczki" title="Permalink to this heading">#</a></h3>
+<p>W folderze wtyczek QGIS stworz nowy folder o nazwie:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moja_pierwsza_wtyczka</span>
+</pre></div>
+</div>
+<p>Nazwa folderu to jednoczesnie nazwa modulu Pythona.
+Musi byc w snake_case (male litery, podkreslenia zamiast spacji).</p>
+</section>
+<section id="zadanie-1-2-stworz-puste-pliki">
+<h3>Zadanie 1.2 — Stworz puste pliki<a class="headerlink" href="#zadanie-1-2-stworz-puste-pliki" title="Permalink to this heading">#</a></h3>
+<p>Wewnatrz folderu <code class="docutils literal notranslate"><span class="pre">moja_pierwsza_wtyczka/</span></code> stworz trzy puste pliki:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moja_pierwsza_wtyczka</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">txt</span>
+    <span class="n">moja_pierwsza_wtyczka</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>To jest <strong>minimalna struktura</strong> wymagana przez QGIS.
+Bez zadnego z tych plikow wtyczka sie nie zaladuje.</p>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="plik-init-py-classfactory">
+<h2>2. Plik <strong>init</strong>.py — classFactory<a class="headerlink" href="#plik-init-py-classfactory" title="Permalink to this heading">#</a></h2>
+<p>Plik <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> to punkt wejscia do pakietu.
+QGIS szuka w nim funkcji <code class="docutils literal notranslate"><span class="pre">classFactory</span></code> i wywoluje ja przy ladowaniu wtyczki.</p>
+<section id="zadanie-2-1-napisz-init-py">
+<h3>Zadanie 2.1 — Napisz <strong>init</strong>.py<a class="headerlink" href="#zadanie-2-1-napisz-init-py" title="Permalink to this heading">#</a></h3>
+<p>Otworz plik <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> w edytorze i wpisz dokladnie:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">classFactory</span><span class="p">(</span><span class="n">iface</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">.moja_pierwsza_wtyczka</span> <span class="kn">import</span> <span class="n">MojaPierwszaWtyczka</span>
+    <span class="k">return</span> <span class="n">MojaPierwszaWtyczka</span><span class="p">(</span><span class="n">iface</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Zapisz plik.</p>
+<p>Zwroc uwage na:</p>
+<ul class="simple">
+<li><p>kropke przed nazwa modulu (<code class="docutils literal notranslate"><span class="pre">.moja_pierwsza_wtyczka</span></code>) — import wzgledny,</p></li>
+<li><p>nazwe klasy <code class="docutils literal notranslate"><span class="pre">MojaPierwszaWtyczka</span></code> — za chwile ja napiszemy,</p></li>
+<li><p>argument <code class="docutils literal notranslate"><span class="pre">iface</span></code> — QGIS przekazuje tu obiekt interfejsu.</p></li>
+</ul>
+<p><strong>Pytanie 2.1</strong> — Co by sie stalo gdybysmy napisali
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">moja_pierwsza_wtyczka</span> <span class="pre">import</span> <span class="pre">MojaPierwszaWtyczka</span></code>
+zamiast <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">.moja_pierwsza_wtyczka</span> <span class="pre">import</span> <span class="pre">MojaPierwszaWtyczka</span></code>
+(bez kropki)?
+Na czyim komputerze mogloby to przestac dzialac i dlaczego?</p>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="plik-metadata-txt">
+<h2>3. Plik metadata.txt<a class="headerlink" href="#plik-metadata-txt" title="Permalink to this heading">#</a></h2>
+<p>QGIS czyta <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code> zanim zaladuje kod wtyczki.
+Na podstawie tego pliku decyduje czy wtyczka jest kompatybilna
+i wyswietla informacje w Menedzerze wtyczek.</p>
+<section id="zadanie-3-1-napisz-metadata-txt">
+<h3>Zadanie 3.1 — Napisz metadata.txt<a class="headerlink" href="#zadanie-3-1-napisz-metadata-txt" title="Permalink to this heading">#</a></h3>
+<p>Otworz plik <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code> i wpisz:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[general]</span><span class="w"></span>
+<span class="na">name</span><span class="o">=</span><span class="s">Moja Pierwsza Wtyczka</span><span class="w"></span>
+<span class="na">qgisMinimumVersion</span><span class="o">=</span><span class="s">3.0</span><span class="w"></span>
+<span class="na">description</span><span class="o">=</span><span class="s">Pierwsza wtyczka napisana recznie na cwiczeniach</span><span class="w"></span>
+<span class="na">version</span><span class="o">=</span><span class="s">0.1</span><span class="w"></span>
+<span class="na">author</span><span class="o">=</span><span class="s">Twoje Imie i Nazwisko</span><span class="w"></span>
+<span class="na">email</span><span class="o">=</span><span class="s">twoj@email.com</span><span class="w"></span>
+<span class="na">about</span><span class="o">=</span><span class="s">Wtyczka demonstracyjna stworzona podczas cwiczen z programowania w GIS.</span><span class="w"></span>
+<span class="na">experimental</span><span class="o">=</span><span class="s">True</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Uzupelnij <code class="docutils literal notranslate"><span class="pre">author</span></code> i <code class="docutils literal notranslate"><span class="pre">email</span></code> swoimi danymi. Zapisz plik.</p>
+<p>Opcjonalnie: <code class="docutils literal notranslate"><span class="pre">icon=icon.png</span></code>, pozwala dodać jej ikonkę. <code class="docutils literal notranslate"><span class="pre">icon.png</span></code> musi znajdować się w tym samym folderze.</p>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="glowna-klasa-wtyczki">
+<h2>4. Glowna klasa wtyczki<a class="headerlink" href="#glowna-klasa-wtyczki" title="Permalink to this heading">#</a></h2>
+<p>Teraz napiszemy serce wtyczki — klase z trzema wymaganymi metodami.</p>
+<section id="zadanie-4-1-napisz-minimalny-szkielet">
+<h3>Zadanie 4.1 — Napisz minimalny szkielet<a class="headerlink" href="#zadanie-4-1-napisz-minimalny-szkielet" title="Permalink to this heading">#</a></h3>
+<p>Otworz <code class="docutils literal notranslate"><span class="pre">moja_pierwsza_wtyczka.py</span></code> i wpisz:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.PyQt.QtWidgets</span> <span class="kn">import</span> <span class="n">QAction</span>
+<span class="kn">from</span> <span class="nn">qgis.PyQt.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span>
+
+
+<span class="k">class</span> <span class="nc">MojaPierwszaWtyczka</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span>   <span class="o">=</span> <span class="n">iface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span>    <span class="o">=</span> <span class="s1">&#39;&amp;Moja Wtyczka&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span>     <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">initGui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Uruchom Moja Wtyczke&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">())</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addToolBarIcon</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addPluginToMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">removePluginMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">removeToolBarIcon</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">messageBar</span><span class="p">()</span><span class="o">.</span><span class="n">pushInfo</span><span class="p">(</span>
+            <span class="s1">&#39;Moja Wtyczka&#39;</span><span class="p">,</span> <span class="s1">&#39;Dziala! To jest moja pierwsza wtyczka.&#39;</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>Zapisz plik.</p>
+<p><strong>Pytanie 4.1</strong> — Dlaczego w <code class="docutils literal notranslate"><span class="pre">unload()</span></code> iterujemy po <code class="docutils literal notranslate"><span class="pre">self.actions</span></code>
+zamiast trzymac jedna zmienna <code class="docutils literal notranslate"><span class="pre">self.action</span></code>?
+Kiedy lista <code class="docutils literal notranslate"><span class="pre">self.actions</span></code> moglaby miec wiecej niz jeden element?</p>
+</section>
+<section id="zadanie-4-2-zrozum-przeplyw-sterowania">
+<h3>Zadanie 4.2 — Zrozum przepływ sterowania<a class="headerlink" href="#zadanie-4-2-zrozum-przeplyw-sterowania" title="Permalink to this heading">#</a></h3>
+<p>Przenalizuj kolejnosc wywolan i wypelnij schemat:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>QGIS startuje
+    |
+    +--&gt; import moja_pierwsza_wtyczka     (co wykonuje?)
+    |    ___________________________________
+    |
+    +--&gt; classFactory(iface)              (co zwraca?)
+    |    ___________________________________
+    |
+    +--&gt; obiekt.__init__(iface)           (co inicjalizuje?)
+    |    ___________________________________
+    |
+    +--&gt; obiekt.initGui()                 (co dodaje do QGIS?)
+         ___________________________________
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uzupelnij schemat (wpisz co dzieje sie w kazdym kroku):</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s5'></a></p>
+</section>
+</section>
+<section id="instalacja-i-pierwsze-uruchomienie">
+<h2>5. Instalacja i pierwsze uruchomienie<a class="headerlink" href="#instalacja-i-pierwsze-uruchomienie" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-5-1-wlacz-wtyczke-w-menedzerze">
+<h3>Zadanie 5.1 — Wlacz wtyczke w Menedzerze<a class="headerlink" href="#zadanie-5-1-wlacz-wtyczke-w-menedzerze" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>W QGIS przejdz do <code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">-&gt;</span> <span class="pre">Zarządzaj</span> <span class="pre">wtyczkami</span></code></p></li>
+<li><p>W zakladce <strong>Ustawienia</strong> zaznacz opcje
+<strong>Pokazuj rowniez wtyczki eksperymentalne</strong></p></li>
+<li><p>Przejdz do zakladki <strong>Zainstalowane</strong></p></li>
+<li><p>Znajdz <code class="docutils literal notranslate"><span class="pre">Moja</span> <span class="pre">Pierwsza</span> <span class="pre">Wtyczka</span></code> i zaznacz checkbox</p></li>
+<li><p>Kliknij <strong>Zamknij</strong></p></li>
+</ol>
+<p>W pasku narzedzi powinna pojawic sie nowa ikona
+(lub tekst, jeśli dodalismy wlasnej ikony).</p>
+</section>
+<section id="zadanie-5-2-przetestuj-dzialanie">
+<h3>Zadanie 5.2 — Przetestuj dzialanie<a class="headerlink" href="#zadanie-5-2-przetestuj-dzialanie" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Kliknij ikone wtyczki lub
+<code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">-&gt;</span> <span class="pre">Moja</span> <span class="pre">Wtyczka</span> <span class="pre">-&gt;</span> <span class="pre">Uruchom</span> <span class="pre">Moja</span> <span class="pre">Wtyczke</span></code></p></li>
+<li><p>Na gorze obszaru mapy powinien pojawic sie zielony pasek komunikatu</p></li>
+</ol>
+<p>Jesli wtyczka sie nie pojawia — sprawdz:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># [QGIS] W Konsoli Pythona:</span>
+<span class="kn">import</span> <span class="nn">qgis.utils</span>
+<span class="c1"># Czy folder jest widoczny?</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plugin_paths</span><span class="p">)</span>
+<span class="c1"># Jakie wtyczki sa zaladowane?</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p><strong>UWAGA:</strong>
+Bledy  znajdziesz w:
+<code class="docutils literal notranslate"><span class="pre">Widok</span> <span class="pre">-&gt;</span> <span class="pre">Panele</span> <span class="pre">-&gt;</span> <span class="pre">Log</span> <span class="pre">Messages</span> <span class="pre">-&gt;</span> <span class="pre">Python</span></code></p>
+<p><strong>Pytanie 5.1</strong> — Co sie stanie jesli w <code class="docutils literal notranslate"><span class="pre">unload()</span></code> zapomnisz
+usunac akcje z paska narzedzi i ponownie wlaczysz wtyczke?
+Sprawdz to eksperymentalnie: wykomentuj linie w <code class="docutils literal notranslate"><span class="pre">unload()</span></code>,
+wylacz i wlacz wtyczke w Menedzerze i zaobserwuj efekt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz i opis eksperymentu:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+</section>
+<section id="qt-designer-projektowanie-dialogu">
+<h2>6. Qt Designer — projektowanie dialogu<a class="headerlink" href="#qt-designer-projektowanie-dialogu" title="Permalink to this heading">#</a></h2>
+<p>Teraz dodamy prawdziwe okno dialogowe zamiast tylko komunikatu.</p>
+<p>W folderze wtyczki dodamy dwa nowe pliki (nie dodawaj ich ręcznie):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moja_pierwsza_wtyczka</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">txt</span>
+    <span class="n">moja_pierwsza_wtyczka</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">py</span>                 <span class="o">&lt;-</span> <span class="n">NOWY</span>
+    <span class="n">dialog_base</span><span class="o">.</span><span class="n">ui</span>            <span class="o">&lt;-</span> <span class="n">NOWY</span> <span class="p">(</span><span class="n">stworzy</span> <span class="n">Qt</span> <span class="n">Designer</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="zadanie-6-1-zaprojektuj-dialog-w-qt-designer">
+<h3>Zadanie 6.1 — Zaprojektuj dialog w Qt Designer<a class="headerlink" href="#zadanie-6-1-zaprojektuj-dialog-w-qt-designer" title="Permalink to this heading">#</a></h3>
+<p>Uruchom Qt Designer i otworz nowy plik jako <strong>Dialog with Buttons Bottom</strong>.</p>
+<p><strong>Na ćwiczeniach zapoznamy się dokładnie z właściwościami QtDesignera</strong></p>
+<p>Zaprojektuj okno z nastepujacymi elementami:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Widget</p></th>
+<th class="head"><p>objectName</p></th>
+<th class="head"><p>Ustawienia</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>QLabel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">wynik</span></code></p></td>
+<td><p>Tekst: <code class="docutils literal notranslate"><span class="pre">Wynik:</span> </code></p></td>
+</tr>
+<tr class="row-odd"><td><p>QPushButton</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">analizuj</span></code></p></td>
+<td><p>Tekst: <code class="docutils literal notranslate"><span class="pre">Analizuj</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Ustaw nazwy w opcji edycji właściwości.</p>
+<p>i zapisz jako <code class="docutils literal notranslate"><span class="pre">dialog_base.ui</span></code> w folderze wtyczki.</p>
+<p><strong>Pytanie 6.1</strong> — Czym jest plik <code class="docutils literal notranslate"><span class="pre">.ui</span></code> pod wzgledem technicznym?
+Otworz go w edytorze tekstu (nie Qt Designer) i sprawdz jego zawartosc.
+Jakiego formatu danych uzywa? Znajdz w nim objectName widgetu <code class="docutils literal notranslate"><span class="pre">lblWarstwa</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s7'></a></p>
+</section>
+</section>
+<section id="podlaczenie-gui-do-kodu">
+<h2>7. Podlaczenie GUI do kodu<a class="headerlink" href="#podlaczenie-gui-do-kodu" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-7-1-dodaj-knowerter-okna">
+<h3>Zadanie 7.1 — Dodaj “knowerter” okna<a class="headerlink" href="#zadanie-7-1-dodaj-knowerter-okna" title="Permalink to this heading">#</a></h3>
+<p>Dodaj plik do konwersji. W folderze dodaj plik <code class="docutils literal notranslate"><span class="pre">dialog.py</span></code>, a w nim</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">qgis.PyQt</span> <span class="kn">import</span> <span class="n">uic</span><span class="p">,</span> <span class="n">QtWidgets</span>
+
+<span class="c1"># uic.loadUiType() czyta plik .ui i zwraca:</span>
+<span class="c1"># - FORM_CLASS: klase opisujaca interfejs (widgety, layouty)</span>
+<span class="c1"># - _: klase bazowa (zazwyczaj QDialog — ignorujemy)</span>
+<span class="n">FORM_CLASS</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">uic</span><span class="o">.</span><span class="n">loadUiType</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;dialog_base.ui&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MojDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">,</span> <span class="n">FORM_CLASS</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># &lt;-- tu wstrzykuje widgety z pliku .ui</span>
+</pre></div>
+</div>
+</section>
+<section id="zadanie-7-2-zaktualizuj-glowna-klase">
+<h3>Zadanie 7.2 — Zaktualizuj glowna klase<a class="headerlink" href="#zadanie-7-2-zaktualizuj-glowna-klase" title="Permalink to this heading">#</a></h3>
+<p>Zastap zawartosc <code class="docutils literal notranslate"><span class="pre">moja_pierwsza_wtyczka.py</span></code> na:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qgis.PyQt.QtWidgets</span> <span class="kn">import</span> <span class="n">QAction</span>
+<span class="kn">from</span> <span class="nn">qgis.PyQt.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span>
+<span class="kn">from</span> <span class="nn">.dialog</span> <span class="kn">import</span> <span class="n">MojDialog</span> <span class="c1"># DODAJEMY IMPORT KLASY!</span>
+
+<span class="k">class</span> <span class="nc">MojaPierwszaWtyczka</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span>   <span class="o">=</span> <span class="n">iface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span>    <span class="o">=</span> <span class="s1">&#39;&amp;Moja Wtyczka&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span>     <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">initGui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Uruchom Moja Wtyczke&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">())</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addToolBarIcon</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addPluginToMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">removePluginMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">removeToolBarIcon</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">MojDialog</span><span class="p">()</span>  <span class="c1"># przygotowuje pustą klasę MojDialog (musi nazywac sie jak w pliku dialog.py)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># pokazujemy okno</span>
+</pre></div>
+</div>
+<p>Zapisz plik.</p>
+<p><strong>Pytanie 7.1</strong> — Dlaczego tworzymy dialog przez
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">self.dlg</span> <span class="pre">is</span> <span class="pre">None:</span> <span class="pre">self.dlg</span> <span class="pre">=</span> <span class="pre">MojDialog()</span></code>
+zamiast po prostu <code class="docutils literal notranslate"><span class="pre">self.dlg</span> <span class="pre">=</span> <span class="pre">MojDialog()</span></code> w metodzie <code class="docutils literal notranslate"><span class="pre">run()</span></code>?</p>
+<hr class="docutils" />
+<p><a id='s8'></a></p>
+</section>
+</section>
+<section id="plugin-reloader-szybkie-testowanie">
+<h2>8. Plugin Reloader — szybkie testowanie<a class="headerlink" href="#plugin-reloader-szybkie-testowanie" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-8-1-skonfiguruj-plugin-reloader">
+<h3>Zadanie 8.1 — Skonfiguruj Plugin Reloader<a class="headerlink" href="#zadanie-8-1-skonfiguruj-plugin-reloader" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Upewnij sie ze Plugin Reloader jest zainstalowany i wlaczony</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wtyczki</span> <span class="pre">-&gt;</span> <span class="pre">Plugin</span> <span class="pre">Reloader</span> <span class="pre">-&gt;</span> <span class="pre">Configure</span></code></p></li>
+<li><p>Z listy wybierz <code class="docutils literal notranslate"><span class="pre">moja_pierwsza_wtyczka</span></code></p></li>
+<li><p>Kliknij OK</p></li>
+</ol>
+<p>Od teraz po kazdej zmianie kodu nacisnij przycik Plugin Reloader zmiast restartowac QGIS.</p>
+</section>
+<section id="zadanie-8-2-przetestuj-cykl-wprowadzania-zmian">
+<h3>Zadanie 8.2 — Przetestuj cykl wprowadzania zmian<a class="headerlink" href="#zadanie-8-2-przetestuj-cykl-wprowadzania-zmian" title="Permalink to this heading">#</a></h3>
+<p>Wykonaj ponizszy cykl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">Zmien</span> <span class="n">cos</span> <span class="n">w</span> <span class="n">kodzie</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span> <span class="n">tresc</span> <span class="n">komunikatu</span> <span class="n">w</span> <span class="n">messageBar</span><span class="p">)</span>
+<span class="mf">2.</span> <span class="n">Zapisz</span> <span class="n">plik</span>
+<span class="mf">3.</span> <span class="n">Uruchum</span> <span class="n">PluginRealoade</span>
+<span class="mf">4.</span> <span class="n">Uruchom</span> <span class="n">wtyczke</span> <span class="n">i</span> <span class="n">sprawdz</span> <span class="n">zmiane</span>
+</pre></div>
+</div>
+</section>
+<section id="zadanie-8-3-diagnozowanie-bledow">
+<h3>Zadanie 8.3 — Diagnozowanie bledow<a class="headerlink" href="#zadanie-8-3-diagnozowanie-bledow" title="Permalink to this heading">#</a></h3>
+<p>Celowo wprowadz blad skladni do <code class="docutils literal notranslate"><span class="pre">moja_pierwsza_wtyczka.py</span></code>
+(np. usun dwukropek po <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">run()</span></code>) i zaktualizuj wtyczke.</p>
+<p>Sprawdz gdzie pojawia sie informacja o bledzie:</p>
+<ul class="simple">
+<li><p>Konsola Pythona QGIS</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Widok</span> <span class="pre">-&gt;</span> <span class="pre">Panele</span> <span class="pre">-&gt;</span> <span class="pre">Log</span> <span class="pre">Messages</span> <span class="pre">-&gt;</span> <span class="pre">Python</span></code></p></li>
+</ul>
+<p>Napraw blad i potwierdz ze wtyczka znowu dziala.</p>
+<p><strong>Pytanie 8.1</strong> — Opisz co widzisz w log Messages
+gdy wtyczka ma blad skladni.
+Jakie informacje sa pomocne przy diagnostyce?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s9'></a></p>
+</section>
+</section>
+<section id="pierwsza-funkcjonalnosc-wtyczki">
+<h2>9. Pierwsza funkcjonalność wtyczki<a class="headerlink" href="#pierwsza-funkcjonalnosc-wtyczki" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-9-1-nowa-funkcjonalnosc-i-dzialanie-sygnalu-i-slotu">
+<h3>Zadanie 9.1 — Nowa funkcjonalność i działanie sygnału i slotu<a class="headerlink" href="#zadanie-9-1-nowa-funkcjonalnosc-i-dzialanie-sygnalu-i-slotu" title="Permalink to this heading">#</a></h3>
+<p>Do metody <code class="docutils literal notranslate"><span class="pre">run()</span></code> dodaj tę linijkę kodu</p>
+<p><code class="docutils literal notranslate"><span class="pre">self.window.[nazwa_przycisku].clicked.connect(self.licz_obiekty)</span></code></p>
+<p>Do pliku dodaj nową metodę:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">licz_obiekty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">warstwa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">warstwa</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="p">[</span><span class="n">nazwa_label</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Nie wybrano warstwy.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="n">warstwa</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="p">[</span><span class="n">nazwa_label</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Warstwa &quot;</span><span class="si">{</span><span class="n">warstwa</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&quot; ma </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> obiektów.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="zadanie-9-2-rozbuduj-wtyczke">
+<h3>Zadanie 9.2 — Rozbuduj wtyczke<a class="headerlink" href="#zadanie-9-2-rozbuduj-wtyczke" title="Permalink to this heading">#</a></h3>
+<p>Rozbuduj swoja wtyczke o</p>
+<p><strong>Przycisk eksportu do CSV</strong></p>
+<p>Dodaj przycisk <code class="docutils literal notranslate"><span class="pre">Eksportuj</span> <span class="pre">do</span> <span class="pre">CSV</span></code> ktory zapisuje
+tabele atrybutow aktywnej warstwy do pliku CSV.
+Uzyj <code class="docutils literal notranslate"><span class="pre">QFileDialog.getSaveFileName()</span></code> do wyboru sciezki.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wklej tutaj finalny kod swojej rozbudowanej wtyczki:</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="podsumowanie-c6">
+<h2>Podsumowanie C6<a class="headerlink" href="#podsumowanie-c6" title="Permalink to this heading">#</a></h2>
+<p>W tym cwiczeniu:</p>
+<ul class="simple">
+<li><p>stworzyłes/stworzylas minimalna strukture wtyczki od podstaw (3 pliki),</p></li>
+<li><p>napisal/a wymagane metody: <code class="docutils literal notranslate"><span class="pre">classFactory</span></code>, <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, <code class="docutils literal notranslate"><span class="pre">initGui</span></code>, <code class="docutils literal notranslate"><span class="pre">unload</span></code>, <code class="docutils literal notranslate"><span class="pre">run</span></code>,</p></li>
+<li><p>zrozumiales/zrozumialas przepływ sterowania przy starcie QGIS,</p></li>
+<li><p>zaprojektowales/zaprojektowałas dialog w Qt Designer z <code class="docutils literal notranslate"><span class="pre">QgsMapLayerComboBox</span></code>,</p></li>
+<li><p>podlaczyłes/podlaczylas sygnaly i sloty,</p></li>
+<li><p>skonfigurował/a Plugin Reloader do szybkiego testowania.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">C5: Operacje geometryczne i relacje przestrzenne</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="14.%20Cwiczenia%207%20Logika_Wtyczki_Projekt_Koncowy.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">C7: Logika wtyczki, Processing i projekt koncowy</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-struktury-plikow-od-podstaw">1. Tworzenie struktury plikow od podstaw</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-stworz-folder-wtyczki">Zadanie 1.1 — Stworz folder wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-stworz-puste-pliki">Zadanie 1.2 — Stworz puste pliki</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plik-init-py-classfactory">2. Plik <strong>init</strong>.py — classFactory</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-napisz-init-py">Zadanie 2.1 — Napisz <strong>init</strong>.py</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plik-metadata-txt">3. Plik metadata.txt</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-napisz-metadata-txt">Zadanie 3.1 — Napisz metadata.txt</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#glowna-klasa-wtyczki">4. Glowna klasa wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-1-napisz-minimalny-szkielet">Zadanie 4.1 — Napisz minimalny szkielet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-4-2-zrozum-przeplyw-sterowania">Zadanie 4.2 — Zrozum przepływ sterowania</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacja-i-pierwsze-uruchomienie">5. Instalacja i pierwsze uruchomienie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-1-wlacz-wtyczke-w-menedzerze">Zadanie 5.1 — Wlacz wtyczke w Menedzerze</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-5-2-przetestuj-dzialanie">Zadanie 5.2 — Przetestuj dzialanie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qt-designer-projektowanie-dialogu">6. Qt Designer — projektowanie dialogu</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-6-1-zaprojektuj-dialog-w-qt-designer">Zadanie 6.1 — Zaprojektuj dialog w Qt Designer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podlaczenie-gui-do-kodu">7. Podlaczenie GUI do kodu</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-1-dodaj-knowerter-okna">Zadanie 7.1 — Dodaj “knowerter” okna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-7-2-zaktualizuj-glowna-klase">Zadanie 7.2 — Zaktualizuj glowna klase</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plugin-reloader-szybkie-testowanie">8. Plugin Reloader — szybkie testowanie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-1-skonfiguruj-plugin-reloader">Zadanie 8.1 — Skonfiguruj Plugin Reloader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-2-przetestuj-cykl-wprowadzania-zmian">Zadanie 8.2 — Przetestuj cykl wprowadzania zmian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-8-3-diagnozowanie-bledow">Zadanie 8.3 — Diagnozowanie bledow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pierwsza-funkcjonalnosc-wtyczki">9. Pierwsza funkcjonalność wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-9-1-nowa-funkcjonalnosc-i-dzialanie-sygnalu-i-slotu">Zadanie 9.1 — Nowa funkcjonalność i działanie sygnału i slotu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-9-2-rozbuduj-wtyczke">Zadanie 9.2 — Rozbuduj wtyczke</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#podsumowanie-c6">Podsumowanie C6</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

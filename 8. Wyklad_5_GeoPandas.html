@@ -175,6 +175,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="10.%20Wyklad_6_Budowa_wtyczki.html">Wyklad 6: Architektura wtyczek QGIS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="11.%20Wyklad_7_Analiza_Rastrowa.html">Wyklad 7: Analiza danych rastrowych w QGIS i Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html">C5: Operacje geometryczne i relacje przestrzenne</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.%20Cwiczenia%206_Pierwsza_Wtyczka_Szkielet_GUI.html">C6: Pierwsza wtyczka QGIS — szkielet i interfejs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.%20Cwiczenia%207%20Logika_Wtyczki_Projekt_Koncowy.html">C7: Logika wtyczki, Processing i projekt koncowy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html">Materiały dodatkowe (część 2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%202.html">Materiały dodatkowe (część 2)</a></li>
 </ul>
 
     </div>
@@ -661,7 +665,7 @@ Pandas   : 1.4.2
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Typ obiektu  : &lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
 Liczba wierszy: 177
 Kolumny      : [&#39;featurecla&#39;, &#39;scalerank&#39;, &#39;LABELRANK&#39;, &#39;SOVEREIGNT&#39;, &#39;SOV_A3&#39;, &#39;ADM0_DIF&#39;, &#39;LEVEL&#39;, &#39;TYPE&#39;, &#39;TLC&#39;, &#39;ADMIN&#39;, &#39;ADM0_A3&#39;, &#39;GEOU_DIF&#39;, &#39;GEOUNIT&#39;, &#39;GU_A3&#39;, &#39;SU_DIF&#39;, &#39;SUBUNIT&#39;, &#39;SU_A3&#39;, &#39;BRK_DIFF&#39;, &#39;NAME&#39;, &#39;NAME_LONG&#39;, &#39;BRK_A3&#39;, &#39;BRK_NAME&#39;, &#39;BRK_GROUP&#39;, &#39;ABBREV&#39;, &#39;POSTAL&#39;, &#39;FORMAL_EN&#39;, &#39;FORMAL_FR&#39;, &#39;NAME_CIAWF&#39;, &#39;NOTE_ADM0&#39;, &#39;NOTE_BRK&#39;, &#39;NAME_SORT&#39;, &#39;NAME_ALT&#39;, &#39;MAPCOLOR7&#39;, &#39;MAPCOLOR8&#39;, &#39;MAPCOLOR9&#39;, &#39;MAPCOLOR13&#39;, &#39;POP_EST&#39;, &#39;POP_RANK&#39;, &#39;POP_YEAR&#39;, &#39;GDP_MD&#39;, &#39;GDP_YEAR&#39;, &#39;ECONOMY&#39;, &#39;INCOME_GRP&#39;, &#39;FIPS_10&#39;, &#39;ISO_A2&#39;, &#39;ISO_A2_EH&#39;, &#39;ISO_A3&#39;, &#39;ISO_A3_EH&#39;, &#39;ISO_N3&#39;, &#39;ISO_N3_EH&#39;, &#39;UN_A3&#39;, &#39;WB_A2&#39;, &#39;WB_A3&#39;, &#39;WOE_ID&#39;, &#39;WOE_ID_EH&#39;, &#39;WOE_NOTE&#39;, &#39;ADM0_ISO&#39;, &#39;ADM0_DIFF&#39;, &#39;ADM0_TLC&#39;, &#39;ADM0_A3_US&#39;, &#39;ADM0_A3_FR&#39;, &#39;ADM0_A3_RU&#39;, &#39;ADM0_A3_ES&#39;, &#39;ADM0_A3_CN&#39;, &#39;ADM0_A3_TW&#39;, &#39;ADM0_A3_IN&#39;, &#39;ADM0_A3_NP&#39;, &#39;ADM0_A3_PK&#39;, &#39;ADM0_A3_DE&#39;, &#39;ADM0_A3_GB&#39;, &#39;ADM0_A3_BR&#39;, &#39;ADM0_A3_IL&#39;, &#39;ADM0_A3_PS&#39;, &#39;ADM0_A3_SA&#39;, &#39;ADM0_A3_EG&#39;, &#39;ADM0_A3_MA&#39;, &#39;ADM0_A3_PT&#39;, &#39;ADM0_A3_AR&#39;, &#39;ADM0_A3_JP&#39;, &#39;ADM0_A3_KO&#39;, &#39;ADM0_A3_VN&#39;, &#39;ADM0_A3_TR&#39;, &#39;ADM0_A3_ID&#39;, &#39;ADM0_A3_PL&#39;, &#39;ADM0_A3_GR&#39;, &#39;ADM0_A3_IT&#39;, &#39;ADM0_A3_NL&#39;, &#39;ADM0_A3_SE&#39;, &#39;ADM0_A3_BD&#39;, &#39;ADM0_A3_UA&#39;, &#39;ADM0_A3_UN&#39;, &#39;ADM0_A3_WB&#39;, &#39;CONTINENT&#39;, &#39;REGION_UN&#39;, &#39;SUBREGION&#39;, &#39;REGION_WB&#39;, &#39;NAME_LEN&#39;, &#39;LONG_LEN&#39;, &#39;ABBREV_LEN&#39;, &#39;TINY&#39;, &#39;HOMEPART&#39;, &#39;MIN_ZOOM&#39;, &#39;MIN_LABEL&#39;, &#39;MAX_LABEL&#39;, &#39;LABEL_X&#39;, &#39;LABEL_Y&#39;, &#39;NE_ID&#39;, &#39;WIKIDATAID&#39;, &#39;NAME_AR&#39;, &#39;NAME_BN&#39;, &#39;NAME_DE&#39;, &#39;NAME_EN&#39;, &#39;NAME_ES&#39;, &#39;NAME_FA&#39;, &#39;NAME_FR&#39;, &#39;NAME_EL&#39;, &#39;NAME_HE&#39;, &#39;NAME_HI&#39;, &#39;NAME_HU&#39;, &#39;NAME_ID&#39;, &#39;NAME_IT&#39;, &#39;NAME_JA&#39;, &#39;NAME_KO&#39;, &#39;NAME_NL&#39;, &#39;NAME_PL&#39;, &#39;NAME_PT&#39;, &#39;NAME_RU&#39;, &#39;NAME_SV&#39;, &#39;NAME_TR&#39;, &#39;NAME_UK&#39;, &#39;NAME_UR&#39;, &#39;NAME_VI&#39;, &#39;NAME_ZH&#39;, &#39;NAME_ZHT&#39;, &#39;FCLASS_ISO&#39;, &#39;TLC_DIFF&#39;, &#39;FCLASS_TLC&#39;, &#39;FCLASS_US&#39;, &#39;FCLASS_FR&#39;, &#39;FCLASS_RU&#39;, &#39;FCLASS_ES&#39;, &#39;FCLASS_CN&#39;, &#39;FCLASS_TW&#39;, &#39;FCLASS_IN&#39;, &#39;FCLASS_NP&#39;, &#39;FCLASS_PK&#39;, &#39;FCLASS_DE&#39;, &#39;FCLASS_GB&#39;, &#39;FCLASS_BR&#39;, &#39;FCLASS_IL&#39;, &#39;FCLASS_PS&#39;, &#39;FCLASS_SA&#39;, &#39;FCLASS_EG&#39;, &#39;FCLASS_MA&#39;, &#39;FCLASS_PT&#39;, &#39;FCLASS_AR&#39;, &#39;FCLASS_JP&#39;, &#39;FCLASS_KO&#39;, &#39;FCLASS_VN&#39;, &#39;FCLASS_TR&#39;, &#39;FCLASS_ID&#39;, &#39;FCLASS_PL&#39;, &#39;FCLASS_GR&#39;, &#39;FCLASS_IT&#39;, &#39;FCLASS_NL&#39;, &#39;FCLASS_SE&#39;, &#39;FCLASS_BD&#39;, &#39;FCLASS_UA&#39;, &#39;geometry&#39;]
-CRS          : None
+CRS          : EPSG:4326
 Typ geometrii: [&#39;MultiPolygon&#39; &#39;Polygon&#39;]
 </pre></div>
 </div>
@@ -1126,11 +1130,11 @@ Miasta — kolumny: [&#39;SCALERANK&#39;, &#39;NATSCALE&#39;, &#39;LABELRANK&#39
 4    Poznan  16.929  52.407   545000  POINT (16.929 52.407)
 5      Lodz  19.455  51.759   672000  POINT (19.455 51.759)
 
-CRS: None
+CRS: EPSG:4326
 
-Zapisano: C:\Users\kamil\AppData\Local\Temp\tmpeq87z9uu\miasta_PL.geojson
-Rozmiar : 1,113 bajtow
-Wczytano: 6 obiektow, CRS: None
+Zapisano: C:\Users\kamil\AppData\Local\Temp\tmpksa0iqn5\miasta_PL.geojson
+Rozmiar : 1,199 bajtow
+Wczytano: 6 obiektow, CRS: EPSG:4326
 </pre></div>
 </div>
 </div>
@@ -1227,50 +1231,16 @@ musisz uzyc <code class="docutils literal notranslate"><span class="pre">to_crs<
   Wroclaw      x=17.0380  y=51.1080
   Warszawa     x=21.0120  y=52.2300
   Krakow       x=19.9450  y=50.0650
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
-<span class="nn">Input In [6],</span> in <span class="ni">&lt;cell line: 16&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">miasto</span><span class="si">:</span><span class="s1">&lt;12</span><span class="si">}</span><span class="s1"> x=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">  y=</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># Reprojekcja do PL-1992</span>
-<span class="ne">---&gt; </span><span class="mi">16</span> <span class="n">gdf_pl</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s1">&#39;EPSG:2180&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Po to_crs(EPSG:2180) — metry:&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf_pl</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
 
-<span class="nn">File ~\AppData\Roaming\Python\Python39\site-packages\geopandas\geodataframe.py:1701,</span> in <span class="ni">GeoDataFrame.to_crs</span><span class="nt">(self, crs, epsg, inplace)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1699</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1700</span>     <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="ne">-&gt; </span><span class="mi">1701</span> <span class="n">geom</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">,</span> <span class="n">epsg</span><span class="o">=</span><span class="n">epsg</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1702</span> <span class="n">df</span><span class="o">.</span><span class="n">geometry</span> <span class="o">=</span> <span class="n">geom</span>
-<span class="g g-Whitespace">   </span><span class="mi">1703</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+Po to_crs(EPSG:2180) — metry:
+  Wroclaw      x=362,694  y=361,966
+  Warszawa     x=637,368  y=486,790
+  Krakow       x=567,613  y=244,621
 
-<span class="nn">File ~\AppData\Roaming\Python\Python39\site-packages\geopandas\geoseries.py:1207,</span> in <span class="ni">GeoSeries.to_crs</span><span class="nt">(self, crs, epsg)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1128</span> <span class="k">def</span> <span class="nf">to_crs</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1129</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">crs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">epsg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1130</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeoSeries</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1131</span>     <span class="sd">&quot;&quot;&quot;Returns a ``GeoSeries`` with all geometries transformed to a new</span>
-<span class="g g-Whitespace">   </span><span class="mi">1132</span><span class="sd">     coordinate reference system.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1133</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1204</span><span class="sd"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1205</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1206</span>     <span class="k">return</span> <span class="n">GeoSeries</span><span class="p">(</span>
-<span class="ne">-&gt; </span><span class="mi">1207</span>         <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">,</span> <span class="n">epsg</span><span class="o">=</span><span class="n">epsg</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-<span class="g g-Whitespace">   </span><span class="mi">1208</span>     <span class="p">)</span>
-
-<span class="nn">File ~\AppData\Roaming\Python\Python39\site-packages\geopandas\_compat.py:85,</span> in <span class="ni">requires_pyproj.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">83</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">HAS_PYPROJ</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">85</span>         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">86</span>             <span class="sa">f</span><span class="s2">&quot;The &#39;pyproj&#39; package is required for </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> to work. &quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">87</span>             <span class="s2">&quot;Install it and initialize the object with a CRS before using it.&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">88</span>             <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Importing pyproj resulted in: </span><span class="si">{</span><span class="n">pyproj_import_error</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">89</span>         <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="ne">ImportError</span>: The &#39;pyproj&#39; package is required for to_crs to work. Install it and initialize the object with a CRS before using it.
-<span class="n">Importing</span> <span class="n">pyproj</span> <span class="n">resulted</span> <span class="ow">in</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="s1">&#39;pyproj&#39;</span>
+Po to_crs(EPSG:3857) — Web Mercator:
+  Wroclaw      x=1,896,661  y=6,640,420
+  Warszawa     x=2,339,045  y=6,841,820
+  Krakow       x=2,220,267  y=6,457,540
 </pre></div>
 </div>
 </div>
@@ -1628,7 +1598,7 @@ Guinea-Bissau        Africa       1.92            697.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/493b3a150c05f89fbc09e084e2b0f12c2ee5e1937e7db287393ff9af67f0198b.png" src="_images/493b3a150c05f89fbc09e084e2b0f12c2ee5e1937e7db287393ff9af67f0198b.png" />
+<img alt="_images/889bff20ce301c9f1801fe1143bf12f381f7cd9faf2d20ed7788dd2caa314a3f.png" src="_images/889bff20ce301c9f1801fe1143bf12f381f7cd9faf2d20ed7788dd2caa314a3f.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Te same dane, rozne metody — rozne mapy!
 </pre></div>
 </div>

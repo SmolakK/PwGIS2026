@@ -1,0 +1,1014 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C7: Logika wtyczki, Processing i projekt koncowy &#8212; Programowanie w systemach GIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '14. Cwiczenia 7 Logika_Wtyczki_Projekt_Koncowy';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Materiały dodatkowe (część 2)" href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html" />
+    <link rel="prev" title="C6: Pierwsza wtyczka QGIS — szkielet i interfejs" href="13.%20Cwiczenia%206_Pierwsza_Wtyczka_Szkielet_GUI.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1.%20Wyklad_1_Wprowadzenie_do_GIS_i_QGIS.html">
+                    Wykład 1: Wprowadzenie do GIS i QGIS
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.%20%C4%86wiczenia_1_Srodowisko_i_Wprowadzenie_do_QGIS.html">Cwiczenia 1: środowisko pracy i wprowadzenie do QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.%20Wyklad_2_Programowanie_skryptowe_PyQGIS.html">Wyklad 2: Programowanie skryptowe w PyQGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Cwiczenia_2_Konsola_Pythona_i_inspekcja_projektu.html">C2: Konsola Pythona i pierwsza inspekcja projektu QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.%20Wyklad_3_4_Operacje_geometryczne_Processing.html">Wyklad 3: Geometrie, operacje przestrzenne i Processing Toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Cwiczenia_3_Operacje_na_atrybutach_selekcja_zapis.html">C3: Operacje na atrybutach, selekcja i zapis danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.%20Wyklad_powtorka_podsumowanie_uporzadkowanie_3.5.html">Wyklad 3.5: Podsumowanie i uporządkowanie dotychczasowej wiedzy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9.%20Cwiczenia_4_QgsGeometry_QgsFeature_warstwy.html">C4: QgsGeometry, QgsFeature i praca z warstwami</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.%20Wyklad_6_Budowa_wtyczki.html">Wyklad 6: Architektura wtyczek QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.%20Wyklad_7_Analiza_Rastrowa.html">Wyklad 7: Analiza danych rastrowych w QGIS i Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.%20Cwiczenia5_Operacje_geometryczne_relacje.html">C5: Operacje geometryczne i relacje przestrzenne</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.%20Cwiczenia%206_Pierwsza_Wtyczka_Szkielet_GUI.html">C6: Pierwsza wtyczka QGIS — szkielet i interfejs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">C7: Logika wtyczki, Processing i projekt koncowy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html">Materiały dodatkowe (część 2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%202.html">Materiały dodatkowe (część 2)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F14. Cwiczenia 7 Logika_Wtyczki_Projekt_Koncowy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/14. Cwiczenia 7 Logika_Wtyczki_Projekt_Koncowy.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>C7: Logika wtyczki, Processing i projekt koncowy</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodanie-processing-do-wtyczki">1. Dodanie Processing do wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-dziala-processing-run-wewnatrz-wtyczki">1.1 Jak dziala processing.run() wewnatrz wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-dodaj-buforowanie-do-wtyczki">Zadanie 1.1 — Dodaj buforowanie do wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-sprawdz-czas-wykonania">Zadanie 1.2 — Sprawdz czas wykonania</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#walidacja-danych-wejsciowych">2. Walidacja danych wejsciowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-walidacja-jest-konieczna">2.1 Dlaczego walidacja jest konieczna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-napisz-metode-waliduj">Zadanie 2.1 — Napisz metode waliduj()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2-samodzielne-dodatkowe-sprawdzenie">Zadanie 2.2 — Samodzielne: dodatkowe sprawdzenie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-wynikow-do-pliku">3. Zapis wynikow do pliku</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-dodaj-wybor-pliku-wyjsciowego">Zadanie 3.1 — Dodaj wybor pliku wyjsciowego</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-podlacz-dialog-wyboru-pliku">Zadanie 3.2 — Podlacz dialog wyboru pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-dodaj-zapis-do-metody-wykonaj-bufor">Zadanie 3.3 — Dodaj zapis do metody wykonaj_bufor()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komunikaty-i-obsluga-bledow">4. Komunikaty i obsluga bledow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#projekt-koncowy-tematy-i-wymagania">6. Projekt koncowy — tematy i wymagania</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wymagania-wspolne-dla-wszystkich-projektow">Wymagania wspolne dla wszystkich projektow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tematy-do-wyboru">Tematy do wyboru</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-1-analizator-warstwy">Temat 1 — Analizator warstwy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-2-narzedzie-buforu-z-opcjami">Temat 2 — Narzedzie buforu z opcjami</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-3-kalkulator-gestosci-punktow">Temat 3 — Kalkulator gestosci punktow</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-4-generowanie-losowych-geometrii-na-mapie">Temat 4 — Generowanie losowych geometrii na mapie</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-5-znajdz-sasiadow">Temat 5 — Znajdz sasiadow</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-6-kalkulator-stref-buforowych">Temat 6 — Kalkulator stref buforowych</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-7-mapa-dostepnosci">Temat 7 — Mapa dostepnosci</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-wlasny">Temat własny</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zatwierdzenie-tematu">Zatwierdzenie tematu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-oddania">Forma oddania</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="c7-logika-wtyczki-processing-i-projekt-koncowy">
+<h1>C7: Logika wtyczki, Processing i projekt koncowy<a class="headerlink" href="#c7-logika-wtyczki-processing-i-projekt-koncowy" title="Permalink to this heading">#</a></h1>
+<section id="programowanie-w-gis-cwiczenia">
+<h2>Programowanie w GIS — Cwiczenia<a class="headerlink" href="#programowanie-w-gis-cwiczenia" title="Permalink to this heading">#</a></h2>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Kurs:</strong> Programowanie w GIS (QGIS)<br />
+<strong>Cwiczenie:</strong> C7<br />
+<strong>Powiazany wyklad:</strong> W6<br />
+<strong>Czas:</strong> ~90 minut</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="cele-cwiczenia">
+<h2>Cele cwiczenia<a class="headerlink" href="#cele-cwiczenia" title="Permalink to this heading">#</a></h2>
+<p>Po ukonczeniu tego cwiczenia bedziesz potrafil/a:</p>
+<ul class="simple">
+<li><p>wywolywac algorytmy Processing Toolbox z poziomu wtyczki,</p></li>
+<li><p>walidowac dane wejsciowe i obslugiwac bledy,</p></li>
+<li><p>zapisywac wyniki do pliku przez dialog wyboru pliku,</p></li>
+<li><p>korzystac z <code class="docutils literal notranslate"><span class="pre">messageBar</span></code> do informowania uzytkownika o postepie,</p></li>
+<li><p>wybrac i opisac temat projektu koncowego.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="przygotowanie">
+<h2>Przygotowanie<a class="headerlink" href="#przygotowanie" title="Permalink to this heading">#</a></h2>
+<p>Kontynuujemy prace na wtyczce z C6.
+Upewnij sie ze:</p>
+<ul class="simple">
+<li><p>folder <code class="docutils literal notranslate"><span class="pre">moja_pierwsza_wtyczka/</span></code> istnieje w katalogu wtyczek,</p></li>
+<li><p>wtyczka laduje sie poprawnie w QGIS,</p></li>
+<li><p>Plugin Reloader jest skonfigurowany na <code class="docutils literal notranslate"><span class="pre">moja_pierwsza_wtyczka</span></code>.</p></li>
+</ul>
+<hr class="docutils" />
+<p><a id='s1'></a></p>
+</section>
+<section id="dodanie-processing-do-wtyczki">
+<h2>1. Dodanie Processing do wtyczki<a class="headerlink" href="#dodanie-processing-do-wtyczki" title="Permalink to this heading">#</a></h2>
+<section id="jak-dziala-processing-run-wewnatrz-wtyczki">
+<h3>1.1 Jak dziala processing.run() wewnatrz wtyczki<a class="headerlink" href="#jak-dziala-processing-run-wewnatrz-wtyczki" title="Permalink to this heading">#</a></h3>
+<p>Modul <code class="docutils literal notranslate"><span class="pre">processing</span></code> jest dostepny wewnatrz wtyczki tak samo jak w konsoli.
+Wystarczy go zaimportowac na poczatku pliku:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">processing</span>
+</pre></div>
+</div>
+<p>Kazdy algorytm zwraca slownik — klucz <code class="docutils literal notranslate"><span class="pre">'OUTPUT'</span></code> zawiera wynik.
+Jesli podasz <code class="docutils literal notranslate"><span class="pre">'TEMPORARY_OUTPUT'</span></code>, wynik to warstwa w pamieci.</p>
+</section>
+<section id="zadanie-1-1-dodaj-buforowanie-do-wtyczki">
+<h3>Zadanie 1.1 — Dodaj buforowanie do wtyczki<a class="headerlink" href="#zadanie-1-1-dodaj-buforowanie-do-wtyczki" title="Permalink to this heading">#</a></h3>
+<p>Rozbuduj swoja wtyczke z poprzednich cwiczen. Dodaj do dialogu:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">QDoubleSpinBox</span></code> o nazwie <code class="docutils literal notranslate"><span class="pre">spbPromien</span></code> (promien bufora w km),</p></li>
+<li><p>etykiete <code class="docutils literal notranslate"><span class="pre">QLabel</span></code> z tekstem <code class="docutils literal notranslate"><span class="pre">Promien</span> <span class="pre">bufora</span> <span class="pre">(km):</span></code>.</p></li>
+</ul>
+<p>Zaktualizuj <code class="docutils literal notranslate"><span class="pre">dialog_base.ui</span></code> w Qt Designer, zapisz
+i przeladuj wtyczke.</p>
+<p>Nastepnie dodaj do klasy glownej metode <code class="docutils literal notranslate"><span class="pre">wykonaj_bufor()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wykonaj_bufor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">processing</span>
+    <span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">QgsCoordinateReferenceSystem</span><span class="p">,</span> <span class="n">QgsCoordinateTransform</span><span class="p">,</span> <span class="n">QgsProject</span>
+    <span class="p">)</span>
+
+    <span class="n">warstwa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+    <span class="n">promien_km</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">spbPromien</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+    <span class="n">bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">messageBar</span><span class="p">()</span>
+    <span class="n">bar</span><span class="o">.</span><span class="n">pushInfo</span><span class="p">(</span><span class="s1">&#39;Wtyczka&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Buforowanie (</span><span class="si">{</span><span class="n">promien_km</span><span class="si">}</span><span class="s1"> km)...&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Reprojekcja do EPSG:3857 (metry)</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;native:reprojectlayer&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;INPUT&#39;</span>     <span class="p">:</span> <span class="n">warstwa</span><span class="p">,</span>
+        <span class="s1">&#39;TARGET_CRS&#39;</span><span class="p">:</span> <span class="s1">&#39;EPSG:3857&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OUTPUT&#39;</span>    <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+    <span class="p">})</span>
+
+    <span class="c1"># Bufor w metrach</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;native:buffer&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;INPUT&#39;</span>    <span class="p">:</span> <span class="n">r1</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;DISTANCE&#39;</span> <span class="p">:</span> <span class="n">promien_km</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="s1">&#39;SEGMENTS&#39;</span> <span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="s1">&#39;DISSOLVE&#39;</span> <span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;OUTPUT&#39;</span>   <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+    <span class="p">})</span>
+
+    <span class="c1"># Cofnij do oryginalnego CRS</span>
+    <span class="n">r3</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;native:reprojectlayer&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;INPUT&#39;</span>     <span class="p">:</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;TARGET_CRS&#39;</span><span class="p">:</span> <span class="n">warstwa</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+        <span class="s1">&#39;OUTPUT&#39;</span>    <span class="p">:</span> <span class="s1">&#39;TEMPORARY_OUTPUT&#39;</span>
+    <span class="p">})</span>
+
+    <span class="n">wynik</span> <span class="o">=</span> <span class="n">r3</span><span class="p">[</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">]</span>
+    <span class="n">wynik</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bufor_</span><span class="si">{</span><span class="n">promien_km</span><span class="si">}</span><span class="s1">km_</span><span class="si">{</span><span class="n">warstwa</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">addMapLayer</span><span class="p">(</span><span class="n">wynik</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+    <span class="n">bar</span><span class="o">.</span><span class="n">pushSuccess</span><span class="p">(</span><span class="s1">&#39;Wtyczka&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Bufor </span><span class="si">{</span><span class="n">promien_km</span><span class="si">}</span><span class="s1"> km gotowy!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Podlacz <code class="docutils literal notranslate"><span class="pre">btnAnalizuj</span></code> do <code class="docutils literal notranslate"><span class="pre">wykonaj_bufor</span></code> zamiast <code class="docutils literal notranslate"><span class="pre">analizuj</span></code>.</p>
+</section>
+<section id="zadanie-1-2-sprawdz-czas-wykonania">
+<h3>Zadanie 1.2 — Sprawdz czas wykonania<a class="headerlink" href="#zadanie-1-2-sprawdz-czas-wykonania" title="Permalink to this heading">#</a></h3>
+<p>Dodaj do metody <code class="docutils literal notranslate"><span class="pre">wykonaj_bufor()</span></code> pomiar czasu:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="c1"># ... kod buforowania ...</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">bar</span><span class="o">.</span><span class="n">pushSuccess</span><span class="p">(</span>
+    <span class="s1">&#39;Wtyczka&#39;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s1">&#39;Gotowe w </span><span class="si">{</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> s. Obiektow: </span><span class="si">{</span><span class="n">wynik</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Uruchom dla warstwy panstw z promieniem 100 km.
+Zanotuj czas wykonania ponizej.</p>
+<hr class="docutils" />
+<p><a id='s2'></a></p>
+</section>
+</section>
+<section id="walidacja-danych-wejsciowych">
+<h2>2. Walidacja danych wejsciowych<a class="headerlink" href="#walidacja-danych-wejsciowych" title="Permalink to this heading">#</a></h2>
+<section id="dlaczego-walidacja-jest-konieczna">
+<h3>2.1 Dlaczego walidacja jest konieczna<a class="headerlink" href="#dlaczego-walidacja-jest-konieczna" title="Permalink to this heading">#</a></h3>
+<p>Uzytkownik moze:</p>
+<ul class="simple">
+<li><p>nie wybrac zadnej warstwy,</p></li>
+<li><p>wybrac warstwe rastrowa zamiast wektorowej,</p></li>
+<li><p>podac promien 0 lub ujemny,</p></li>
+<li><p>nie podac sciezki wyjsciowej.</p></li>
+</ul>
+<p>Bez walidacji wtyczka wywoli niezrozumialy blad lub zawiesi sie.
+Z walidacja — wyswietli czytelny komunikat i nie wykona operacji.</p>
+</section>
+<section id="zadanie-2-1-napisz-metode-waliduj">
+<h3>Zadanie 2.1 — Napisz metode waliduj()<a class="headerlink" href="#zadanie-2-1-napisz-metode-waliduj" title="Permalink to this heading">#</a></h3>
+<p>Dodaj do klasy glownej:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">waliduj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsMapLayer</span>
+
+    <span class="n">bar</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">messageBar</span><span class="p">()</span>
+    <span class="n">ok</span>    <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">bledy</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">warstwa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">warstwa</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">bledy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Nie wybrano zadnej warstwy.&#39;</span><span class="p">)</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">warstwa</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">!=</span> <span class="n">QgsMapLayer</span><span class="o">.</span><span class="n">VectorLayer</span><span class="p">:</span>
+        <span class="n">bledy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Wybrana warstwa musi byc wektorowa.&#39;</span><span class="p">)</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">promien</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">spbPromien</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">promien</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">bledy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Promien musi byc wiekszy od zera.&#39;</span><span class="p">)</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+        <span class="n">bar</span><span class="o">.</span><span class="n">pushWarning</span><span class="p">(</span><span class="s1">&#39;Wtyczka&#39;</span><span class="p">,</span> <span class="s1">&#39; | &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bledy</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">ok</span>
+</pre></div>
+</div>
+<p>Wywolaj <code class="docutils literal notranslate"><span class="pre">waliduj()</span></code> na poczatku <code class="docutils literal notranslate"><span class="pre">wykonaj_bufor()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wykonaj_bufor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">waliduj</span><span class="p">():</span>
+        <span class="k">return</span>
+    <span class="c1"># reszta kodu...</span>
+</pre></div>
+</div>
+<p><strong>Pytanie 2.1</strong> — Przetestuj walidacje: sprobuj uruchomic wtyczke
+bez wybranej warstwy oraz z promieniem 0.
+Czy komunikaty sa wystarczajaco zrozumiale dla uzytkownika?
+Co bys zmienil/zmienila w tresci komunikatow?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja odpowiedz:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="zadanie-2-2-samodzielne-dodatkowe-sprawdzenie">
+<h3>Zadanie 2.2 — Samodzielne: dodatkowe sprawdzenie<a class="headerlink" href="#zadanie-2-2-samodzielne-dodatkowe-sprawdzenie" title="Permalink to this heading">#</a></h3>
+<p>Dodaj do metody <code class="docutils literal notranslate"><span class="pre">waliduj()</span></code> sprawdzenie czy warstwa
+ma co najmniej jeden obiekt (<code class="docutils literal notranslate"><span class="pre">featureCount()</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>).
+Buforowanie pustej warstwy jest technicznie poprawne
+ale bezuzyteczne — warto o tym poinformowac uzytkownika.</p>
+<p>Wyswietl ostrzezenie (<code class="docutils literal notranslate"><span class="pre">pushWarning</span></code>) ale nie blokuj wykonania
+— niech uzytkownik zdecyduje czy chce kontynuowac.</p>
+<p>Wskazowka: mozesz zwrocic trzy stany: <code class="docutils literal notranslate"><span class="pre">'ok'</span></code>, <code class="docutils literal notranslate"><span class="pre">'warning'</span></code>, <code class="docutils literal notranslate"><span class="pre">'error'</span></code>
+zamiast tylko <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twoja rozbudowana metoda waliduj():</span>
+
+<span class="c1"># [QGIS]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a id='s3'></a></p>
+</section>
+</section>
+<section id="zapis-wynikow-do-pliku">
+<h2>3. Zapis wynikow do pliku<a class="headerlink" href="#zapis-wynikow-do-pliku" title="Permalink to this heading">#</a></h2>
+<section id="zadanie-3-1-dodaj-wybor-pliku-wyjsciowego">
+<h3>Zadanie 3.1 — Dodaj wybor pliku wyjsciowego<a class="headerlink" href="#zadanie-3-1-dodaj-wybor-pliku-wyjsciowego" title="Permalink to this heading">#</a></h3>
+<p>Dodaj do <code class="docutils literal notranslate"><span class="pre">dialog_base.ui</span></code> w Qt Designer:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">QLineEdit</span></code> o nazwie <code class="docutils literal notranslate"><span class="pre">ledSciezka</span></code> (placeholder: <code class="docutils literal notranslate"><span class="pre">Wybierz</span> <span class="pre">plik...</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QPushButton</span></code> o nazwie <code class="docutils literal notranslate"><span class="pre">btnPlik</span></code> (tekst: <code class="docutils literal notranslate"><span class="pre">...</span></code>, maxWidth: 40)</p></li>
+</ul>
+<p>Zapisz, przeladuj wtyczke.</p>
+</section>
+<section id="zadanie-3-2-podlacz-dialog-wyboru-pliku">
+<h3>Zadanie 3.2 — Podlacz dialog wyboru pliku<a class="headerlink" href="#zadanie-3-2-podlacz-dialog-wyboru-pliku" title="Permalink to this heading">#</a></h3>
+<p>W metodzie <code class="docutils literal notranslate"><span class="pre">run()</span></code> po stworzeniu dialogu dodaj:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">btnPlik</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wybierz_plik</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Dodaj metode <code class="docutils literal notranslate"><span class="pre">wybierz_plik()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wybierz_plik</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">qgis.PyQt.QtWidgets</span> <span class="kn">import</span> <span class="n">QFileDialog</span>
+
+    <span class="n">sciezka</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span>
+        <span class="s1">&#39;Zapisz wynik jako&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;GeoPackage (*.gpkg);;Shapefile (*.shp)&#39;</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">sciezka</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">sciezka</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gpkg&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sciezka</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.shp&#39;</span><span class="p">)):</span>
+            <span class="n">sciezka</span> <span class="o">+=</span> <span class="s1">&#39;.gpkg&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">ledSciezka</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">sciezka</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="zadanie-3-3-dodaj-zapis-do-metody-wykonaj-bufor">
+<h3>Zadanie 3.3 — Dodaj zapis do metody wykonaj_bufor()<a class="headerlink" href="#zadanie-3-3-dodaj-zapis-do-metody-wykonaj-bufor" title="Permalink to this heading">#</a></h3>
+<p>Na koncu <code class="docutils literal notranslate"><span class="pre">wykonaj_bufor()</span></code>, po stworzeniu warstwy wynikowej:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sciezka</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">ledSciezka</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">sciezka</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">qgis.core</span> <span class="kn">import</span> <span class="n">QgsVectorFileWriter</span><span class="p">,</span> <span class="n">QgsProject</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    <span class="n">driver</span> <span class="o">=</span> <span class="s1">&#39;GPKG&#39;</span> <span class="k">if</span> <span class="n">sciezka</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gpkg&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;ESRI Shapefile&#39;</span>
+    <span class="n">opcje</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">SaveVectorOptions</span><span class="p">()</span>
+    <span class="n">opcje</span><span class="o">.</span><span class="n">driverName</span>   <span class="o">=</span> <span class="n">driver</span>
+    <span class="n">opcje</span><span class="o">.</span><span class="n">fileEncoding</span> <span class="o">=</span> <span class="s1">&#39;UTF-8&#39;</span>
+
+    <span class="n">blad</span><span class="p">,</span> <span class="n">kom</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">writeAsVectorFormatV3</span><span class="p">(</span>
+        <span class="n">wynik</span><span class="p">,</span> <span class="n">sciezka</span><span class="p">,</span>
+        <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">transformContext</span><span class="p">(),</span> <span class="n">opcje</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">blad</span> <span class="o">==</span> <span class="n">QgsVectorFileWriter</span><span class="o">.</span><span class="n">NoError</span><span class="p">:</span>
+        <span class="n">bar</span><span class="o">.</span><span class="n">pushSuccess</span><span class="p">(</span>
+            <span class="s1">&#39;Wtyczka&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Zapisano: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">sciezka</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bar</span><span class="o">.</span><span class="n">pushCritical</span><span class="p">(</span><span class="s1">&#39;Wtyczka&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Blad zapisu: </span><span class="si">{</span><span class="n">kom</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">bar</span><span class="o">.</span><span class="n">pushInfo</span><span class="p">(</span><span class="s1">&#39;Wtyczka&#39;</span><span class="p">,</span> <span class="s1">&#39;Wynik dodany do projektu (brak sciezki zapisu).&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s4'></a></p>
+</section>
+</section>
+<section id="komunikaty-i-obsluga-bledow">
+<h2>4. Komunikaty i obsluga bledow<a class="headerlink" href="#komunikaty-i-obsluga-bledow" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">messageBar</span><span class="p">()</span>
+
+<span class="n">bar</span><span class="o">.</span><span class="n">pushInfo</span><span class="p">(</span><span class="s1">&#39;Tytul&#39;</span><span class="p">,</span>     <span class="s1">&#39;Informacja&#39;</span><span class="p">)</span>     <span class="c1"># niebieski</span>
+<span class="n">bar</span><span class="o">.</span><span class="n">pushSuccess</span><span class="p">(</span><span class="s1">&#39;Tytul&#39;</span><span class="p">,</span> <span class="s1">&#39;Sukces&#39;</span><span class="p">)</span>          <span class="c1"># zielony</span>
+<span class="n">bar</span><span class="o">.</span><span class="n">pushWarning</span><span class="p">(</span><span class="s1">&#39;Tytul&#39;</span><span class="p">,</span> <span class="s1">&#39;Ostrzezenie&#39;</span><span class="p">)</span>     <span class="c1"># zolty</span>
+<span class="n">bar</span><span class="o">.</span><span class="n">pushCritical</span><span class="p">(</span><span class="s1">&#39;Tytul&#39;</span><span class="p">,</span><span class="s1">&#39;Blad krytyczny&#39;</span><span class="p">)</span>  <span class="c1"># czerwony</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a id='s6'></a></p>
+</section>
+<section id="projekt-koncowy-tematy-i-wymagania">
+<h2>6. Projekt koncowy — tematy i wymagania<a class="headerlink" href="#projekt-koncowy-tematy-i-wymagania" title="Permalink to this heading">#</a></h2>
+<p>Projekt koncowy to samodzielnie napisana wtyczka QGIS.
+Wybierz jeden temat z ponizszej listy lub zaproponuj wlasny.</p>
+<hr class="docutils" />
+<section id="wymagania-wspolne-dla-wszystkich-projektow">
+<h3>Wymagania wspolne dla wszystkich projektow<a class="headerlink" href="#wymagania-wspolne-dla-wszystkich-projektow" title="Permalink to this heading">#</a></h3>
+<p>Kazda wtyczka musi zawierac:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Element</p></th>
+<th class="head"><p>Opis</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Struktura plikow</p></td>
+<td><p>Poprawne <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>, <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code>, klasa glowna</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interfejs GUI</p></td>
+<td><p>Co najmniej 4 widgety wejsciowe, layout, czytelne etykiety</p></td>
+</tr>
+<tr class="row-even"><td><p>QgsMapLayerComboBox</p></td>
+<td><p>Wybor warstwy wejsciowej z projektu</p></td>
+</tr>
+<tr class="row-odd"><td><p>Walidacja</p></td>
+<td><p>Sprawdzenie danych przed wykonaniem, komunikaty o bledach</p></td>
+</tr>
+<tr class="row-even"><td><p>Logika operacji</p></td>
+<td><p>Przynajmniej jeden algorytm Processing lub operacja PyQGIS</p></td>
+</tr>
+<tr class="row-odd"><td><p>Zapis wyniku</p></td>
+<td><p>Nowa warstwa w projekcie lub plik na dysku</p></td>
+</tr>
+<tr class="row-even"><td><p>messageBar</p></td>
+<td><p>Komunikaty info/success/warning/critical w odpowiednich miejscach</p></td>
+</tr>
+<tr class="row-odd"><td><p>metadata.txt</p></td>
+<td><p>Wypelnione wszystkie wymagane pola + opis <code class="docutils literal notranslate"><span class="pre">about</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Komentarze w kodzie</p></td>
+<td><p>Kluczowe fragmenty opisane po polsku lub angielsku</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="tematy-do-wyboru">
+<h3>Tematy do wyboru<a class="headerlink" href="#tematy-do-wyboru" title="Permalink to this heading">#</a></h3>
+<section id="temat-1-analizator-warstwy">
+<h4>Temat 1 — Analizator warstwy<a class="headerlink" href="#temat-1-analizator-warstwy" title="Permalink to this heading">#</a></h4>
+<p><em>Poziom: podstawowy</em></p>
+<p>Wtyczka wyswietla szczegolowy raport o wybranej warstwie wektorowej:
+typ geometrii, liczba obiektow, pola atrybutow z typami,
+zasieg przestrzenny, CRS, pole powierzchni i obwod
+(dla poligonow), srednie wartosci pol numerycznych.
+Raport zapisywany jest do pliku tekstowego.</p>
+<p><strong>Wymagane algorytmy/operacje:</strong> <code class="docutils literal notranslate"><span class="pre">QgsDistanceArea</span></code>, <code class="docutils literal notranslate"><span class="pre">bandStatistics</span></code> lub petla
+po obiektach, <code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code> lub zapis przez Python <code class="docutils literal notranslate"><span class="pre">open()</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="temat-2-narzedzie-buforu-z-opcjami">
+<h4>Temat 2 — Narzedzie buforu z opcjami<a class="headerlink" href="#temat-2-narzedzie-buforu-z-opcjami" title="Permalink to this heading">#</a></h4>
+<p><em>Poziom: podstawowy-sredni</em></p>
+<p>Rozbudowana wersja buforu z opcjami:
+wybor jednostki (m / km), opcja scalania buforow (dissolve),
+wybor pola po ktorym scalamy, podglad liczby obiektow wynikowych.</p>
+<p><strong>Wymagane algorytmy:</strong> <code class="docutils literal notranslate"><span class="pre">native:buffer</span></code>, <code class="docutils literal notranslate"><span class="pre">native:dissolve</span></code>,
+<code class="docutils literal notranslate"><span class="pre">native:reprojectlayer</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="temat-3-kalkulator-gestosci-punktow">
+<h4>Temat 3 — Kalkulator gestosci punktow<a class="headerlink" href="#temat-3-kalkulator-gestosci-punktow" title="Permalink to this heading">#</a></h4>
+<p><em>Poziom: sredni</em></p>
+<p>Dla warstwy punktowej i warstwy poligonowej oblicza
+ile punktow lezy wewnatrz kazdego poligonu (gestosc).
+Wynik zapisuje jako nowe pole atrybutu w warstwie poligonowej.
+Wizualizuje choropleta wg gestosci.</p>
+<p><strong>Wymagane algorytmy:</strong> <code class="docutils literal notranslate"><span class="pre">native:countpointsinpolygon</span></code>,
+<code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code> tryb edycji, <code class="docutils literal notranslate"><span class="pre">changeAttributeValue</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="temat-4-generowanie-losowych-geometrii-na-mapie">
+<h4>Temat 4 — Generowanie losowych geometrii na mapie<a class="headerlink" href="#temat-4-generowanie-losowych-geometrii-na-mapie" title="Permalink to this heading">#</a></h4>
+<p><em>Poziom: sredni</em></p>
+<p>Narzędzie do generowania losowych geometrii gdzie użytkownik może podać zakres współrzędnych w których można generować, liczbę obiektów do wygenerowania oraz typ geometrii do generowania.</p>
+</section>
+<hr class="docutils" />
+<section id="temat-5-znajdz-sasiadow">
+<h4>Temat 5 — Znajdz sasiadow<a class="headerlink" href="#temat-5-znajdz-sasiadow" title="Permalink to this heading">#</a></h4>
+<p><em>Poziom: sredni</em></p>
+<p>Uzytkownik klika obiekt na mapie (lub wybiera z listy),
+wtyczka znajduje wszystkich sasiadow obiektu w podanym zakresie tolerancji
+i zaznacza ich na mapie.</p>
+</section>
+<hr class="docutils" />
+<section id="temat-6-kalkulator-stref-buforowych">
+<h4>Temat 6 — Kalkulator stref buforowych<a class="headerlink" href="#temat-6-kalkulator-stref-buforowych" title="Permalink to this heading">#</a></h4>
+<p><em>Poziom: sredni</em></p>
+<p>Tworzy N koncentrycznych stref buforowych wokol wybranych obiektow.
+Uzytkownik podaje liczbe stref i promien kazdej.
+Kazda strefa to pierscien (roznica miedzy kolejnymi buforami).
+Strefy sa zapisywane jako osobne warstwy lub jako jedna warstwa
+z polem <code class="docutils literal notranslate"><span class="pre">strefa_nr</span></code>.</p>
+<p><strong>Wymagane algorytmy:</strong> <code class="docutils literal notranslate"><span class="pre">native:buffer</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsGeometry.difference()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">native:reprojectlayer</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsCategorizedSymbolRenderer</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="temat-7-mapa-dostepnosci">
+<h4>Temat 7 — Mapa dostepnosci<a class="headerlink" href="#temat-7-mapa-dostepnosci" title="Permalink to this heading">#</a></h4>
+<p><em>Poziom: zaawansowany</em></p>
+<p>Uzytkownik wybiera warstwe punktowa (np. szpitale, szkoly)
+i warstwe obszarow (np. gminy) - z otwartych danych.
+Wtyczka oblicza dla kazdego obszaru odleglosc do najblizszego punktu
+i liczbe punktow w promieniu N km.
+Wynik jako choropleta: obszary kolorowane wg dostepnosci.</p>
+<p><strong>Wymagane operacje:</strong> <code class="docutils literal notranslate"><span class="pre">QgsDistanceArea</span></code>, petla po obiektach,
+<code class="docutils literal notranslate"><span class="pre">native:countpointsinpolygon</span></code>, <code class="docutils literal notranslate"><span class="pre">native:buffer</span></code>,
+<code class="docutils literal notranslate"><span class="pre">QgsGraduatedSymbolRenderer</span></code>.</p>
+</section>
+</section>
+<section id="temat-wlasny">
+<h3>Temat własny<a class="headerlink" href="#temat-wlasny" title="Permalink to this heading">#</a></h3>
+<p>Do zaakceptowania przez prowadzącego</p>
+</section>
+<section id="zatwierdzenie-tematu">
+<h3>Zatwierdzenie tematu<a class="headerlink" href="#zatwierdzenie-tematu" title="Permalink to this heading">#</a></h3>
+<p>Do końca tygodnia 29.05.2026 mail na <a class="reference external" href="mailto:kamil&#46;smolak&#37;&#52;&#48;upwr&#46;edu&#46;pl">kamil<span>&#46;</span>smolak<span>&#64;</span>upwr<span>&#46;</span>edu<span>&#46;</span>pl</a> z podaniem:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Osób w grupie
+Tematu 
+</pre></div>
+</div>
+</section>
+<section id="forma-oddania">
+<h3>Forma oddania<a class="headerlink" href="#forma-oddania" title="Permalink to this heading">#</a></h3>
+<p>Spakuj folder wtyczki jako <code class="docutils literal notranslate"><span class="pre">wtyczka_[numer_indeksu].zip</span></code>.
+Nazwa folderu wewnatrz ZIP musi byc w snake_case (bez spacji).
+Wtyczka musi dac sie zainstalowac przez rozpakowanie do folderu wtyczek
+i wlaczenie w Menedzerze — przetestuj to przed oddaniem.</p>
+<p><strong>Termin oddania</strong>: 19.06.2026</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="13.%20Cwiczenia%206_Pierwsza_Wtyczka_Szkielet_GUI.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">C6: Pierwsza wtyczka QGIS — szkielet i interfejs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="15.%20Wtyczki%20-%20materia%C5%82y%20dodatkowe%201.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Materiały dodatkowe (część 2)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programowanie-w-gis-cwiczenia">Programowanie w GIS — Cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cele-cwiczenia">Cele cwiczenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#przygotowanie">Przygotowanie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dodanie-processing-do-wtyczki">1. Dodanie Processing do wtyczki</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jak-dziala-processing-run-wewnatrz-wtyczki">1.1 Jak dziala processing.run() wewnatrz wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-1-dodaj-buforowanie-do-wtyczki">Zadanie 1.1 — Dodaj buforowanie do wtyczki</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-1-2-sprawdz-czas-wykonania">Zadanie 1.2 — Sprawdz czas wykonania</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#walidacja-danych-wejsciowych">2. Walidacja danych wejsciowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dlaczego-walidacja-jest-konieczna">2.1 Dlaczego walidacja jest konieczna</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-1-napisz-metode-waliduj">Zadanie 2.1 — Napisz metode waliduj()</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-2-2-samodzielne-dodatkowe-sprawdzenie">Zadanie 2.2 — Samodzielne: dodatkowe sprawdzenie</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zapis-wynikow-do-pliku">3. Zapis wynikow do pliku</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-1-dodaj-wybor-pliku-wyjsciowego">Zadanie 3.1 — Dodaj wybor pliku wyjsciowego</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-2-podlacz-dialog-wyboru-pliku">Zadanie 3.2 — Podlacz dialog wyboru pliku</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zadanie-3-3-dodaj-zapis-do-metody-wykonaj-bufor">Zadanie 3.3 — Dodaj zapis do metody wykonaj_bufor()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komunikaty-i-obsluga-bledow">4. Komunikaty i obsluga bledow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#projekt-koncowy-tematy-i-wymagania">6. Projekt koncowy — tematy i wymagania</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wymagania-wspolne-dla-wszystkich-projektow">Wymagania wspolne dla wszystkich projektow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tematy-do-wyboru">Tematy do wyboru</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-1-analizator-warstwy">Temat 1 — Analizator warstwy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-2-narzedzie-buforu-z-opcjami">Temat 2 — Narzedzie buforu z opcjami</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-3-kalkulator-gestosci-punktow">Temat 3 — Kalkulator gestosci punktow</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-4-generowanie-losowych-geometrii-na-mapie">Temat 4 — Generowanie losowych geometrii na mapie</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-5-znajdz-sasiadow">Temat 5 — Znajdz sasiadow</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-6-kalkulator-stref-buforowych">Temat 6 — Kalkulator stref buforowych</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-7-mapa-dostepnosci">Temat 7 — Mapa dostepnosci</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temat-wlasny">Temat własny</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zatwierdzenie-tematu">Zatwierdzenie tematu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-oddania">Forma oddania</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kamil Smolak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
