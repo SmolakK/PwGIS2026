@@ -389,11 +389,11 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="materialy-dodatkowe-czesc-2">
-<h1>Materiały dodatkowe (część 2)<a class="headerlink" href="#materialy-dodatkowe-czesc-2" title="Permalink to this heading">#</a></h1>
+<h1>Materiały dodatkowe (część 1)<a class="headerlink" href="#materialy-dodatkowe-czesc-2" title="Permalink to this heading">#</a></h1>
 <section id="interakcja-z-mapa">
 <h2>Interakcja z mapą<a class="headerlink" href="#interakcja-z-mapa" title="Permalink to this heading">#</a></h2>
 <p>Zacznijmy od dodania kilku przycisków do naszej istniejącej już wtyczki. Oprogramujemy dla nich różne przykładowe funkcjonalności.</p>
-<img src='wyk8_img/1.png' /><p>Przyciski mają kolejno nazwy PushButton_3 _4 oraz _5.</p>
+<img src='wyk8_img/1.PNG' /><p>Przyciski mają kolejno nazwy PushButton_3 _4 oraz _5.</p>
 <p>Interakcje, które możemy podejmować poprzez wtyczkę odbywają się (jak zresztą w bibliotece Qt oprogramowane są wszystkie interakcje) poprzez zestaw akcji i sygnałów.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Akcja jest uruchomieniem pewnego modułu (np. clicked.connect())
 </pre></div>
@@ -428,7 +428,7 @@ document.write(`
 </div>
 </div>
 <p>Teraz po uruchomieniu wtyczki i wciśnięciu tego przycisku uruchomi nam się żądane okno:</p>
-<img src='wyk8_img/2.png' /><p>Spróbujmy coś bardziej skomplikowanego - akcję actionSelectRadius, która uruchamia metodę zaznaczania obiektu w zadanym promieniu. Oprogramowujemy kolejny przycisk:</p>
+<img src='wyk8_img/2.PNG' /><p>Spróbujmy coś bardziej skomplikowanego - akcję actionSelectRadius, która uruchamia metodę zaznaczania obiektu w zadanym promieniu. Oprogramowujemy kolejny przycisk:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -520,7 +520,7 @@ document.write(`
 </div>
 </div>
 </div>
-<img src='wyk8_img/3.png' /><h3> Komunikaty </h3>
+<img src='wyk8_img/3.PNG' /><h3> Komunikaty </h3>
 <p>Czasem przydatne jest wyświetlanie komunikatów, które mogą być wyświetlane na górnym pasku lub w osobnym oknie. Zobaczmy, jak takie komunikaty oprogramować. Niech kliknięcie naszego trzeciego nowego przycisku uruchamia komunikat na pasku:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -555,7 +555,7 @@ document.write(`
 </div>
 </div>
 </div>
-<img src='wyk8_img/4.png' /><p>Oczywiście w tekst błędu możemy wstawiać informacje dotyczące tego co obecnie dzieje się we wtyczce. Do tego należy użyć formatowania tekstu.
+<img src='wyk8_img/4.PNG' /><p>Oczywiście w tekst błędu możemy wstawiać informacje dotyczące tego co obecnie dzieje się we wtyczce. Do tego należy użyć formatowania tekstu.
 Inne dostępne paski to:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Qgis.Info
 
@@ -576,9 +576,9 @@ Qgis.Success
 </div>
 </div>
 <p>Pierwszy argument odpowiada za typ okna - wywoływane są liczbami od 0 do 4 włącznie.</p>
-<img src='wyk8_img/5.png' /><h3> Narzędzia processingu </h3>
+<img src='wyk8_img/5.PNG' /><h3> Narzędzia processingu </h3>
 <p>Narzędzia processingu są bardzo przydatnymi funkcjami do przetwarzania danych wektorowych i rastrowych. Mogą być używane zarówno w formie skryptów jak i części własnych wtyczek. Narzędzia processingu dostępne w QGIS są na górnym pasu w menu “Processing -&gt; Panel algorytmów”</p>
-<img src='wyk8_img/6.png' /><p>Narzędzia processingu to takie metody jak operatory przecięcia, buforowania itp, ale również bardziej zaawansowane metody jak analizy sieciowe czy operacje na rastrach (stoki, ekspozycja, nachylenia). Aby korzystać z narzędzi processingu należy najpierw zaimportować moduł processingu:</p>
+<img src='wyk8_img/6.PNG' /><p>Narzędzia processingu to takie metody jak operatory przecięcia, buforowania itp, ale również bardziej zaawansowane metody jak analizy sieciowe czy operacje na rastrach (stoki, ekspozycja, nachylenia). Aby korzystać z narzędzi processingu należy najpierw zaimportować moduł processingu:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">processing</span>
